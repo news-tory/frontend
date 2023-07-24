@@ -1,7 +1,7 @@
 import Body from "./body";
 
 
-function Login() {
+function Footer() {
     return (
         <Body>
 
@@ -9,4 +9,4 @@ function Login() {
     );
 };
 
-export default Login;
+export default Footer;
