@@ -2,6 +2,25 @@ import { Sidebar, Profile, All } from "./style";
 import { useState, useEffect } from "react";
 import basicimage from "../user.png";
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+
+const serverApi = axios.create({
+    headers:{
+        "Content-Type": "application/json",
+    }
+});
+
+const sideApi = async (movieid) => {
+
+    let data = [];
+    await serverApi.get(``).then((response) => {
+        data = response.data;
+        // console.log(data);
+    })
+    return [data];
+}
+
 
 function Body() {
     const [image, setImage] = useState('');
