@@ -6,7 +6,7 @@ export const Sidebar = styled.div`
     display: flex;
     /* list-style-type: none; */
     /* margin: 0;  */
-    height: 95vh;
+    height: 90vh;
     /* border-right :  solid #aac8a7;
     border-left :  solid #aac8a7; */
 
@@ -35,7 +35,7 @@ export const All = styled.div`
         color: black;
     }
     .bottom {
-        padding-top:30vh;
+        padding-top:20vh;
         color: white;
         font-weight: lighter;
     }
