@@ -1,8 +1,8 @@
 function Body() {
     return (
-        <div>
-            
-        </div>
+        <>
+        <h1>Body</h1>
+        </>
     );
 };
 
