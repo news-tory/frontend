@@ -2,7 +2,11 @@ import styled from 'styled-components';
 
 export const Sidebar = styled.div`
     width: 200px;
+<<<<<<< Updated upstream
     background-color: #b6edd4;
+=======
+    background-color: #4ad395;
+>>>>>>> Stashed changes
     display: flex;
     /* list-style-type: none; */
     /* margin: 0;  */
@@ -32,6 +36,7 @@ export const Profile = styled.div`
     .pencil {
         padding-top: 25px;
         padding-left: 5px;
+        cursor: pointer;
     }
 `
 
