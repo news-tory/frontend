@@ -3,7 +3,6 @@ import Sidebar from '../../components/sidebar';
 import Body from './body';
 import { Sidebody } from "./style";
 import { Wrapper } from "./style";
-import Login from "../../components/login";
 
 function Main() {
     return (

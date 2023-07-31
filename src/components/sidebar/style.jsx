@@ -25,9 +25,6 @@ export const Profile = styled.div`
     h6 {
         margin-top:5px;
     }
-    img {
-        /* margin: 0; */
-    }
     .change{
         display: flex;
         margin-left: 10px;
@@ -53,7 +50,7 @@ export const All = styled.div`
     }
     .bottom {
         padding-top:20vh;
-        color: white;
+        color: #4ad395;
         font-weight: lighter;
     }
 `

@@ -14,19 +14,30 @@ const serverApi = axios.create({
     }
 });
 
-const sideApi = async (userkey) => {
+const sideApi = async () => {
 
     let data = [];
-    await serverApi.get(``).then((response) => {
+    await serverApi.get(`https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/articles/nyt/`).then((response) => {
         data = response.data;
-        // console.log(data);
+        console.log(data);
     })
     return [data];
 }
 
 
-function Body({ nickname }) {
+function Body() {
 
+
+    const [info, setInfo] = useState('')
+
+    const getData = async () => {
+        const nowData = await sideApi();
+        setInfo(nowData);
+        console.log(info);
+    }
+
+
+    // 모달창 관리
     let [modal, setModal] = useState(false);
     const openModal = () => {
         setModal(!modal);
@@ -42,16 +53,11 @@ function Body({ nickname }) {
 
 
     const [image, setImage] = useState('');
-    // const [nickname, setNickname] = useState('');
     const [id, setId] = useState('');
 
     const userkey = useParams().userkey;
 
-    // const getData = async () => {
-    //     const nowData = await sideApi(userkey);
-    //     setImage(nowData[0]);
-    //     setNickname(nowData[1]);
-    // }
+
 
 
     return (
@@ -74,6 +80,9 @@ function Body({ nickname }) {
                     <p><Link to='mypage' className="noline">
                         MyPage</Link></p>
                     <h5 className="bottom">NewStory</h5>
+                    <Link to='/login'>
+                        <div>로그인/회원가입</div>
+                    </Link>
 
                 </All>
 
@@ -81,7 +90,7 @@ function Body({ nickname }) {
             {modal &&
                 <Itsmodal onClick={closeModal}>
                     <ModalContainer onClick={stopPropagation}>
-                        <Modalpage/>
+                        <Modalpage />
                     </ModalContainer>
                 </Itsmodal>}
         </Modaltoo>

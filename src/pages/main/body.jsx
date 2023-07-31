@@ -1,9 +1,7 @@
-function Body() {
-    return (
-        <>
-        <h1>Body</h1>
-        </>
-    );
-};
+function Main () {
+    return(
+        <h2>hello</h2>
+    )
+}
 
-export default Body;
+export default Main;
