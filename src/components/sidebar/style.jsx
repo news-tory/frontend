@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Sidebar = styled.div`
     width: 200px;
-    background-color: #aac8a7;
+    background-color: #b6edd4;
     display: flex;
     /* list-style-type: none; */
     /* margin: 0;  */
