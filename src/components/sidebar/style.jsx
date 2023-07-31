@@ -2,18 +2,12 @@ import styled from 'styled-components';
 
 export const Sidebar = styled.div`
     width: 200px;
-<<<<<<< Updated upstream
-    background-color: #b6edd4;
-=======
-    background-color: #4ad395;
->>>>>>> Stashed changes
     display: flex;
     /* list-style-type: none; */
     /* margin: 0;  */
     height: 90vh;
     height: 90vh;
-    /* border-right :  solid #aac8a7;
-    border-left :  solid #aac8a7; */
+    border-right :  solid #4ad395;
     /* z-index: 99999;  */
 
 `
