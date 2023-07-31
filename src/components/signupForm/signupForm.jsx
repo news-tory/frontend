@@ -6,12 +6,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAt,faLock, faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import newstory from "../../components/header/newstory.png"
 import LoginForm from "../LoginForm/loginForm.jsx";
+import SignupNextForm from "../SignupNextForm/signupNextForm.jsx";
 
 const ServerUrl = 'https://port-0-minibackrepo1-k19y2klk242hfg.sel4.cloudtype.app/members/signup/'
 
 function SignupForm(){
     const navigate = useNavigate();
     const [activeSignupForm, setActiveSignupForm] = useState('signup');
+    const [activeNextForm, setActiveNextForm] = useState(false);
+
     //정보확인
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
@@ -113,6 +116,11 @@ function SignupForm(){
     const loginActive = () => {
       setActiveSignupForm('login');
   }
+
+    const onClickNext = () => {
+      setActiveNextForm(true);
+      setActiveSignupForm('signup2');
+    }
   
     return(
       <>
@@ -192,13 +200,16 @@ function SignupForm(){
                   type="submit"
                   footButtonType={FootButtonType.ACTIVATION}
                   disabled={!(isNickname && isEmail && isPassword && isPasswordConfirm)}
+                  onClick={onClickNext}
                   >
-                  다음
+                  다음으로
                   </FootButton>
               </section>
               </div>
         </SignupFormStructure>
     </Wrapper>
+      ): activeNextForm ? (
+        <SignupNextForm/>
       ): (
         <LoginForm/>
       )}
