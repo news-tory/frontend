@@ -3,11 +3,12 @@ import styled from "styled-components";
 const Container = styled.div`
     width: 100%
     box-sizing:border-box;
+    border-bottom: solid #4ad395;
 `
 
 const Wrapper = styled.div`
     width: 100%;
-    height: 70px;
+    height: 120x;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -18,7 +19,7 @@ const Wrapper = styled.div`
 const SearchBar = styled.input`
     width: 27rem;
     height: 50px;
-    border: 3px solid #AAC8A7;
+    border: 3px solid #4ad395;
     padding-left: 20px;
     border-radius: 10px;
 `

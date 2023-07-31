@@ -56,7 +56,7 @@ function Body({ nickname }) {
 
     return (
         <Modaltoo>
-            <Sidebar>
+            <Sidebar className="v-line">
                 <All>
                     <Profile>
                         <img src={basicimage}></img>

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Sidebar = styled.div`
     width: 200px;
-    background-color: #aac8a7;
+    /* background-color: #aac8a7; */
     display: flex;
     /* list-style-type: none; */
     /* margin: 0;  */
@@ -11,6 +11,9 @@ export const Sidebar = styled.div`
     /* border-right :  solid #aac8a7;
     border-left :  solid #aac8a7; */
     /* z-index: 99999;  */
+    border-right :  solid #4ad395;
+        height : 90vh;
+        margin-bottom: 40px;
 
 `
 
@@ -32,6 +35,7 @@ export const Profile = styled.div`
     .pencil {
         padding-top: 25px;
         padding-left: 5px;
+        cursor: pointer;
     }
 `
 
