@@ -5,6 +5,8 @@ import Community from "./pages/community"
 import Mypage from "./pages/mypage"
 import Signup from "./pages/signup"
 import Modal from "./components/changemodal"
+import Login from "./pages/login"
+
 
 
 
@@ -15,7 +17,7 @@ function App() {
           <Route path='/' element={<Main/>}/>
           <Route path='/community/' element={<Community/>}/>
           <Route path='/mypage/' element={<Mypage/>}/>
-          <Route path='/signup/' element={<Signup/>}/>
+          <Route path='/login/' element={<Login/>}/>
         </Routes>
       </BrowserRouter>
   );
