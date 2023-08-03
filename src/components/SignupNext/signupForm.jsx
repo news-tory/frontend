@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import {Wrapper, TitleText, FootButton, SubTitleText, SignupFormStructure, CategoryButton, CategoryWrapper} from "./style.jsx"
-
+import { useSignupContext } from "../signupForm/signupContext.js";
 import newstory from "../../components/header/newstory.png"
 import LoginForm from "../LoginForm/loginForm.jsx";
 
@@ -12,6 +12,7 @@ function SignupNextForm(){
     const navigate = useNavigate();
     const [activeSignupForm, setActiveSignupForm] = useState('signup');
     const [activeButton, setActiveButton] = useState(false);
+    const {nickname, email, password} = useSignupContext();
 
     const category = ['🏈 스포츠','🌎 세계','🎨 예술','🎬 영화','👫 사회','📚 도서','🏢 경영','🖥️ 기술','🧑‍🤝‍🧑 문화'];
 
@@ -27,7 +28,7 @@ function SignupNextForm(){
 
     const onSubmit = async () => {
       try {
-            const response = axios.post(ServerUrl, {
+          const response = axios.post(ServerUrl, {
                 //정보 입력
             });
             console.log(response.data); // 서버의 응답 데이터 확인
@@ -57,7 +58,7 @@ function SignupNextForm(){
       <>
       {activeSignupForm === 'signup' ? (
         <Wrapper>
-          <SignupFormStructure onSubmit={onSubmit}>
+          <SignupFormStructure>
             <TitleText>원하는 기사의 종류를 골라주세요!</TitleText>
             <SubTitleText>선택한 종류의 기사를 추천해드려요</SubTitleText>
               <CategoryWrapper>
@@ -70,8 +71,8 @@ function SignupNextForm(){
               </CategoryWrapper>
               <div>
               <section>
-                  <FootButton>
-                  다음으로
+                  <FootButton onClick = {onSubmit}>
+                    완료
                   </FootButton>
               </section>
               </div>
