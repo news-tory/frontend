@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-const Container = styled.div`
+export const Container = styled.div`
     width: 100%
     box-sizing:border-box;
 `
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
     width: 100%;
     height: 100px;
     display: flex;
@@ -16,7 +16,7 @@ const Wrapper = styled.div`
     border-bottom: solid #4ad395;
 `
 
-const SearchBar = styled.input`
+export const SearchBar = styled.input`
     width: 27rem;
     height: 50px;
     border: 3px solid #4ad395;
@@ -24,8 +24,7 @@ const SearchBar = styled.input`
     border-radius: 10px;
 `
 
-const LogoImage = styled.img`
+export const LogoImage = styled.img`
     height: 30px;
 `
 
-export {Wrapper, SearchBar,Container, LogoImage};

@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import {Wrapper, LoginChangeButton, LoginandSignupWrapper, SignupChangebutton, EmailField, TextField, PasswordField, NicknameField, ErrorMessage, FootButton, FootButtonType, SignupFormStructure, LoginImage, LogoImage} from "./style.jsx"
@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAt,faLock, faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import newstory from "../../components/header/newstory.png"
 import LoginForm from "../LoginForm/loginForm.jsx";
-import SignupNextForm from "../SignupNextForm/signupNextForm.jsx";
+import SignupNextForm from "../SignupNext/signupForm.jsx";
+import SignupContext, { useSignupContext } from "./signupContext.js";
 
 const ServerUrl = 'https://port-0-minibackrepo1-k19y2klk242hfg.sel4.cloudtype.app/members/signup/'
 
@@ -14,6 +15,7 @@ function SignupForm(){
     const navigate = useNavigate();
     const [activeSignupForm, setActiveSignupForm] = useState('signup');
     const [activeNextForm, setActiveNextForm] = useState(false);
+    const SignupContext = createContext();
 
     //정보확인
     const [email,setEmail] = useState('');
@@ -34,17 +36,16 @@ function SignupForm(){
     const [isPasswordConfirm, setIsPasswordConfirm] = useState(false)
 
 
-    const onSubmit = async () => {
-      try {
-            const response = axios.post(ServerUrl, {
-                //정보 입력
-            });
-            console.log(response.data); // 서버의 응답 데이터 확인
-            alert('회원가입이 완료되었습니다! 로그인을 다시 해주세요 :)')
-            navigate('/login')
-      } catch (error) {
-        console.error(error);
-      }
+    const onClickNext = async () => {
+      // ...
+      // Context Provider를 통해 데이터를 전달
+      const dataToPass = {
+        nickname,
+        email,
+        password,
+      };
+      setActiveNextForm(true);
+      setActiveSignupForm('signup2');
     };
 
     const onChangeEmail = useCallback((e) => {
@@ -117,16 +118,15 @@ function SignupForm(){
       setActiveSignupForm('login');
   }
 
-    const onClickNext = () => {
-      setActiveNextForm(true);
-      setActiveSignupForm('signup2');
-    }
+  function useSignupContext() {
+    return useContext(SignupContext);
+  }
   
     return(
-      <>
+      <SignupContext.Provider value = {{nickname, email, password}}>
       {activeSignupForm === 'signup' ? (
         <Wrapper>
-          <SignupFormStructure onSubmit={onSubmit}>
+          <SignupFormStructure>
             <LoginandSignupWrapper>
               <LoginChangeButton onClick = {loginActive}>
                 로그인
@@ -213,7 +213,7 @@ function SignupForm(){
       ): (
         <LoginForm/>
       )}
-    </>
+    </SignupContext.Provider>
     )
 }
 
