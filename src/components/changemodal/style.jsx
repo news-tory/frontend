@@ -32,6 +32,7 @@ export const Image = styled.div`
         margin-right: 10px;
         margin-top: 10px;
         border : 1px solid #4ad395;
+        cursor: pointer;
     }
     .changeimg {
         margin-top: 20px;
@@ -56,6 +57,7 @@ export const Nickname = styled.div`
         width: 60px;
         height: 26px;
         border : 1px solid #4ad395;
+        cursor: pointer;
     }
     #message {
         margin-top: 10px;
@@ -76,6 +78,7 @@ export const Password = styled.div`
         width: 60px;
         height: 26px;
         border : 1px solid #4ad395;
+        cursor: pointer;
     }
     #message {
         font-size: 12px;
@@ -94,6 +97,7 @@ export const Category = styled.div`
         width: 60px;
         height: 25px;
         margin-left: 400px;
+        cursor: pointer;
     }
 `
 
@@ -105,6 +109,7 @@ export const CategoryButton = styled.div`
     height: 25px;
     background-color: ${({ active }) => (active ? '#f2f2f2' : 'transparent')};
     border: 1px solid #4ad395
+    
 
     `
 
@@ -116,4 +121,5 @@ export const CategoryWrapper = styled.div`
     justify-content: left;
     text-align: center;
     padding: 10px 0px 20px 0px;
+    cursor: pointer;
 `
