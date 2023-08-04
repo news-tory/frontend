@@ -1,8 +1,6 @@
 import Header from '../../components/header';
 import Sidebar from '../../components/sidebar';
 import Body from './body';
-
-
 import { Sidebody, Wrapper, BodyWrapper } from "./style";
 
 function Main() {

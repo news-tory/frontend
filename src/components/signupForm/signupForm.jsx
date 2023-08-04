@@ -15,7 +15,6 @@ function SignupForm(){
     const navigate = useNavigate();
     const [activeSignupForm, setActiveSignupForm] = useState('signup');
     const [activeNextForm, setActiveNextForm] = useState(false);
-    const SignupContext = createContext();
 
     //정보확인
     const [email,setEmail] = useState('');
@@ -50,8 +49,9 @@ function SignupForm(){
 
     const onChangeEmail = useCallback((e) => {
         const emailRegex =
-          /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
-        const emailCurrent = e.target.value
+          /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        const emailCurrent = e.target.value;
+        console.log(emailCurrent);
         setEmail(emailCurrent)
     
         if (!emailRegex.test(emailCurrent)) {
@@ -140,8 +140,7 @@ function SignupForm(){
                 <FontAwesomeIcon icon={faAt} style={{color: "#4ad395",}} />
                 <EmailField 
                   text="이메일" 
-                  type="email" 
-                  typeName="email" 
+                  type="email"  
                   placeholder = "이메일"
                   onChange={onChangeEmail}/>
               </TextField>
@@ -153,10 +152,8 @@ function SignupForm(){
                 <FontAwesomeIcon icon={faLock} style={{color: "#4ad395",}} />
                 <PasswordField
                   onChange = {onChangePassword}
-                  passwordText = "비밀번호 (숫자+영문자+특수문자 조합으로 8자리 이상)"
                   placeholder = "비밀번호"
-                  title="비밀번호"
-                  typeTitle="password"/>
+                  title="비밀번호"/>
               </TextField>
               {password.length > 0 && (
                   <ErrorMessage className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</ErrorMessage>
@@ -168,10 +165,8 @@ function SignupForm(){
                 <FontAwesomeIcon icon={faLock} style={{color: "#4ad395",}} />
                 <PasswordField
                   onChange={onChangePasswordConfirm}
-                  passwordText=" "
                   placeholder="비밀번호 확인"
-                  title="비밀번호 확인"
-                  typeTitle="passwordConfirm"/>
+                  title="비밀번호 확인"/>
               </TextField>
               {passwordConfirm.length > 0 && (
                   <ErrorMessage className={`message ${isPasswordConfirm ? 'success' : 'error'}`}>{passwordConfirmMessage}</ErrorMessage>
@@ -184,8 +179,7 @@ function SignupForm(){
                 <NicknameField 
                   onChange={onChangeNickname}
                   placeholder="사용하실 닉네임을 입력해주세요."
-                  title="닉네임 입력"
-                  typeTitle="nickname"/>
+                  title="닉네임 입력"/>
               </TextField>
               
               {nickname.length > 0 && (
