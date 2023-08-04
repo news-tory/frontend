@@ -40,7 +40,7 @@ export const Tologin = styled.div`
 `
 
 export const All = styled.div`
-    padding-left: 40px;  
+    padding-left: 45px;  
     text-align: center;
     img {
         width:100px;
