@@ -2,31 +2,27 @@ import styled from 'styled-components';
 
 export const Sidebar = styled.div`
     width: 200px;
+
+    /* background-color: #aac8a7; */
+
     display: flex;
     /* list-style-type: none; */
     /* margin: 0;  */
     height: 90vh;
     height: 90vh;
+    /* border-right :  solid #aac8a7;
+    border-left :  solid #aac8a7; */
+    /* z-index: 99;  */
     border-right :  solid #4ad395;
-    /* z-index: 99999;  */
+        height : 90vh;
+        margin-bottom: 40px;
+
 
 `
 
 export const Profile = styled.div`
     padding-bottom: 10vh;
-    h4 {
-        margin-bottom:0;
-    }
-    h6 {
-        margin-top:5px;
-    }
-    img {
-        /* margin: 0; */
-    }
-    .change{
-        display: flex;
-        margin-left: 10px;
-    }
+
     .pencil {
         padding-top: 25px;
         padding-left: 5px;
@@ -34,8 +30,17 @@ export const Profile = styled.div`
     }
 `
 
+export const Tologin = styled.div`
+    .tologin {
+    text-decoration-line: none;
+    color: black;
+
+
+    }
+`
+
 export const All = styled.div`
-    padding-left: 50px;  
+    padding-left: 40px;  
     text-align: center;
     img {
         width:100px;
@@ -48,7 +53,7 @@ export const All = styled.div`
     }
     .bottom {
         padding-top:20vh;
-        color: white;
+        color: #4ad395;
         font-weight: lighter;
     }
 `

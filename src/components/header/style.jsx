@@ -3,11 +3,14 @@ import styled from "styled-components";
 export const Container = styled.div`
     width: 100%
     box-sizing:border-box;
+    border-bottom: solid #4ad395;
 `
 
 export const Wrapper = styled.div`
     width: 100%;
-    height: 100px;
+
+    height: 120x;
+
     display: flex;
     justify-content: space-between;
     align-items: center;

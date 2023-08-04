@@ -1,4 +1,4 @@
-import { Sidebar, Profile, All, Modaltoo, Itsmodal, ModalContainer } from "./style";
+import { Sidebar, Profile, All, Modaltoo, Itsmodal, ModalContainer, Tologin } from "./style";
 import { useState, useEffect } from "react";
 import basicimage from "../user.png";
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -14,19 +14,30 @@ const serverApi = axios.create({
     }
 });
 
-const sideApi = async (userkey) => {
+const sideApi = async () => {
 
     let data = [];
-    await serverApi.get(``).then((response) => {
+    await serverApi.get(`https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/articles/nyt/`).then((response) => {
         data = response.data;
-        // console.log(data);
+        console.log(data);
     })
     return [data];
 }
 
 
-function Body({ nickname }) {
+function Body() {
 
+
+    const [info, setInfo] = useState('')
+
+    const getData = async () => {
+        const nowData = await sideApi();
+        setInfo(nowData);
+        console.log(info);
+    }
+
+
+    // 모달창 관리
     let [modal, setModal] = useState(false);
     const openModal = () => {
         setModal(!modal);
@@ -42,30 +53,34 @@ function Body({ nickname }) {
 
 
     const [image, setImage] = useState('');
-    // const [nickname, setNickname] = useState('');
     const [id, setId] = useState('');
 
     const userkey = useParams().userkey;
 
-    // const getData = async () => {
-    //     const nowData = await sideApi(userkey);
-    //     setImage(nowData[0]);
-    //     setNickname(nowData[1]);
-    // }
+    // 로그인 여부
+    const [isloggedin, setIsloggedin] = useState(true)
+
+
 
 
     return (
         <Modaltoo>
-            <Sidebar>
+            <Sidebar className="v-line">
                 <All>
                     <Profile>
                         <img src={basicimage}></img>
-                        <div className="change">
-                            <h4>nickname</h4>
-                            <FontAwesomeIcon
-                                onClick={openModal} className='pencil' icon={faPencil} />
-                        </div>
-                        <h6>id</h6>
+                        {isloggedin ?
+                            <div style={{display:'flex', marginLeft:'10px'}}>
+                                <h4>nickname</h4>
+                                <FontAwesomeIcon
+                                    onClick={openModal} className='pencil' icon={faPencil} />
+
+                            </div> :
+                            <Tologin>
+                                <Link to="/login" className="tologin">
+                                <h5>로그인을 해주세요.</h5>
+                                </Link>
+                            </Tologin>}
                     </Profile>
                     <p><Link to='/' className="noline">
                         Home</Link></p>
@@ -81,7 +96,7 @@ function Body({ nickname }) {
             {modal &&
                 <Itsmodal onClick={closeModal}>
                     <ModalContainer onClick={stopPropagation}>
-                        <Modalpage/>
+                        <Modalpage />
                     </ModalContainer>
                 </Itsmodal>}
         </Modaltoo>

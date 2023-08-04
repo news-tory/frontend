@@ -1,6 +1,8 @@
-import { All } from "./style";
+import { All, Image, Nickname } from "./style";
 import { useState, useRef } from "react";
 import axios from "axios";
+import basicimage from "../user.png";
+
 
 const Modalpage = () => {
     const [nickname, setNickname] = useState('')
@@ -27,10 +29,11 @@ const Modalpage = () => {
             return;
         }
         URL.revokeObjectURL(fileImage);
-        setFileImage(null);
+        setFileImage('');
         if (fileInputRef.current) {
             fileInputRef.current.value = '';
-        }    };
+        }
+    };
 
     // 이미지 서버로 전송?
     const UploadFile = async (e) => {
@@ -44,40 +47,66 @@ const Modalpage = () => {
         try {
             const response = await axios.post('/upload', formData, {
                 headers: {
-                    'Content-Type' : 'multipart/form-data',
+                    'Content-Type': 'multipart/form-data',
                 },
             });
             console.log('이미지 업로드 성공:', response.data);
-        } catch(error) {
-        console.error('이미지 업로드 실패:', error);
-    }
-};
+        } catch (error) {
+            console.error('이미지 업로드 실패:', error);
+        }
+    };
     return (
         <All>
-            <div>
-                <h3>프로필 변경</h3>
-                <h4>프로필 이미지 변경</h4>
-                <img
-                    className="viewimage"
-                    src={fileImage}
-                    alt="이미지 미리보기" />
-                <input
-                    className="changeimg"
-                    type="file"
-                    accept="image/*"
-                    onChange={saveFileImage} />
-                <button
-                    onClick={() => deleteFileImage()}> 삭제 </button>
-                <button
-                    onClick={UploadFile}>변경</button>
-                <h4>닉네임 변경</h4>
-                <input
-                    type="text"
-                    value={nickname}
-                    onChange={handleChange} />
-                <button onClick={handleSubmit}>변경</button>
+            <div className="left-pane">
+                <h3 className="title">프로필 설정</h3>
+                <Image>
 
+                    <h4 className="smalltitle">프로필 이미지 변경</h4>
+                    {fileImage ?
+                        <img
+                            className="viewimage"
+                            src={fileImage}
+                        // alt="이미지 미리보기" 
+                        />
+                        : <img
+                            className="viewimage"
+                            src={basicimage} />
+                    }
+                    {!fileImage &&
+                        <input
+                            className="changeimg"
+                            type="file"
+                            accept="image/*"
+                            onChange={saveFileImage} />
+                    }
+                    <div className="buttons">
+                        <button className="button"
+                            onClick={() => deleteFileImage()}> 삭제 </button>
+                        <button className="button"
+                            onClick={UploadFile}>변경</button>
+                    </div>
+                </Image>
+                <Nickname>
+                    <h4 className="smalltitle">닉네임 변경</h4>
+                    <input
+                        type="text"
+                        className="input"
+                        value={nickname}
+                        onChange={handleChange} />
+                    <button onClick={handleSubmit}>변경</button>
+                </Nickname>
             </div>
+            <div className="right-pane">
+                <Image>
+                    <h4 className="smalltitle">프로필 이미지 변경</h4>
+                    
+                </Image>
+                <Nickname>
+                    <h4 className="smalltitle">닉네임 변경</h4>
+                    
+                </Nickname>
+            </div>
+
         </All>
     )
 }
