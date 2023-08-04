@@ -14,3 +14,11 @@ export const Wrapper = styled.div`
 export const Sidebody = styled.div`
     display: flex;
 `
+
+export const BodyWrapper = styled.div`
+    width: 85%;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    `

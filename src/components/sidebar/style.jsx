@@ -2,7 +2,9 @@ import styled from 'styled-components';
 
 export const Sidebar = styled.div`
     width: 200px;
+
     /* background-color: #aac8a7; */
+
     display: flex;
     /* list-style-type: none; */
     /* margin: 0;  */
@@ -14,6 +16,7 @@ export const Sidebar = styled.div`
     border-right :  solid #4ad395;
         height : 90vh;
         margin-bottom: 40px;
+
 
 `
 
@@ -31,6 +34,8 @@ export const Tologin = styled.div`
     .tologin {
     text-decoration-line: none;
     color: black;
+
+
     }
 `
 
@@ -65,7 +70,7 @@ export const Itsmodal = styled.div`
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    /* z-index: 9999;  */
+    z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center; 

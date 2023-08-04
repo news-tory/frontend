@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'TheJamsil3Regular';
+    src: url('./fonts/The_Jamsil_TTF/The%20Jamsil%203%20Regular.ttf') format('truetype');
+}
+
+body {
+    font-family: "TheJamsil3Regular";
+  }

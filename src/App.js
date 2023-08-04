@@ -5,7 +5,7 @@ import Community from "./pages/community"
 import Mypage from "./pages/mypage"
 import Modal from "./components/changemodal"
 import Login from "./pages/login"
-
+import './App.css'
 
 
 

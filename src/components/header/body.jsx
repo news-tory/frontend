@@ -28,6 +28,9 @@ function Body() {
     }
   }, [searchTerm]);
 
+  const onClickLogin = () => {
+    navigate("/login")
+  }
 
     return (
       <Container>
