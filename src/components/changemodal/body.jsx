@@ -97,42 +97,13 @@ const Modalpage = () => {
                 </Nickname>
             </div>
             <div className="right-pane">
-                <h3 className="title"> </h3>
                 <Image>
-
                     <h4 className="smalltitle">프로필 이미지 변경</h4>
-                    {fileImage ?
-                        <img
-                            className="viewimage"
-                            src={fileImage}
-                        // alt="이미지 미리보기" 
-                        />
-                        : <img
-                            className="viewimage"
-                            src={basicimage} />
-                    }
-                    {!fileImage &&
-                        <input
-                            className="changeimg"
-                            type="file"
-                            accept="image/*"
-                            onChange={saveFileImage} />
-                    }
-                    <div className="buttons">
-                        <button className="button"
-                            onClick={() => deleteFileImage()}> 삭제 </button>
-                        <button className="button"
-                            onClick={UploadFile}>변경</button>
-                    </div>
+                    
                 </Image>
                 <Nickname>
                     <h4 className="smalltitle">닉네임 변경</h4>
-                    <input
-                        type="text"
-                        className="input"
-                        value={nickname}
-                        onChange={handleChange} />
-                    <button onClick={handleSubmit}>변경</button>
+                    
                 </Nickname>
             </div>
 

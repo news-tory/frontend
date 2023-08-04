@@ -1,4 +1,4 @@
-import { Sidebar, Profile, All, Modaltoo, Itsmodal, ModalContainer } from "./style";
+import { Sidebar, Profile, All, Modaltoo, Itsmodal, ModalContainer, Tologin } from "./style";
 import { useState, useEffect } from "react";
 import basicimage from "../user.png";
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -57,6 +57,9 @@ function Body() {
 
     const userkey = useParams().userkey;
 
+    // 로그인 여부
+    const [isloggedin, setIsloggedin] = useState(true)
+
 
 
 
@@ -66,12 +69,18 @@ function Body() {
                 <All>
                     <Profile>
                         <img src={basicimage}></img>
-                        <div className="change">
-                            <h4>nickname</h4>
-                            <FontAwesomeIcon
-                                onClick={openModal} className='pencil' icon={faPencil} />
-                        </div>
-                        <h6>id</h6>
+                        {isloggedin ?
+                            <div style={{display:'flex', marginLeft:'10px'}}>
+                                <h4>nickname</h4>
+                                <FontAwesomeIcon
+                                    onClick={openModal} className='pencil' icon={faPencil} />
+
+                            </div> :
+                            <Tologin>
+                                <Link to="/login" className="tologin">
+                                <h5>로그인을 해주세요.</h5>
+                                </Link>
+                            </Tologin>}
                     </Profile>
                     <p><Link to='/' className="noline">
                         Home</Link></p>
@@ -80,9 +89,6 @@ function Body() {
                     <p><Link to='mypage' className="noline">
                         MyPage</Link></p>
                     <h5 className="bottom">NewStory</h5>
-                    <Link to='/login'>
-                        <div>로그인/회원가입</div>
-                    </Link>
 
                 </All>
 
