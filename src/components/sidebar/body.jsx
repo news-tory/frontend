@@ -8,34 +8,7 @@ import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import Modalpage from '../changemodal';
 
 
-const serverApi = axios.create({
-    headers: {
-        "Content-Type": "application/json",
-    }
-});
-
-const sideApi = async () => {
-
-    let data = [];
-    await serverApi.get(`https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/articles/nyt/`).then((response) => {
-        data = response.data;
-        console.log(data);
-    })
-    return [data];
-}
-
-
 function Body() {
-
-
-    const [info, setInfo] = useState('')
-
-    const getData = async () => {
-        const nowData = await sideApi();
-        setInfo(nowData);
-        console.log(info);
-    }
-
 
     // 모달창 관리
     let [modal, setModal] = useState(false);
@@ -50,8 +23,6 @@ function Body() {
     };
 
 
-
-
     const [image, setImage] = useState('');
     const [id, setId] = useState('');
 
@@ -59,8 +30,6 @@ function Body() {
 
     // 로그인 여부
     const [isloggedin, setIsloggedin] = useState(true)
-
-
 
 
     return (
