@@ -6,9 +6,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAt, faLock } from "@fortawesome/free-solid-svg-icons";
 import SignupForm from "../signupForm/signupForm.jsx";
 
-const ServerUrl = 'https://port-0-minibackrepo1-k19y2klk242hfg.sel4.cloudtype.app/members/signup/';
+
 
 function LoginForm() {
+    const ServerUrl = 'https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/auth/';
     const navigate = useNavigate();
     const [activeSignupForm, setActiveSignupForm] = useState('login');
     // 정보확인
@@ -24,7 +25,7 @@ function LoginForm() {
     const onSubmit = async () => {
         try {
             const response = await axios.post(ServerUrl, {
-                // 정보 입력
+                
             });
             console.log(response.data); // 서버의 응답 데이터 확인
             alert('환영합니다');

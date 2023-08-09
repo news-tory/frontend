@@ -63,7 +63,6 @@ export const Modaltoo = styled.div`
 
 export const Itsmodal = styled.div`
     padding-left: 100px;
-    
     position: fixed;
     top: 0;
     left: 0;

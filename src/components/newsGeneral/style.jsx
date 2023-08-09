@@ -101,3 +101,31 @@ export const ListWrapper = styled.div`
     width: 100%;
     position: relative;
     `
+
+//모달창
+export const ModalBackground = styled.div`
+    padding-left: 100px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    margin-left: 9px;
+    padding: 0;
+`
+
+export const ModalContainer = styled.div`
+    background-color: #fff;
+    border-radius: 10px;
+    margin: 100px 0px 100px 0px;
+    width: 1000px;
+    height: 800px;
+    display: flex;
+    justify-content: center;
+    z-index: 11;
+`

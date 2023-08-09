@@ -19,13 +19,23 @@ export const Wrapper = styled.div`
     border-bottom: solid #4ad395;
 `
 
-export const SearchBar = styled.input`
+export const SearchBarWrapper = styled.div`
     width: 27rem;
     height: 50px;
     border: 3px solid #4ad395;
     padding-left: 20px;
     border-radius: 10px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
 `
+export const SearchBar = styled.input`
+    width: 24rem;
+    height: 40px;
+    align-items: center;
+    border: none;
+    `
+
 
 export const LogoImage = styled.img`
     height: 30px;

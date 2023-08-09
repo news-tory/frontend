@@ -1,7 +1,19 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
+import Newsview from '../newview/newsview'
 import styled from 'styled-components'
-import { ListWrapper, AllNews, NewsImage, NewsTitle, FavNews,SlideSection ,CategoryButton, Wrapper, NewsCategory, NewsContainer, NewsListContainer, SlideContainer, PrevButton, NextButton } from "./style";
+import {AllNews,
+        NewsImage,
+        NewsTitle,
+        CategoryButton,
+        NewsCategory,
+        NewsContainer,
+        NewsListContainer,
+        SlideContainer,
+        PrevButton,
+        NextButton,
+        ModalBackground,
+        ModalContainer } from "./style";
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icons";
@@ -22,7 +34,9 @@ function NewsGeneral() {
                         {문화:'Culture'}];
     const [selectedCategory, setSelectedCategory] = useState([]);
     const [newslist, setNewslist] = useState([]);
+    const [selectedNews,setSelectedNews] = useState([]);
     const navigate = useNavigate();
+    
 
     useEffect(() => {
         fetchnews();
@@ -82,7 +96,21 @@ function NewsGeneral() {
         setNewsLen(filteredNews.length);
     }, [filteredNews]);
     
+    let [modal, setModal] = useState(false);
+    const changeModal = () => {
+        setModal(!modal);
+    };
+
+    const stopPropagation = (e) => {
+        e.stopPropagation();
+    };
+
+    const onClickNews = (news) => {
+        setSelectedNews(news);
+        changeModal();
+    }
     return (
+        <>
         <AllNews>
         <NewsCategory>
         {category.map((categoryObject) => {
@@ -101,7 +129,7 @@ function NewsGeneral() {
             <PrevButton onClick={PrevSlide} icon={faCircleChevronLeft} style={{color: "#4ad395",}} />
             <SlideContainer currentSlide={currentSlide} ref={SlideRef} slides={filteredNews.length}>
             {filteredNews.map((news, index) => (
-                <NewsContainer key={index}>
+                <NewsContainer key={index} onClick={() => onClickNews(news)}>
                 <NewsImage src={news.img_url}></NewsImage>
                 <NewsTitle>{news.title}</NewsTitle>
                 </NewsContainer>
@@ -110,6 +138,14 @@ function NewsGeneral() {
             <NextButton onClick={NextSlide} icon={faCircleChevronRight} style={{color: "#4ad395",}} />
         </NewsListContainer>
     </AllNews>
+    { modal &&
+        <ModalBackground onClick={changeModal}>
+            <ModalContainer onClick={stopPropagation}>
+                <Newsview news = {selectedNews}/>
+            </ModalContainer>
+        </ModalBackground>
+    }
+    </>
     )
     }
 

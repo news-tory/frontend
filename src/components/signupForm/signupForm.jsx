@@ -9,9 +9,9 @@ import LoginForm from "../LoginForm/loginForm.jsx";
 import SignupNextForm from "../SignupNext/signupForm.jsx";
 import SignupContext, { useSignupContext } from "./signupContext.js";
 
-const ServerUrl = 'https://port-0-minibackrepo1-k19y2klk242hfg.sel4.cloudtype.app/members/signup/'
 
 function SignupForm(){
+    const ServerUrl = 'https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/register/';
     const navigate = useNavigate();
     const [activeSignupForm, setActiveSignupForm] = useState('signup');
     const [activeNextForm, setActiveNextForm] = useState(false);
@@ -38,7 +38,7 @@ function SignupForm(){
     const onClickNext = async () => {
       // ...
       // Context Provider를 통해 데이터를 전달
-      const dataToPass = {
+      const signupData = {
         nickname,
         email,
         password,
@@ -51,7 +51,6 @@ function SignupForm(){
         const emailRegex =
           /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
         const emailCurrent = e.target.value;
-        console.log(emailCurrent);
         setEmail(emailCurrent)
     
         if (!emailRegex.test(emailCurrent)) {
