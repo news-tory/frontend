@@ -4,14 +4,14 @@ import axios from 'axios';
 import {Wrapper, LoginChangeButton, LoginandSignupWrapper, SignupChangebutton, EmailField, TextField, PasswordField, NicknameField, ErrorMessage, FootButton, FootButtonType, SignupFormStructure, LoginImage, LogoImage} from "./style.jsx"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAt,faLock, faCircleUser } from "@fortawesome/free-solid-svg-icons";
-import newstory from "../../components/header/newstory.png"
+import newstory from "../../images/newstory.png"
 import LoginForm from "../LoginForm/loginForm.jsx";
-import SignupNextForm from "../SignupNext/signupForm.jsx";
+import SignupNextForm from "../SignupNext/signupNextForm.jsx";
 import SignupContext, { useSignupContext } from "./signupContext.js";
 
-const ServerUrl = 'https://port-0-minibackrepo1-k19y2klk242hfg.sel4.cloudtype.app/members/signup/'
 
 function SignupForm(){
+    const ServerUrl = 'https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/register/';
     const navigate = useNavigate();
     const [activeSignupForm, setActiveSignupForm] = useState('signup');
     const [activeNextForm, setActiveNextForm] = useState(false);
@@ -38,7 +38,7 @@ function SignupForm(){
     const onClickNext = async () => {
       // ...
       // Context Provider를 통해 데이터를 전달
-      const dataToPass = {
+      const signupData = {
         nickname,
         email,
         password,
@@ -51,7 +51,6 @@ function SignupForm(){
         const emailRegex =
           /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
         const emailCurrent = e.target.value;
-        console.log(emailCurrent);
         setEmail(emailCurrent)
     
         if (!emailRegex.test(emailCurrent)) {
@@ -120,6 +119,10 @@ function SignupForm(){
 
   function useSignupContext() {
     return useContext(SignupContext);
+  }
+
+  const updateActiveNextForm = (value) => {
+    setActiveNextForm(value);
   }
   
     return(
@@ -203,7 +206,7 @@ function SignupForm(){
         </SignupFormStructure>
     </Wrapper>
       ): activeNextForm ? (
-        <SignupNextForm/>
+        <SignupNextForm updateActiveNextForm = {updateActiveNextForm}/>
       ): (
         <LoginForm/>
       )}

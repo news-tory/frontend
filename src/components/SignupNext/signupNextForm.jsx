@@ -3,18 +3,18 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import {Wrapper, TitleText, FootButton, SubTitleText, SignupFormStructure, CategoryButton, CategoryWrapper} from "./style.jsx"
 import { useSignupContext } from "../signupForm/signupContext.js";
-import newstory from "../../components/header/newstory.png"
+import newstory from "../../images/newstory.png"
 import LoginForm from "../LoginForm/loginForm.jsx";
 
-const ServerUrl = 'https://port-0-minibackrepo1-k19y2klk242hfg.sel4.cloudtype.app/members/signup/'
+const ServerUrl = 'https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/register/';
 
-function SignupNextForm(){
+function SignupNextForm({updateActiveNextForm}){
     const navigate = useNavigate();
     const [activeSignupForm, setActiveSignupForm] = useState('signup');
     const [activeButton, setActiveButton] = useState(false);
     const {nickname, email, password} = useSignupContext();
 
-    const category = ['🏈 스포츠','🌎 세계','🎨 예술','🎬 영화','👫 사회','📚 도서','🏢 경영','🖥️ 기술','🧑‍🤝‍🧑 문화'];
+    const category = ['스포츠','세계','예술','영화','사회','도서','경영','기술','문화'];
 
     //정보확인
     const [favorite,setFavorite] = useState([]);
@@ -29,15 +29,27 @@ function SignupNextForm(){
     const onSubmit = async () => {
       try {
           const response = axios.post(ServerUrl, {
-                //정보 입력
+              nickname: nickname,
+              email: email,
+              password: password,
+              sport: favorite.includes('스포츠'),
+              world: favorite.includes('세계'),
+              art: favorite.includes('예술'),
+              film: favorite.includes('영화'),
+              society: favorite.includes('사회'),
+              books: favorite.includes('도서'),
+              business: favorite.includes('경영'),
+              tech: favorite.includes('기술'),
+              culture: favorite.includes('문화')
             });
             console.log(response.data); // 서버의 응답 데이터 확인
             alert('회원가입이 완료되었습니다! 로그인을 다시 해주세요 :)')
-            navigate('/login')
+            updateActiveNextForm(false);
       } catch (error) {
         console.error(error);
       }
     };
+
 
     const onClickFav = useCallback(
       (selectedCategory) => {

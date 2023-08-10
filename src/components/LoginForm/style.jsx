@@ -93,6 +93,7 @@ export const FootButton = styled.button`
     border: none;
     border-radius: 10px;
     background-color: ${({ disabled }) => (disabled ? '#65bf97' : '#4AD395')};
+    cursor: pointer;
 `
 
 export const FootButtonType = styled.button`

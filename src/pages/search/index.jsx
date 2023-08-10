@@ -2,7 +2,7 @@ import Sidebar from '../../components/sidebar';
 import Body from './body';
 import { Sidebody, Wrapper, BodyWrapper } from "./style";
 
-function Main() {
+function Search() {
     return (
         <Wrapper>
             <Sidebody>
@@ -16,4 +16,4 @@ function Main() {
     )
 }
 
-export default Main;
+export default Search;

@@ -6,9 +6,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAt, faLock } from "@fortawesome/free-solid-svg-icons";
 import SignupForm from "../signupForm/signupForm.jsx";
 
-const ServerUrl = 'https://port-0-minibackrepo1-k19y2klk242hfg.sel4.cloudtype.app/members/signup/';
+
 
 function LoginForm() {
+    const ServerUrl = 'https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/auth/';
     const navigate = useNavigate();
     const [activeSignupForm, setActiveSignupForm] = useState('login');
     // 정보확인
@@ -24,12 +25,14 @@ function LoginForm() {
     const onSubmit = async () => {
         try {
             const response = await axios.post(ServerUrl, {
-                // 정보 입력
+                email: email,
+                password: password
             });
             console.log(response.data); // 서버의 응답 데이터 확인
             alert('환영합니다');
             navigate('/');
         } catch (error) {
+            alert('회원 정보가 일치하지 않습니다.')
             console.error(error);
         }
     };
@@ -63,7 +66,7 @@ function LoginForm() {
             <SignupForm/>
         ):(
             <Wrapper>
-                <LoginFormStructure onSubmit={onSubmit}>
+                <LoginFormStructure>
                     <LoginandSignupWrapper>
                         <LoginChangeButton>
                             로그인
@@ -105,8 +108,8 @@ function LoginForm() {
 
                     <div>
                         <section>
-                            <FootButton type="submit" footButtonType={FootButtonType.ACTIVATION}>
-                                다음
+                            <FootButton type="submit" footButtonType={FootButtonType.ACTIVATION} onClick = {onSubmit}>
+                                로그인
                             </FootButton>
                         </section>
                     </div>

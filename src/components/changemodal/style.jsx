@@ -61,6 +61,7 @@ export const Image = styled.div`
         border-radius: 50%;
         margin-left: 50px;
     }
+    justify-content: center;
 `
 
 export const Nickname = styled.div`

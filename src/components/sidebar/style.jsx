@@ -14,8 +14,9 @@ export const Sidebar = styled.div`
     border-left :  solid #aac8a7; */
     /* z-index: 99;  */
     border-right :  solid #4ad395;
-        height : 90vh;
-        margin-bottom: 40px;
+    height : 100vh;
+    margin-bottom: 40px;
+    position: fixed;
 
 
 `
@@ -63,7 +64,6 @@ export const Modaltoo = styled.div`
 
 export const Itsmodal = styled.div`
     padding-left: 100px;
-    
     position: fixed;
     top: 0;
     left: 0;

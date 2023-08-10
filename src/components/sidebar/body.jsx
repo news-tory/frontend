@@ -6,7 +6,7 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import Modalpage from '../changemodal';
-
+import logo from './newstory.png'
 
 function Body() {
 
