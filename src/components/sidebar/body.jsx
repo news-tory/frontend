@@ -66,6 +66,7 @@ function Body() {
                 <Itsmodal onClick={closeModal}>
                     <ModalContainer onClick={stopPropagation}>
                         <Modalpage />
+                        
                     </ModalContainer>
                 </Itsmodal>}
         </Modaltoo>

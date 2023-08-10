@@ -79,7 +79,7 @@ export const Itsmodal = styled.div`
 
 export const ModalContainer = styled.div`
     background-color: #fff;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     padding: 20px;
     /* pointer-events: none;  */
 

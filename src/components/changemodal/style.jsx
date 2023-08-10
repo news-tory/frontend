@@ -8,10 +8,10 @@ export const Every = styled.div`
 `
 
 export const All = styled.div`
-    display:flex;
+    /* display:flex; */
     border: solid #4ad395;
     /*margin-left: 300px;*/
-    width: 1000px;
+    width: 500px;
     height: 500px;
     .left-pane{
         width: 500px;
@@ -20,23 +20,41 @@ export const All = styled.div`
 `;
 
 
-export const Image = styled.div`
-    height: 250px;
-    padding-top: 20px;
-    padding-left: 30px;
-    flex-direction: column;
-    display: grid;
-    .button {
-        width: 100px;
-        height:  25px;
-        margin-right: 10px;
-        margin-top: 10px;
-        border : 1px solid #4ad395;
+export const Profile = styled.div`
+    /* display: flex; */
+    .pencil {
+        padding-top: 25px;
+        padding-left: 5px;
         cursor: pointer;
+        align-items: right;
+        font-size: 15px;
     }
-    .changeimg {
-        margin-top: 20px;
+    .viewimage {
+        height: 100px;
+        width:100px;
+        border-radius: 50%;
+        margin-left: 200px;
+        margin-top: 30px;
     }
+    h4 {
+        margin-left: 210px;
+    }
+    p {
+        font-size: 12px;
+        text-align: center;
+        cursor: pointer;
+
+    }
+
+`
+
+
+export const Image = styled.div`
+    /* height: 250px; */
+    /* padding-top: 20px;
+    padding-left: 30px; */
+    /* flex-direction: column; */
+    /* display: grid; */
     .viewimage {
         height: 100px;
         width:100px;
@@ -90,15 +108,14 @@ export const Password = styled.div`
 `
 
 export const Category = styled.div`
-    padding-top: 20px;
-    /* padding-left: 90px; */
-    button {
-        border : 1px solid #4ad395;
-        width: 60px;
-        height: 25px;
-        margin-left: 400px;
+    padding-left: 20px;
+    padding-top: 30px;
+    p {
+        font-size: 12px;
         cursor: pointer;
+
     }
+
 `
 
 export const CategoryButton = styled.div`
@@ -123,3 +140,28 @@ export const CategoryWrapper = styled.div`
     padding: 10px 0px 20px 0px;
     cursor: pointer;
 `
+
+export const Itsmodal = styled.div`
+    padding-left: 100px;
+    
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    margin-left: 9px;
+`
+
+export const ModalContainer = styled.div`
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 150px;
+    /* pointer-events: none;  */
+
+`;
