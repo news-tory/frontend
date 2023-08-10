@@ -4,6 +4,8 @@ import Newsview from '../newview/newsview'
 import styled from 'styled-components'
 import {AllNews,
         SearchBarWrapper,
+        SearchBar,
+        SearchBarInput,
         NewsImage,
         NewsTitle,
         CategoryButton,
@@ -14,10 +16,12 @@ import {AllNews,
         PrevButton,
         NextButton,
         ModalBackground,
-        ModalContainer } from "./style";
+        ModalContainer,
+        SearchIcon,
+        CategoryWrapper} from "./style";
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleChevronRight, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { faCircleChevronRight, faCircleChevronLeft, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 function NewsGeneral() {
     const serverUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/articles/nyt/"
@@ -62,7 +66,7 @@ function NewsGeneral() {
             setCurrentSlide(currentSlide + 2);
         }
     }
-
+    
     const PrevSlide = () => {
         if (currentSlide <= 0){
             setCurrentSlide(newsLen - 2);
@@ -70,12 +74,13 @@ function NewsGeneral() {
             setCurrentSlide(currentSlide - 2);
         }
     }
+    
 
     useEffect(() => {
         console.log(currentSlide);
         console.log(SlideRef.current);
         SlideRef.current.style.transition = 'all 0.5s ease-in-out';
-        SlideRef.current.style.transform = `translateX(-${currentSlide * (100 / filteredNews.length)}%)`;
+        SlideRef.current.style.transform = `translateX(-${currentSlide * 10}%)`;
     },[currentSlide]);
 
 
@@ -113,7 +118,13 @@ function NewsGeneral() {
     return (
         <>
         <AllNews>
-            <SearchBarWrapper>qgewgeewggw</SearchBarWrapper>
+            <SearchBarWrapper>
+                <SearchBar>
+                <SearchIcon icon={faMagnifyingGlass} style={{color: "#4ad395",}} />
+                <SearchBarInput placeholder='보고 싶은 기사를 검색하세요'></SearchBarInput>
+                </SearchBar>
+            </SearchBarWrapper>
+        <CategoryWrapper>
         <NewsCategory>
         {category.map((categoryObject) => {
             const key = Object.keys(categoryObject)[0];
@@ -127,17 +138,14 @@ function NewsGeneral() {
             );
         })}
         </NewsCategory>
+        </CategoryWrapper>
         <NewsListContainer>
-            <PrevButton onClick={PrevSlide} icon={faCircleChevronLeft} style={{color: "#4ad395",}} />
-            <SlideContainer currentSlide={currentSlide} ref={SlideRef} slides={filteredNews.length}>
             {filteredNews.map((news, index) => (
                 <NewsContainer key={index} onClick={() => onClickNews(news)}>
                 <NewsImage src={news.img_url}></NewsImage>
                 <NewsTitle>{news.title}</NewsTitle>
                 </NewsContainer>
             ))}
-            </SlideContainer>
-            <NextButton onClick={NextSlide} icon={faCircleChevronRight} style={{color: "#4ad395",}} />
         </NewsListContainer>
     </AllNews>
     { modal &&

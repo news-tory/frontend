@@ -2,69 +2,107 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const AllNews = styled.div`
-display: flex;
-flex-direction: column;
-height: 100%;
-padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 20px;
 `
-
 export const SearchBarWrapper = styled.div`
     width: 100%;
-    height: 100px;
-    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 
-export const NewsCategory = styled.div`
+export const SearchBar = styled.div`
+    display: flex;
+    width: 35rem;
+    height: 50px;
+    margin: 40px 40px 0px 40px;
+    align-items: center;
+    border: 1px solid #4ad395;
+    border-radius: 10px;
+`
+
+export const SearchBarInput = styled.input`
+    width: 25rem;
+    height: 40px;
+    border: none;
+    margin-left: 20px;
+`
+export const CategoryWrapper = styled.div`
     width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    `
+export const NewsCategory = styled.div`
+    width: 50rem;
     height: 50px;
     border: none;
     display: flex;
     padding-left: 20px;
+    justify-content: center;
+    gap: 1px;
     `
 
 export const CategoryButton = styled.div`
-    width: 60px;
+    display: flex;
+    justify-content: center;
     height: 15px;
     border: 2px solid #4AD395;
-    border-radius: 20px;
+    border-radius: 10px;
     padding : 10px;
     text-align: center;
-    margin: 10px;
-    export const SearchBat = styled.div`
-    
-    `
+    font-size: 15px;
+    margin: 5px;
     cursor: pointer;
     background-color: ${({ active }) => (active ? '#f2f2f2' : 'transparent')};
     `
 
+// export const NewsListContainer = styled.div`
+//         display: flex;
+//         width: 100%;
+//         overflow:hidden;
+//         border-radius: 20px;
+//         `
 export const NewsListContainer = styled.div`
-        display: flex;
-        width: 100%;
-        overflow:hidden;
-        border-radius: 20px;
-        `
+    width: 100%;
+`;
+
+export const SlideContainer = styled.div`
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);  // 2열 생성
+    width: calc(${props => props.slides} * 25%); // 전체 슬라이드 수에 따른 너비 설정
+    transform: translateX(0); // 변경된 부분
+    transition: all 0.5s ease-in-out;
+`;
+
+
 export const NewsContainer = styled.div`
-    width: 100%; // SlideContainer의 너비의 일부로 설정합니다.
+    width: calc(50% - 20px);  // 변경된 부분: 전체의 50%에서 마진값(예: 20px)을 뺀 크기로 설정해본다.
     height: 300px;
     display: flex;
     flex-direction: column;
-    margin: 15px;
     border: 2px solid #4ad395;
     border-radius: 20px;
     cursor: pointer;
+    margin: 10px;  // 변경된 부분: 아이템 간격을 주기 위한 마진값 설정
     &:hover {
-        background-color: #f2f2f2; // 원하는 색상으로 변경하세요
+        background-color: #f2f2f2;
     }
-    `
+`;
 
-export const SlideContainer = styled.div`
-    display: flex;
-    width: calc(${props => props.slides * 100}%); // 버튼들의 너비를 고려하여 너비를 조절합니다.
-    transform: translateX(0); // 변경된 부분
-    transition: all 0.5s ease-in-out;
-    margin-left: 20px;
-    position: relative;
-`
+
+// export const SlideContainer = styled.div`
+//     display: flex;
+//     width: calc(${props => props.slides * 100}%); // 버튼들의 너비를 고려하여 너비를 조절합니다.
+//     transform: translateX(0); // 변경된 부분
+//     transition: all 0.5s ease-in-out;
+//     margin-left: 20px;
+//     position: relative;
+// `
 
 export const PrevButton = styled(FontAwesomeIcon)`
     position: absolute;
@@ -84,6 +122,10 @@ export const NextButton = styled(FontAwesomeIcon)`
     z-index:1;
     transform: translateY(-50%);
     cursor: pointer;
+    `
+export const SearchIcon = styled(FontAwesomeIcon)`
+    font-size: 30px;
+    margin-left: 15px;
     `
 
 export const NewsImage = styled.img`
