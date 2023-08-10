@@ -23,12 +23,17 @@ export const Sidebar = styled.div`
 
 export const Profile = styled.div`
     padding-bottom: 10vh;
+    display: flex;
 
     .pencil {
-        padding-top: 25px;
+        padding-top: 120px;
         padding-left: 5px;
         cursor: pointer;
     }
+    h4 {
+        /* padding-left: 30px; */
+        padding-top: 100px;
+        text-align: right;    }
 `
 
 export const Tologin = styled.div`
@@ -41,12 +46,13 @@ export const Tologin = styled.div`
 `
 
 export const All = styled.div`
-    padding-left: 45px;  
+    padding-left: 25px;  
     text-align: center;
     img {
-        width:100px;
-        padding-top: 60px;
+        width:30px;
+        padding-top: 100px;
         border-radius: 30%;
+        padding-left: 10px;
     }
     .noline {
         text-decoration: none;
