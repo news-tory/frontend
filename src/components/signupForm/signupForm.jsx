@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAt,faLock, faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import newstory from "../../components/header/newstory.png"
 import LoginForm from "../LoginForm/loginForm.jsx";
-import SignupNextForm from "../SignupNext/signupForm.jsx";
+import SignupNextForm from "../SignupNext/signupNextForm.jsx";
 import SignupContext, { useSignupContext } from "./signupContext.js";
 
 
@@ -120,6 +120,10 @@ function SignupForm(){
   function useSignupContext() {
     return useContext(SignupContext);
   }
+
+  const updateActiveNextForm = (value) => {
+    setActiveNextForm(value);
+  }
   
     return(
       <SignupContext.Provider value = {{nickname, email, password}}>
@@ -202,7 +206,7 @@ function SignupForm(){
         </SignupFormStructure>
     </Wrapper>
       ): activeNextForm ? (
-        <SignupNextForm/>
+        <SignupNextForm updateActiveNextForm = {updateActiveNextForm}/>
       ): (
         <LoginForm/>
       )}

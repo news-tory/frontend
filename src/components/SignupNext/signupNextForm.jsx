@@ -8,7 +8,7 @@ import LoginForm from "../LoginForm/loginForm.jsx";
 
 const ServerUrl = 'https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/register/';
 
-function SignupNextForm(){
+function SignupNextForm({updateActiveNextForm}){
     const navigate = useNavigate();
     const [activeSignupForm, setActiveSignupForm] = useState('signup');
     const [activeButton, setActiveButton] = useState(false);
@@ -44,11 +44,12 @@ function SignupNextForm(){
             });
             console.log(response.data); // 서버의 응답 데이터 확인
             alert('회원가입이 완료되었습니다! 로그인을 다시 해주세요 :)')
-            navigate('/login')
+            updateActiveNextForm(false);
       } catch (error) {
         console.error(error);
       }
     };
+
 
     const onClickFav = useCallback(
       (selectedCategory) => {
