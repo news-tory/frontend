@@ -4,8 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 export const AllNews = styled.div`
     display: flex;
     flex-direction: column;
+    width: 100%
     height: 100%;
     padding: 20px;
+    margin-left: 200px;
 `
 export const SearchBarWrapper = styled.div`
     width: 100%;
@@ -25,7 +27,7 @@ export const SearchBar = styled.div`
 `
 
 export const SearchBarInput = styled.input`
-    width: 25rem;
+    width: 30rem;
     height: 40px;
     border: none;
     margin-left: 20px;
@@ -60,14 +62,12 @@ export const CategoryButton = styled.div`
     background-color: ${({ active }) => (active ? '#f2f2f2' : 'transparent')};
     `
 
-// export const NewsListContainer = styled.div`
-//         display: flex;
-//         width: 100%;
-//         overflow:hidden;
-//         border-radius: 20px;
-//         `
 export const NewsListContainer = styled.div`
     width: 100%;
+    margin: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 `;
 
 export const SlideContainer = styled.div`
@@ -81,14 +81,14 @@ export const SlideContainer = styled.div`
 
 
 export const NewsContainer = styled.div`
-    width: calc(50% - 20px);  // 변경된 부분: 전체의 50%에서 마진값(예: 20px)을 뺀 크기로 설정해본다.
+    width: 300px;  // 변경된 부분: 전체의 50%에서 마진값(예: 20px)을 뺀 크기로 설정해본다.
     height: 300px;
     display: flex;
     flex-direction: column;
     border: 2px solid #4ad395;
     border-radius: 20px;
     cursor: pointer;
-    margin: 10px;  // 변경된 부분: 아이템 간격을 주기 위한 마진값 설정
+    margin: 10px 10px 20px 10px;  // 변경된 부분: 아이템 간격을 주기 위한 마진값 설정
     &:hover {
         background-color: #f2f2f2;
     }

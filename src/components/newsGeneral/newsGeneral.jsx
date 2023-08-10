@@ -12,9 +12,6 @@ import {AllNews,
         NewsCategory,
         NewsContainer,
         NewsListContainer,
-        SlideContainer,
-        PrevButton,
-        NextButton,
         ModalBackground,
         ModalContainer,
         SearchIcon,
@@ -24,7 +21,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight, faCircleChevronLeft, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 function NewsGeneral() {
-    const serverUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/articles/nyt/"
+    const serverUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/articles/"
     const [currentSlide, setCurrentSlide] = useState(0);
     const SlideRef = useRef(null);
     const [newsLen, setNewsLen] = useState(0);
@@ -41,6 +38,7 @@ function NewsGeneral() {
     const [newslist, setNewslist] = useState([]);
     const [selectedNews,setSelectedNews] = useState([]);
     const navigate = useNavigate();
+    const [searchTerm, setSearchTerm] = useState("");
     
 
     useEffect(() => {
@@ -76,13 +74,6 @@ function NewsGeneral() {
     }
     
 
-    useEffect(() => {
-        console.log(currentSlide);
-        console.log(SlideRef.current);
-        SlideRef.current.style.transition = 'all 0.5s ease-in-out';
-        SlideRef.current.style.transform = `translateX(-${currentSlide * 10}%)`;
-    },[currentSlide]);
-
 
     const onClickFav = useCallback(
         (category) => {
@@ -96,7 +87,12 @@ function NewsGeneral() {
         [selectedCategory]
       );
 
-    const filteredNews = newslist.filter(news => selectedCategory.length === 0 || selectedCategory.map(c => category.find(a => Object.keys(a)[0] === c)[c]).includes(news.section));
+      const filteredNews = newslist.filter(news => 
+        (selectedCategory.length === 0 || selectedCategory.map(c => category.find(a => Object.keys(a)[0] === c)[c]).includes(news.section))
+        &&
+        (news.title.toLowerCase().includes(searchTerm.toLowerCase()) || news.content?.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+    
 
     useEffect(() => {
         setNewsLen(filteredNews.length);
@@ -115,13 +111,17 @@ function NewsGeneral() {
         setSelectedNews(news);
         changeModal();
     }
+
+    const onChangeSearchTerm = (e) => {
+        setSearchTerm(e.target.value)
+    }
     return (
         <>
         <AllNews>
             <SearchBarWrapper>
                 <SearchBar>
                 <SearchIcon icon={faMagnifyingGlass} style={{color: "#4ad395",}} />
-                <SearchBarInput placeholder='보고 싶은 기사를 검색하세요'></SearchBarInput>
+                <SearchBarInput onChange = {onChangeSearchTerm} placeholder='보고 싶은 기사를 검색하세요'></SearchBarInput>
                 </SearchBar>
             </SearchBarWrapper>
         <CategoryWrapper>
