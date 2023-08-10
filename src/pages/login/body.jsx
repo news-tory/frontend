@@ -1,7 +1,7 @@
 import React, { useState }from "react";
 import { useNavigate } from "react-router-dom";
 import { LogoImage, LoginImage } from "./style.jsx";
-import newstory from "../../components/header/newstory.png";
+import newstory from "../../images/newstory.png"
 import SignupForm from "../../components/signupForm/signupForm.jsx";
 import LoginForm from "../../components/LoginForm/loginForm.jsx";
 import loginImage from "./loginImage.jpg"

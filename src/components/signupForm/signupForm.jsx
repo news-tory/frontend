@@ -4,7 +4,7 @@ import axios from 'axios';
 import {Wrapper, LoginChangeButton, LoginandSignupWrapper, SignupChangebutton, EmailField, TextField, PasswordField, NicknameField, ErrorMessage, FootButton, FootButtonType, SignupFormStructure, LoginImage, LogoImage} from "./style.jsx"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAt,faLock, faCircleUser } from "@fortawesome/free-solid-svg-icons";
-import newstory from "../../components/header/newstory.png"
+import newstory from "../../images/newstory.png"
 import LoginForm from "../LoginForm/loginForm.jsx";
 import SignupNextForm from "../SignupNext/signupNextForm.jsx";
 import SignupContext, { useSignupContext } from "./signupContext.js";

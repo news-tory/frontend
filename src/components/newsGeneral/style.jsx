@@ -2,10 +2,16 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const AllNews = styled.div`
-    display: flex;
-    flex-direction: column;
-    height: 50%;
-    padding: 20px;
+display: flex;
+flex-direction: column;
+height: 100%;
+padding: 20px;
+`
+
+export const SearchBarWrapper = styled.div`
+    width: 100%;
+    height: 100px;
+    background-color: black;
 `
 
 export const NewsCategory = styled.div`
@@ -24,6 +30,9 @@ export const CategoryButton = styled.div`
     padding : 10px;
     text-align: center;
     margin: 10px;
+    export const SearchBat = styled.div`
+    
+    `
     cursor: pointer;
     background-color: ${({ active }) => (active ? '#f2f2f2' : 'transparent')};
     `

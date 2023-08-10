@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Newsview from '../newview/newsview'
 import styled from 'styled-components'
 import {AllNews,
+        SearchBarWrapper,
         NewsImage,
         NewsTitle,
         CategoryButton,
@@ -112,6 +113,7 @@ function NewsGeneral() {
     return (
         <>
         <AllNews>
+            <SearchBarWrapper>qgewgeewggw</SearchBarWrapper>
         <NewsCategory>
         {category.map((categoryObject) => {
             const key = Object.keys(categoryObject)[0];

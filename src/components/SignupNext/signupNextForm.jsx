@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import {Wrapper, TitleText, FootButton, SubTitleText, SignupFormStructure, CategoryButton, CategoryWrapper} from "./style.jsx"
 import { useSignupContext } from "../signupForm/signupContext.js";
-import newstory from "../../components/header/newstory.png"
+import newstory from "../../images/newstory.png"
 import LoginForm from "../LoginForm/loginForm.jsx";
 
 const ServerUrl = 'https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/register/';
