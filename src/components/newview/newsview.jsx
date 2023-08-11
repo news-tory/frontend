@@ -27,19 +27,29 @@ export default function Newsview(props) {
     const {news} = props ;
     const navigate = useNavigate()
     const [posting, setPosting] = useState("");
-
+    
     const onClickNewsSite = () => {
         const movetoLink = prompt(news.url);
         }
 
-    const serverUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/articles/nyt/"
+    const serverUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/community/posts/"
     const postfeed = async () => {
         try {
-            const response = await axios.post(serverUrl, posting);
+            const token = localStorage.getItem('token');
+            const response = await axios.post(serverUrl,{
+                article: news.id,
+                content: posting
+            },{
+                headers: {
+                    Authorization: `token ${token}`
+                }
+            });
             console.log(response.data); // 서버의 응답 데이터 확인
-            navigate("/")
+            alert('게시되었습니다.')
+            navigate('/')
         } catch (error) {
             alert('업로드에 실패했습니다. 인터넷 연결을 확인 후 다시 시도해보시겠어요?')
+            console.error(error)
         }
     };
 
@@ -66,6 +76,7 @@ export default function Newsview(props) {
     // fetchData()
     // },[])
 
+    
     return(
         <Container>
             <NewsViewSection>
@@ -96,7 +107,7 @@ export default function Newsview(props) {
             <NewsPostSection>
                 <PostText>
                     <div>포스트</div>
-                    <PostButton>
+                    <PostButton onClick={postfeed}>
                         공유하기 <FontAwesomeIcon icon={faPenToSquare} style={{color: "#4ad395",}} />
                         </PostButton>
                 </PostText>

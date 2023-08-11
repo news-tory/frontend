@@ -111,7 +111,7 @@ export const NewsContainer =  styled.div`
 `
 
 export const NewsWrapper =  styled.div`
-    width: 35rem;
+    width: 75%;
     background-color: #eaeaea;
     display: flex;
     flex-direction: column;
@@ -121,7 +121,7 @@ export const NewsWrapper =  styled.div`
 `
 
 export const NewsImage =  styled.img`
-    width: 80%;
+    width: 90%;
     margin: 20px;
 `
 
