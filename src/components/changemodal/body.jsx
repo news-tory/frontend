@@ -1,5 +1,5 @@
 import { All, Profile, Password, Category, Every, Itsmodal, ModalContainer } from "./style";
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import basicimage from "../user.png";
 import { useNavigate } from "react-router";
@@ -12,8 +12,42 @@ import Modalcategory from '../modalcategory';
 
 const ServerUrl = 'https://port-0-minibackrepo1-k19y2klk242hfg.sel4.cloudtype.app/members/'
 
+const TOKEN = localStorage.getItem('token')
+
+const serverApi = axios.create({
+    headers: {
+        //   'Authorization': "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzM2NTk3LCJpYXQiOjE2OTE3MzQ3OTcsImp0aSI6ImQ5ODVkZjExNmQ2NjQ3MjhiNDIxY2M4Y2MyMjRjNjk5IiwidXNlcl9pZCI6MX0.GGgA8q0fjRmYNT6yj9rJWfHTii03pqrFyreA1wTf4ic",
+            // 'Authorization': localStorage.getItem('token')
+        'Authorization' : `token ${TOKEN}`
+    },
+ });
+  const userApi = async () => {
+      let user = [];
+      await serverApi.get(`https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/`).then((response) => {
+          user = response.data;
+         //  console.log(user);
+      })
+      return user;
+  }
+
 
 const Modalpage = () => {
+
+    const TOKEN = localStorage.getItem('token')
+    console.log(TOKEN)
+    const [data, setData] = useState('');
+
+    const getUser = async () => {
+        const nowDetail = await userApi();
+        setData(nowDetail);
+    }
+    console.log(data.nickname);
+
+    useEffect(() => {
+        getUser();
+        // getComment();
+    }, [])
+
 
     // 이미지 모달창 관리
     let [modalimage, setModalimage] = useState(false);

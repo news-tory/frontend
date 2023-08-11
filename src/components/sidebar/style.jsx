@@ -8,32 +8,44 @@ export const Sidebar = styled.div`
     display: flex;
     /* list-style-type: none; */
     /* margin: 0;  */
-    height: 90vh;
-    height: 90vh;
-    /* border-right :  solid #aac8a7;
-    border-left :  solid #aac8a7; */
-    /* z-index: 99;  */
+    height: auto;
     border-right :  solid #4ad395;
     height : 100vh;
     margin-bottom: 40px;
     position: fixed;
-
-
 `
 
-export const Profile = styled.div`
-    padding-bottom: 10vh;
-    display: flex;
+export const Section = styled.div`
+    position: relative;
+`
 
+
+export const Profile = styled.div`
+    padding-bottom: 5vh;
+    display: flex;
     .pencil {
-        padding-top: 120px;
-        padding-left: 5px;
+        padding-top: 114px;
+        padding-left: 7px;
         cursor: pointer;
+        font-size: 13px;
     }
     h4 {
-        /* padding-left: 30px; */
-        padding-top: 100px;
+        padding-left: 10px;
+        padding-top: 92px;
         text-align: right;    }
+`
+
+export const Goto = styled.div`
+    display: flex;
+    padding-top: 30px;
+    .gotoimage {
+        position: absolute;
+        width: 25px;
+        height: 25px;
+    }
+    p {
+        padding-left: 80px;
+    }
 `
 
 export const Tologin = styled.div`
@@ -46,22 +58,25 @@ export const Tologin = styled.div`
 `
 
 export const All = styled.div`
-    padding-left: 25px;  
     text-align: center;
     img {
-        width:30px;
+        width:40px;
+        height: 40px;
         padding-top: 100px;
-        border-radius: 30%;
-        padding-left: 10px;
+        border-radius: 10%;
+        padding-left: 25px;
     }
     .noline {
         text-decoration: none;
         color: black;
-    }
+        display: flex;
+        justify-content: space-between;
+      }
     .bottom {
         padding-top:20vh;
         color: #4ad395;
         font-weight: lighter;
+        padding-left: 20px;
     }
 `
 export const Modaltoo = styled.div`

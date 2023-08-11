@@ -28,7 +28,12 @@ function LoginForm() {
                 email: email,
                 password: password
             });
-            console.log(response.data); // 서버의 응답 데이터 확인
+            console.log(response.data.token.access); // 서버의 응답 데이터 확인
+            localStorage.clear()
+            localStorage.setItem('token', response.data.token.access)
+            const TOKEN = localStorage.getItem("token")
+            console.log(TOKEN)
+            // console.log(response.data)
             alert('환영합니다');
             navigate('/');
         } catch (error) {
