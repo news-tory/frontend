@@ -16,7 +16,7 @@ export const Sidebody = styled.div`
 `
 
 export const BodyWrapper = styled.div`
-    width: 85%;
+    width: 100%;
     height: 100%;
     box-sizing: border-box;
     display: flex;
