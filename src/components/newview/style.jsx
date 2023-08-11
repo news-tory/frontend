@@ -10,15 +10,16 @@ export const Container = styled.div`
 export const NewsViewSection = styled.div`
     width: 60%;
     height: 100%;
-    border-right: 3px solid #4AD395;
+    box-sizing: border-box;
+    border-right: 3px solid #eaeaea;
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 20px 20px 0px 20px;
 `
 
 export const NewsPaper = styled.div`
     width: 100%;
-    font-size: 15px;
+    font-size: 30px;
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
@@ -26,7 +27,27 @@ export const NewsPaper = styled.div`
 
 export const NewsImage = styled.img`
     width: 100%;
-    height: 40%;
+    height: 40%;`
+    
+
+export const ButtonSection = styled.div`
+    width: 100%;
+    display: flex;
+    height: 30px;
+    justify-content: space-between;
+    
+`
+
+export const ViewWrapper = styled.div`
+    display:flex;
+    `
+
+export const HeartView = styled.div`
+    font-size: 25px;
+    `
+
+export const PostView = styled.div`
+    font-size: 25px;
     `
 
 export const NewsTitle = styled.div`
@@ -68,10 +89,10 @@ export const PostText = styled.div`
 export const PostInput = styled.textarea`
     text-align: left;
     width: 300px;
-    height: 400px;
+    height: 200px;
     resize: none;
     margin: 0px 20px 20px 20px;
-    border: 1px solid #4AD395;
+    border: none;
     padding: 20px;
     font-size: 15px;
 `

@@ -10,15 +10,20 @@ import {Container,
         PostText,
         PostInput,
         InputWrapper,
-        PostButton
+        PostButton,
+        ButtonSection,
+        HeartView,
+        PostView,
+        ViewWrapper
 } from './style' ;
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faHeart} from '@fortawesome/free-solid-svg-icons';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Newsview(props) {
+    const [like, setLike] = useState(false);
     const {news} = props ;
     const navigate = useNavigate()
     const [posting, setPosting] = useState("");
@@ -42,13 +47,44 @@ export default function Newsview(props) {
         setPosting(e.target.value)
     }
 
+    // useEffect(async () => {
+    //     const fetchData = async() => {
+    //         const res = await axios.get()
+    //         if (res.data.type === 'liked') setLike(true)
+    //     }
+    // fetchData()
+    // },[])
+
+    // const toggleLike = async(e) => {
+    //     const res = await axios.post()
+    //     setLike(!like)
+    // }
+        // useEffect(async () => {
+    //     const fetchData = async() => {
+    //         const res = await axios.get()
+    //     }
+    // fetchData()
+    // },[])
+
     return(
         <Container>
             <NewsViewSection>
-                <NewsImage src={news.img_url}/>
                 <NewsPaper>
-                    발행사: {news.paper}
+                    {news.paper}
                 </NewsPaper>
+                <NewsImage src={news.img_url}/>
+                <ButtonSection>
+                    <ViewWrapper>
+                    <HeartView>
+                        <FontAwesomeIcon icon={faHeart} style={{ color: like ? '#BABABA' : '#ededed' }} />
+                        <p></p>
+                    </HeartView>
+                    <PostView>
+                        <FontAwesomeIcon icon={faPenToSquare} style={{color: "grey",}} />
+                    </PostView>
+                    </ViewWrapper>
+                    <div>이미지를 누르면 뉴스 사이트로 이동합니다.</div>
+                </ButtonSection>
                 <NewsTitle> 
                     {news.title}
                 </NewsTitle>
@@ -61,7 +97,6 @@ export default function Newsview(props) {
                 <PostText>
                     <div>포스트</div>
                     <PostButton>
-                    {/* // onClick={postdeed}> */}
                         공유하기 <FontAwesomeIcon icon={faPenToSquare} style={{color: "#4ad395",}} />
                         </PostButton>
                 </PostText>

@@ -89,18 +89,17 @@ export const MyFavoriteText = styled.div`
     display: flex;
     justify-content: center;
     align-items: center; 
-    margin-left: 9px;
     padding: 0;
 `
 
 export const ModalContainer = styled.div`
     background-color: #fff;
     border-radius: 10px;
-    margin: 100px 0px 100px 0px;
-    width: 1000px;
-    height: 800px;
+    width: 80%;
+    height: 70%;
     display: flex;
     justify-content: center;
+    align-items: center;
     z-index: 11;
 `
 
@@ -161,10 +160,12 @@ export const HeartButton = styled.div`
     justify-content: center;
     align-items: center;
     border-right: 2px solid #656565;
+    cursor: pointer;
 `
 export const PostButton = styled.div`
     width: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 `

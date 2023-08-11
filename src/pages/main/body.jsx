@@ -98,7 +98,7 @@ function Body() {
                     ) : (
                         <NewsContainer>
                         {newslist.map((news, index) => (
-                        <NewsWrapper key={index} onClick={() => onClickNews(news)}>
+                        <NewsWrapper key={index}>
                             <NewsPaper>{news.paper}</NewsPaper>
                             <NewsImage src={news.img_url}></NewsImage>
                             <NewsTitle>{news.title}</NewsTitle>
@@ -107,7 +107,7 @@ function Body() {
                                 <HeartButton>
                                     <FontAwesomeIcon icon={faHeart} />
                                 </HeartButton>
-                                <PostButton>
+                                <PostButton onClick={() => onClickNews(news)}>
                                     <FontAwesomeIcon icon={faPenToSquare} />
                                     <p> Post</p>
                                 </PostButton>
