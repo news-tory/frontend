@@ -103,9 +103,10 @@ function Body() {
             <Sidebar className="v-line">
 
                 <All>
-                    <Profile>
+                <img className='logo' src={logo}></img>
 
-                        <img src={basicimage}></img>
+                    <Profile>
+                        <img className='basicimage' src={basicimage}></img>
                         {isloggedin ?
                             <div style={{ display: 'flex', marginLeft: '10px' }}>
                                 <h4>{data.nickname}</h4>
@@ -141,9 +142,8 @@ function Body() {
                                 <p>MyPage</p></Link>
                         </Goto>
                     </Section>
-
+                    <div className='logout' onClick={Onclicklogout}>로그아웃</div>
                     <h5 className="bottom">NewStory</h5>
-                    <button onClick={Onclicklogout}>로그아웃</button>
 
 
                 </All>

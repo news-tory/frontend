@@ -24,14 +24,14 @@ export const Profile = styled.div`
     padding-bottom: 5vh;
     display: flex;
     .pencil {
-        padding-top: 114px;
+        padding-top: 65px;
         padding-left: 7px;
         cursor: pointer;
         font-size: 13px;
     }
     h4 {
         padding-left: 10px;
-        padding-top: 92px;
+        padding-top: 42px;
         text-align: right;    }
 `
 
@@ -42,9 +42,12 @@ export const Goto = styled.div`
         position: absolute;
         width: 25px;
         height: 25px;
+        padding-top: 23px;
+        padding-left: 50px;
     }
     p {
-        padding-left: 80px;
+        padding-left: 90px;
+        padding-top: 10px;
     }
 `
 
@@ -52,17 +55,25 @@ export const Tologin = styled.div`
     .tologin {
     text-decoration-line: none;
     color: black;
-
-
+    }
+    h5 {
+        padding-top: 40px;
+        padding-left: 20px;
     }
 `
 
 export const All = styled.div`
     text-align: center;
-    img {
+    .logo {
+        width: 200px;
+        height:30px;
+        padding-top: 15px;
+        padding-left: 20px;
+    }
+    .basicimage {
         width:40px;
         height: 40px;
-        padding-top: 100px;
+        padding-top: 50px;
         border-radius: 10%;
         padding-left: 25px;
     }
@@ -73,7 +84,7 @@ export const All = styled.div`
         justify-content: space-between;
       }
     .bottom {
-        padding-top:20vh;
+        /* padding-top:15vh; */
         color: #4ad395;
         font-weight: lighter;
         padding-left: 20px;
