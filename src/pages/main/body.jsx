@@ -62,20 +62,26 @@ function Body() {
         fetchnews();
     }, []);
 
+    const onClickMyFav = () => {
+        setActiveMyFav(!activeMyFav)
+        console.log(activeMyFav)
+    }
+
     return (
         <>
             <MainContainer>
                 <LeftWrapper>
                     <HomeText>Home</HomeText>
+                    {activeMyFav === false?(
+                    <>
                     <ArticleSection>
                         <ArticleText>
-                            <Text active={!activeMyFav}>모든 기사</Text>
+                            <Text active={!activeMyFav}> 모든 기사</Text>
                         </ArticleText>
-                        <MyFavoriteText>
+                        <MyFavoriteText onClick={onClickMyFav}>
                             <Text active={activeMyFav}>내 선호</Text>
                         </MyFavoriteText>
                     </ArticleSection>
-                    {setActiveMyFav === 'false'?(
                     <NewsContainer>
                         {newslist.map((news, index) => (
                         <NewsWrapper key={index} onClick={() => onClickNews(news)}>
@@ -95,7 +101,17 @@ function Body() {
                         </NewsWrapper>
                         ))}
                     </NewsContainer>
+                    </>
                     ) : (
+                        <>
+                        <ArticleSection>
+                            <ArticleText>
+                                <Text active={!activeMyFav} onClick={onClickMyFav}> 모든 기사</Text>
+                            </ArticleText>
+                            <MyFavoriteText>
+                                <Text active={activeMyFav}>내 선호</Text>
+                            </MyFavoriteText>
+                        </ArticleSection>
                         <NewsContainer>
                         {newslist.map((news, index) => (
                         <NewsWrapper key={index}>
@@ -115,6 +131,7 @@ function Body() {
                         </NewsWrapper>
                         ))}
                     </NewsContainer>
+                    </>
                     )}
                 </LeftWrapper>
             </MainContainer>
