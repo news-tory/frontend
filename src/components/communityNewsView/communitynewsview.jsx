@@ -48,7 +48,7 @@ const postCommentUrl = `https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudty
 const newsUrl = `https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/articles/`
 const fetchPosting = async () => {
     try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('acctoken');
         const response = await axios.get(postingDetailUrl,{
             headers: {
                 Authorization: `Bearer ${token}`

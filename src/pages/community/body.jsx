@@ -41,7 +41,7 @@ const stopPropagation = (e) => {
 
 const fetchCommunity = async () => {
     try {
-        const token = localStorage.getItem('token')
+        const token = localStorage.getItem('acctoken')
         const response = await axios.get(serverUrl,{
             headers: {
                 Authorization: `Bearer ${token}`
