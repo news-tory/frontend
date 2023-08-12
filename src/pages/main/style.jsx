@@ -190,6 +190,10 @@ export const HotNewsWrapper = styled.div`
     justify-content: center;
     align-items: center;
     margin-bottom: 30px;
+    &:hover {
+        background-color: #bababa;
+    }
+    cursor: pointer;
     `
 
 export const HotNewsPaper = styled.div`

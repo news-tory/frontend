@@ -167,7 +167,7 @@ function Body() {
                         <div>실시간 인기 뉴스</div>
                     </HotNewsText>
                     {newslist.map((news,index) => (
-                        <HotNewsWrapper>
+                        <HotNewsWrapper onClick={() => onClickNews(news)}>
                             <HotNewsPaper>
                                 <div>{news.paper}</div>
                             </HotNewsPaper>
