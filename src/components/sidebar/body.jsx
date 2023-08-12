@@ -19,7 +19,7 @@ function Body() {
     const [data, setData] = useState('');
 
     // local Storage의 토큰
-    const TOKEN = localStorage.getItem('token')
+    const TOKEN = localStorage.getItem('acctoken')
 
     // 로그인 판별
     const [isloggedin, setIsloggedin] = useState(!!TOKEN)
