@@ -12,24 +12,31 @@ import community from './community.png';
 import search from './search.png';
 import mypage from './mypage.png';
 
+import { connect } from 'react-redux';
+import { logout } from '../../modules/authActions';
 
 
-function Body() {
+function Body(props) {
 
     const [data, setData] = useState('');
 
     // local Storage의 토큰
-    const TOKEN = localStorage.getItem('acctoken')
+
+    const accToken = localStorage.getItem('accToken')
+
 
     // 로그인 판별
-    const [isloggedin, setIsloggedin] = useState(!!TOKEN)
+    // const [isloggedin, setIsloggedin] = useState(!!TOKEN)
+
+    // const [isloggedin, setIsloggedin] = useState(false)
+
 
 
     // 유저 정보 get
     const serverApi = axios.create({
         headers: {
             // 'Authorization': "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzM2NTk3LCJpYXQiOjE2OTE3MzQ3OTcsImp0aSI6ImQ5ODVkZjExNmQ2NjQ3MjhiNDIxY2M4Y2MyMjRjNjk5IiwidXNlcl9pZCI6MX0.GGgA8q0fjRmYNT6yj9rJWfHTii03pqrFyreA1wTf4ic",
-            'Authorization': `token ${TOKEN}`
+            'Authorization': `token ${accToken}`
         },
     });
 
@@ -43,7 +50,7 @@ function Body() {
     }
 
     const getUser = async () => {
-        if (TOKEN) {
+        if (accToken) {
             const nowData = await userApi();
             setData(nowData);
         }
@@ -53,21 +60,26 @@ function Body() {
         getUser();
     }, [])
 
-
+    console.log('isLoggedInBody:', props.isLoggedIn);
+    console.log('TOken: ', props.accessToken)
 
 
     // 로그아웃
     const Onclicklogout = async () => {
         try {
-            localStorage.removeItem('token');
+            localStorage.removeItem('refToken');
+            localStorage.removeItem('accToken');
+
             const response = await axios.delete(`https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/auth/`, {
             });
-            const TOKEN = localStorage.getItem('token')
+            props.logout();
+            // const TOKEN = localStorage.getItem('token')
             console.log('삭제 요청 성공:', response.data);
-            console.log(localStorage.getItem('token'))
-            console.log(TOKEN)
-            setIsloggedin(!!TOKEN)
-            console.log(isloggedin)
+            // console.log(localStorage.getItem('token'))
+            // console.log(TOKEN)
+            // setIsloggedin(!!TOKEN)
+            // console.log(isloggedin)
+
 
         } catch (error) {
             console.error('삭제 요청 실패:', error);
@@ -95,7 +107,7 @@ function Body() {
 
 
     // islogin 확인
-    console.log(isloggedin)
+    // console.log(isloggedin)
 
 
     return (
@@ -107,7 +119,7 @@ function Body() {
 
                     <Profile>
                         <img className='basicimage' src={basicimage}></img>
-                        {isloggedin ?
+                        {props.isLoggedIn ?
                             <div style={{ display: 'flex', marginLeft: '10px' }}>
                                 <h4>{data.nickname}</h4>
                                 <FontAwesomeIcon
@@ -142,12 +154,15 @@ function Body() {
                                 <p>MyPage</p></Link>
                         </Goto>
                     </Section>
+                    { props.isLoggedIn ?
+                    <>
                     <div className='logout' onClick={Onclicklogout}>로그아웃</div>
                     <h5 className="bottom">NewStory</h5>
-
-
+                    </>
+                    : 
+                    <h5 className="bottom2">NewStory</h5>               
+                    }
                 </All>
-
             </Sidebar>
             {modal &&
                 <Itsmodal onClick={closeModal}>
@@ -160,7 +175,14 @@ function Body() {
     );
 };
 
+const mapStateToProps = (state) => ({
+    isLoggedIn: state.auth.isLoggedIn,
+    accessToken: state.auth.accessToken,
+  });
+  
+  const mapDispatchToProps = {
+    logout,
+  };
 
 
-
-export default Body;
+  export default connect(mapStateToProps, mapDispatchToProps)(Body);

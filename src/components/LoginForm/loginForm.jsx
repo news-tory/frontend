@@ -5,10 +5,13 @@ import { Wrapper, LoginandSignupWrapper, LoginChangeButton, SignupChangebutton, 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAt, faLock } from "@fortawesome/free-solid-svg-icons";
 import SignupForm from "../signupForm/signupForm.jsx";
+import { connect } from 'react-redux';
+import { loginSuccess, loginFailure, saveResponseData } from '../../modules/authActions.js'
+import { useDispatch, useSelector } from "react-redux";
 
 
 
-function LoginForm() {
+function LoginForm(props) {
     const ServerUrl = 'https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/auth/';
     const navigate = useNavigate();
     const [activeSignupForm, setActiveSignupForm] = useState('login');
@@ -22,21 +25,39 @@ function LoginForm() {
     // 유효성 검사
     const [isEmail, setIsEmail] = useState(false);
 
+
+    console.log('Isloggedinlogin:', props.isLoggedIn)
+
+    const dispatch = useDispatch();
+    const accessToken = useSelector(store => store);
+
     const onSubmit = async () => {
         try {
             const response = await axios.post(ServerUrl, {
                 email: email,
                 password: password
             });
-            console.log(response.data.token.access); // 서버의 응답 데이터 확인
             localStorage.clear()
-            localStorage.setItem('token', response.data.token.access)
-            const TOKEN = localStorage.getItem("token")
-            console.log(TOKEN)
-            // console.log(response.data)
+
+            // REDUX에 accessToken 저장
+            const accToken = response.data.token.access;
+            props.loginSuccess(accToken);
+            dispatch(props.saveResponseData(accToken));
+            console.log("gu: ", props.accessToken)
+
+            // local에 accessToken, refreshToken 저장
+            const refToken = response.data.token.refresh;
+            localStorage.setItem('refToken', refToken)
+            localStorage.setItem('accToken', accToken)
+
             alert('환영합니다');
             navigate('/');
+            console.log('Isloggedinlogin:', props.isLoggedIn)
+
+            console.log('TOken: ', props.accessToken)
+            
         } catch (error) {
+            props.loginFailure();
             alert('회원 정보가 일치하지 않습니다.')
             console.error(error);
         }
@@ -125,4 +146,15 @@ function LoginForm() {
     );
 }
 
-export default LoginForm;
+const mapStateToProps = (state) => ({
+    isLoggedIn: state.auth.isLoggedIn,
+    accessToken: state.auth.accessToken,
+});
+
+const mapDispatchToProps = {
+    loginSuccess,
+    loginFailure,
+    saveResponseData,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
