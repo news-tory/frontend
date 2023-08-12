@@ -171,3 +171,10 @@ export const PostButton = styled.div`
     align-items: center;
     cursor: pointer;
 `
+
+export const CommunityNewsWrapper = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    `

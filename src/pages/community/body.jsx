@@ -3,6 +3,7 @@ import { MainWrapper,
     CommunityText,
     CommunityContainer,
     CommunityWrapper,
+    CommunityNewsWrapper,
     CommunityContent,
     ModalBackground,
     ModalContainer, 
@@ -15,7 +16,7 @@ import { useState, useCallback, useEffect } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import Newsview from "../../components/newview/newsview";
-import NewsGeneral from "../../components/newsGeneral/newsGeneral";
+import CommunityNews from "../../components/communitynews/communitynews"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment } from "@fortawesome/free-solid-svg-icons";
 
@@ -80,6 +81,9 @@ return (
                             <NewsAbstract>{list.created_at}</NewsAbstract>
                         </PostUser>
                         <CommunityContent>{list.content}</CommunityContent>
+                        <CommunityNewsWrapper>
+                            <CommunityNews newsId = {list.article}/>
+                        </CommunityNewsWrapper>
                         <ButtonSection>
                             <HeartButton>
                                 <FontAwesomeIcon icon={faHeart} />
