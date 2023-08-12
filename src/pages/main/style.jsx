@@ -35,10 +35,7 @@ export const LeftWrapper = styled.div`
     border-right: 2px solid #eaeaea;
     display: flex;
     flex-direction: column;
-    
-`
-
-export const RightWrapper = styled.div`
+    overflow: auto;
 `
 
 export const HomeText = styled.div`
@@ -169,3 +166,53 @@ export const PostButton = styled.div`
     align-items: center;
     cursor: pointer;
 `
+
+export const RightWrapper = styled.div`
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+    `
+
+export const HotNewsText = styled.div`
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+    font-size: 20px;
+    `
+
+export const HotNewsWrapper = styled.div`
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    background-color: #eaeaea;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    `
+
+export const HotNewsPaper = styled.div`
+    width: 100%;
+    display: flex;
+    padding: 10px 10px 10px 20px;
+    box-sizing: border-box;
+    `
+
+export const HotNewsImageSection = styled.div`
+    width: 100%;
+    display: flex;
+    padding: 0px 10px 10px 10px;
+    box-sizing: border-box;
+    justify-content: center;
+    `
+
+export const HotNewsImage = styled.img`
+    width: 90%;
+    `
+
+export const HotNewsTitle = styled.div`
+    width: 100%;
+    padding: 0px 20px 20px 20px;
+    box-sizing: border-box;
+    `

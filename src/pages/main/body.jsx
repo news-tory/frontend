@@ -15,7 +15,14 @@ import { LeftWrapper,
         NewsAbstract,
         ButtonSection,
         HeartButton,
-        PostButton} from "./style";
+        PostButton,
+        RightWrapper,
+        HotNewsText,
+        HotNewsWrapper,
+        HotNewsPaper,
+        HotNewsImageSection,
+        HotNewsImage,
+        HotNewsTitle} from "./style";
 import { useState, useCallback, useEffect } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
@@ -155,6 +162,24 @@ function Body() {
                     </>
                     )}
                 </LeftWrapper>
+                <RightWrapper>
+                    <HotNewsText>
+                        <div>실시간 인기 뉴스</div>
+                    </HotNewsText>
+                    {newslist.map((news,index) => (
+                        <HotNewsWrapper>
+                            <HotNewsPaper>
+                                <div>{news.paper}</div>
+                            </HotNewsPaper>
+                            <HotNewsImageSection>
+                                <HotNewsImage src={news.img_url}/>
+                            </HotNewsImageSection>
+                            <HotNewsTitle>
+                                <div>{news.title}</div>
+                            </HotNewsTitle>
+                        </HotNewsWrapper>
+                    ))}
+                </RightWrapper>
             </MainContainer>
             { modal &&
             <ModalBackground onClick={changeModal}>
