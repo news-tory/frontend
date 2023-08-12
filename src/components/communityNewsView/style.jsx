@@ -17,7 +17,6 @@ export const NewsViewSection = styled.div`
     display: flex;
     flex-direction: column;
     padding: 20px 20px 0px 20px;
-    justify-content: center;
     align-items: center;
 `
 
@@ -64,7 +63,7 @@ export const NewsImage = styled.div`
     `
 
 export const ArticleImage = styled.img`
-    width: 80%;
+    width: 90%;
     `
 
 export const ButtonSection = styled.div`

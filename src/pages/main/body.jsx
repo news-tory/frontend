@@ -28,10 +28,12 @@ import { faHeart, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 
 function Body() {
     const serverUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/articles/"
+    const UserServerUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/"
     const [newslist, setNewsList] = useState([]);
     const [selectedNews,setSelectedNews] = useState([]);
     const [activeMyFav, setActiveMyFav] = useState(false);
     const navigate = useNavigate();
+    const [filteredNews,setFilteredNews] = useState([]);
     let [modal, setModal] = useState(false);
 
     const changeModal = () => {
@@ -60,12 +62,31 @@ function Body() {
     
     useEffect(() => {
         fetchnews();
+        getUser();
     }, []);
 
     const onClickMyFav = () => {
         setActiveMyFav(!activeMyFav)
         console.log(activeMyFav)
     }
+
+    const getUser = async () => {
+        try{
+            const token = localStorage.getItem('token')
+            const response = await axios.get(UserServerUrl, {
+                headers: {
+                    Authorization: `token ${token}`
+                }
+            });
+            const userData = response.data;
+            const trueKeys = Object.keys(userData).filter(key => userData[key] === true);
+            setFilteredNews(newslist.filter(news => trueKeys.includes(news.section)));
+        }
+            catch(error){
+                alert('실패')
+                console.error(error);   
+            }
+        }
 
     return (
         <>
@@ -113,7 +134,7 @@ function Body() {
                             </MyFavoriteText>
                         </ArticleSection>
                         <NewsContainer>
-                        {newslist.map((news, index) => (
+                        {filteredNews.map((news, index) => (
                         <NewsWrapper key={index}>
                             <NewsPaper>{news.paper}</NewsPaper>
                             <NewsImage src={news.img_url}></NewsImage>
