@@ -96,7 +96,7 @@ export const ModalContainer = styled.div`
     background-color: #fff;
     border-radius: 10px;
     width: 80%;
-    height: 70%;
+    height: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
