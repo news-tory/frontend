@@ -35,7 +35,7 @@ export default function Newsview(props) {
     const serverUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/community/posts/"
     const postfeed = async () => {
         try {
-            const token = localStorage.getItem('acctoken');
+            const token = localStorage.getItem('accToken');
             const response = await axios.post(serverUrl,{
                 article: news.id,
                 content: posting
