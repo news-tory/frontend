@@ -41,12 +41,12 @@ export default function Newsview(props) {
                 content: posting
             },{
                 headers: {
-                    Authorization: `token ${token}`
+                    Authorization: `Bearer ${token}`
                 }
             });
             console.log(response.data); // 서버의 응답 데이터 확인
             alert('게시되었습니다.')
-            navigate('/')
+            setPosting("")
         } catch (error) {
             alert('업로드에 실패했습니다. 인터넷 연결을 확인 후 다시 시도해보시겠어요?')
             console.error(error)
