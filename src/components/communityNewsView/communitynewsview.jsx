@@ -128,7 +128,7 @@ return(
         <NewsViewSection>
             <PostingSection>
                 <PostingUserInfo>
-                    <div>{posting.user}</div>
+                    <div>{posting.user}님의 이야기</div>
                     <div>{posting.created_at}</div>
                 </PostingUserInfo>
                 <PostingContent>
@@ -146,10 +146,11 @@ return(
                 <ViewWrapper>
                 <HeartView>
                     <FontAwesomeIcon icon={faHeart} style={{ color: like ? '#BABABA' : '#ededed' }} />
-                    <p></p>
+                    <p>{newsData.like_cnt}</p>
                 </HeartView>
                 <PostView>
                     <FontAwesomeIcon icon={faPenToSquare} style={{color: "grey",}} />
+                    <p></p>
                 </PostView>
                 </ViewWrapper>
                 <div>이미지를 누르면 뉴스 사이트로 이동합니다.</div>
