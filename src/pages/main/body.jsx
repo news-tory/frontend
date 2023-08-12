@@ -79,7 +79,7 @@ function Body() {
 
     const getUser = async () => {
         try{
-            const token = localStorage.getItem('acctoken')
+            const token = localStorage.getItem('accToken')
             const response = await axios.get(UserServerUrl, {
                 headers: {
                     Authorization: `token ${token}`
