@@ -41,16 +41,18 @@ const stopPropagation = (e) => {
 
 const fetchCommunity = async () => {
     try {
-        const token = localStorage.getItem('acctoken')
+        const token = localStorage.getItem('accToken')
         const response = await axios.get(serverUrl,{
             headers: {
                 Authorization: `Bearer ${token}`
             }
         });
+        console.log(token);
         console.log(response.data); // 서버의 응답 데이터 확인
         setCommunityList(response.data);
     } catch (error) {
         alert('데이터 로딩에 실패했습니다.')
+        console.error(error);
         navigate('/')
     }
 };
