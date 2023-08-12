@@ -58,7 +58,7 @@ export const Tologin = styled.div`
     }
     h5 {
         padding-top: 40px;
-        padding-left: 20px;
+        padding-left: 10px;
     }
 `
 
@@ -75,7 +75,7 @@ export const All = styled.div`
         height: 40px;
         padding-top: 50px;
         border-radius: 10%;
-        padding-left: 25px;
+        padding-left: 35px;
     }
     .noline {
         text-decoration: none;
@@ -83,8 +83,20 @@ export const All = styled.div`
         display: flex;
         justify-content: space-between;
       }
+    .logout {
+        padding-top: 15vh;
+        padding-left: 20px;
+        font-size: 12px;
+        cursor: pointer;
+    }
     .bottom {
         /* padding-top:15vh; */
+        color: #4ad395;
+        font-weight: lighter;
+        padding-left: 20px;
+    }
+    .bottom2 {
+        padding-top:15vh;
         color: #4ad395;
         font-weight: lighter;
         padding-left: 20px;
