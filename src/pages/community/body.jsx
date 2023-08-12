@@ -17,6 +17,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import Newsview from "../../components/newview/newsview";
 import CommunityNews from "../../components/communitynews/communitynews"
+import CommunityNewsview from "../../components/communityNewsView/communitynewsview";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment } from "@fortawesome/free-solid-svg-icons";
 
@@ -40,7 +41,7 @@ const stopPropagation = (e) => {
 
 const fetchCommunity = async () => {
     try {
-        const token = localStorage.getItem('token')
+        const token = localStorage.getItem('acctoken')
         const response = await axios.get(serverUrl,{
             headers: {
                 Authorization: `Bearer ${token}`
@@ -102,7 +103,7 @@ return (
         { modal &&
         <ModalBackground onClick={changeModal}>
             <ModalContainer onClick={stopPropagation}>
-                <Newsview news = {selectedNews}/>
+                <CommunityNewsview postId = {selectedNews.id} articleId = {selectedNews.article}/>
             </ModalContainer>
         </ModalBackground>
         }
@@ -111,4 +112,3 @@ return (
 };
 
 export default Body;
-

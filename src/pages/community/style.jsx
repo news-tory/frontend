@@ -96,7 +96,7 @@ export const ModalContainer = styled.div`
     background-color: #fff;
     border-radius: 10px;
     width: 80%;
-    height: 70%;
+    height: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -148,7 +148,7 @@ export const ButtonSection = styled.div`
     width: 100%;
     height: 50px;
     display: flex;
-    border-top: 2px solid #656565;
+    border-top: 2px solid #eaeaea;
     justify-content: center;
     align-items: center;
 `
@@ -159,7 +159,7 @@ export const HeartButton = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    border-right: 2px solid #656565;
+    border-right: 2px solid #eaeaea;
     gap: 5px;
     cursor: pointer;
 `

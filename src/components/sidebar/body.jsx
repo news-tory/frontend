@@ -21,7 +21,9 @@ function Body(props) {
     const [data, setData] = useState('');
 
     // local Storage의 토큰
+
     const accToken = localStorage.getItem('accToken')
+
 
     // 로그인 판별
     // const [isloggedin, setIsloggedin] = useState(!!TOKEN)
