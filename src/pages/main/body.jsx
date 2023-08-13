@@ -30,10 +30,9 @@ import Newsview from "../../components/newview/newsview";
 import NewsGeneral from "../../components/newsGeneral/newsGeneral";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { connect } from "react-redux";
 
-
-
-function Body() {
+function Body(props) {
     const serverUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/articles/"
     const UserServerUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/"
     const HotnewsUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/articles/popularity/"
@@ -93,10 +92,9 @@ function Body() {
 
     const getUser = async () => {
         try{
-            const token = localStorage.getItem('accToken')
             const response = await axios.get(UserServerUrl, {
                 headers: {
-                    Authorization: `token ${token}`
+                    Authorization: `token ${props.accessToken}`
                 }
             });
             const userData = response.data;
@@ -206,5 +204,11 @@ function Body() {
     );
 };
 
-export default Body;
+const mapStateToProps = (state) => ({
+    isLoggedIn: state.auth.isLoggedIn,
+    accessToken: state.auth.accessToken,
+});
+
+
+export default connect(mapStateToProps)(Body);
 
