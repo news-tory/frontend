@@ -27,7 +27,7 @@ const Modalpage = () => {
     const [activeSignupForm, setActiveSignupForm] = useState('signup');
     const [activeButton, setActiveButton] = useState(false);
 
-    const category = ['🏈 스포츠', '🌎 세계', '🎨 예술', '🎬 영화', '👫 사회', '📚 도서', '🏢 경영', '🖥️ 기술', '🧑‍🤝‍🧑 문화'];
+    const category = ['스포츠', '세계', '예술', '영화', '사회', '도서', '경영', '기술', '문화'];
 
     //정보확인
     const [favorite, setFavorite] = useState([]);

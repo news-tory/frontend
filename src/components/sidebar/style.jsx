@@ -21,33 +21,31 @@ export const Section = styled.div`
 
 
 export const Profile = styled.div`
-    padding-bottom: 5vh;
+    padding-bottom: 10vh;
     display: flex;
     .pencil {
-        padding-top: 65px;
+        padding-top: 80px;
         padding-left: 7px;
         cursor: pointer;
         font-size: 13px;
     }
     h4 {
         padding-left: 10px;
-        padding-top: 42px;
+        padding-top: 60px;
         text-align: right;    }
 `
 
 export const Goto = styled.div`
     display: flex;
-    padding-top: 30px;
     .gotoimage {
         position: absolute;
         width: 25px;
         height: 25px;
-        padding-top: 23px;
-        padding-left: 50px;
+        padding-top: 13px;
+        padding-left: 60px;
     }
     p {
-        padding-left: 90px;
-        padding-top: 10px;
+        padding-left: 100px;
     }
 `
 
@@ -57,7 +55,7 @@ export const Tologin = styled.div`
     color: black;
     }
     h5 {
-        padding-top: 40px;
+        padding-top: 60px;
         padding-left: 10px;
     }
 `
@@ -65,15 +63,15 @@ export const Tologin = styled.div`
 export const All = styled.div`
     text-align: center;
     .logo {
-        width: 200px;
+        width: 220px;
         height:30px;
-        padding-top: 15px;
-        padding-left: 20px;
+        padding-top: 25px;
+        padding-left: 15px;
     }
     .basicimage {
         width:40px;
         height: 40px;
-        padding-top: 50px;
+        padding-top: 70px;
         border-radius: 10%;
         padding-left: 35px;
     }
@@ -84,10 +82,11 @@ export const All = styled.div`
         justify-content: space-between;
       }
     .logout {
-        padding-top: 15vh;
+        margin-top: 33vh;
         padding-left: 20px;
         font-size: 12px;
         cursor: pointer;
+        color: gray;
     }
     .bottom {
         /* padding-top:15vh; */
@@ -96,7 +95,7 @@ export const All = styled.div`
         padding-left: 20px;
     }
     .bottom2 {
-        padding-top:15vh;
+        padding-top:35vh;
         color: #4ad395;
         font-weight: lighter;
         padding-left: 20px;

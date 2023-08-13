@@ -1,16 +1,71 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import basicimage from "../user.png";
 import axios from "axios";
 import { All, Nickname } from './style';
+import { connect } from 'react-redux';
 
-const ServerUrl = 'https://port-0-minibackrepo1-k19y2klk242hfg.sel4.cloudtype.app/members/'
 
-const Modalpage = () => {
+const ServerUrl = 'https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/'
 
+function Modalpage (props){
+
+    const [data, setData] = useState('');
     const [currentNickname, setCurrentNickname] = useState('nickname')
     const [nickname, setNickname] = useState('')
     const [isNickname, setIsNickname] = useState(false)
     const [nicknameMessage, setNicknameMessage] = useState('')
+
+
+    console.log("nickToken", props.accessToken);
+
+
+    // 원래 정보 불러오기
+    const serverApi = axios.create({
+        headers: {
+            //   'Authorization': "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzM2NTk3LCJpYXQiOjE2OTE3MzQ3OTcsImp0aSI6ImQ5ODVkZjExNmQ2NjQ3MjhiNDIxY2M4Y2MyMjRjNjk5IiwidXNlcl9pZCI6MX0.GGgA8q0fjRmYNT6yj9rJWfHTii03pqrFyreA1wTf4ic",
+            // 'Authorization': localStorage.getItem('token')
+            'Authorization': `token ${props.accessToken}`
+        },
+    });
+    const userApi = async () => {
+        let user = [];
+        await serverApi.get(ServerUrl).then((response) => {
+            user = response.data;
+            //  console.log(user);
+        })
+        return user;
+    }
+
+    const getUser = async () => {
+        const nowDetail = await userApi();
+        setData(nowDetail);
+    }
+    console.log(data.nickname);
+
+    useEffect(() => {
+        getUser();
+    }, [])
+
+
+    // 닉네임 변경
+    const onSubmit = async () => {
+        try {
+            const response = await axios.patch(ServerUrl,{
+                nickname: nickname,
+            },{
+                headers: {
+                    Authorization: `token ${props.accessToken}`
+                }
+            });
+            console.log(response.data); // 서버의 응답 데이터 확인
+            alert('변경이 완료되었습니다!')
+            setNickname("")
+            setCurrentNickname(nickname)
+        } catch (error) {
+            alert('변경에 실패했습니다. 인터넷 연결을 확인 후 다시 시도해보시겠어요?')
+            console.error(error)
+        }
+    };
 
 
     // 닉네임 우효성 검사
@@ -28,19 +83,6 @@ const Modalpage = () => {
         }
     }, [])
 
-    // 정보 변경 버튼
-    const onSubmit = async () => {
-        try {
-            const response = await axios.patch(ServerUrl, {
-                //정보 입력
-            });
-            console.log(response.data); // 서버의 응답 데이터 확인
-            alert('변경이 완료되었습니다!')
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
     return (
         <All>
             <Nickname>
@@ -50,7 +92,7 @@ const Modalpage = () => {
                     type="text"
                     className="input"
                     onChange={onChangeNickname}
-                    placeholder={currentNickname}
+                    placeholder={data.nickname}
                     disabled={true} />
                 <p>변경할 닉네임</p>
                 <input
@@ -68,4 +110,10 @@ const Modalpage = () => {
     )
 };
 
-export default Modalpage;
+const mapStateToProps = (state) => ({
+    isLoggedIn: state.auth.isLoggedIn,
+    accessToken: state.auth.accessToken,
+});
+
+
+export default connect(mapStateToProps)(Modalpage);

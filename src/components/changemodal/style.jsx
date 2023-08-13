@@ -37,7 +37,8 @@ export const Profile = styled.div`
         margin-top: 30px;
     }
     h4 {
-        margin-left: 210px;
+        /* margin-left: 210px; */
+        text-align: center;
     }
     p {
         font-size: 12px;

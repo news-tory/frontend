@@ -18,6 +18,9 @@ export const Category = styled.div`
         margin-left: 370px;
         cursor: pointer;
     }
+    .smalltitle {
+        padding-left: 23px;
+    }
 `
 
 export const CategoryButton = styled.div`
@@ -26,6 +29,7 @@ export const CategoryButton = styled.div`
     margin-left: 25px;
     margin-right: 25px;
     margin-bottom: 10px;
+    padding-top: 7px;
     width: 100px;
     height: 25px;
     background-color: ${({ active }) => (active ? '#f2f2f2' : 'transparent')};
