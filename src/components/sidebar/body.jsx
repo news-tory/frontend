@@ -59,6 +59,10 @@ function Body(props) {
     console.log('isLoggedInBody:', props.isLoggedIn);
     console.log('TOken: ', props.accessToken)
 
+    useEffect(() => {
+        getUser();
+    }, [data.nickname]); 
+
 
     // 로그아웃
     const Onclicklogout = async () => {

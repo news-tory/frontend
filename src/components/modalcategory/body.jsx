@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 import { All, Category, CategoryWrapper, CategoryButton } from './style';
 import { connect } from 'react-redux';
+import { useEffect } from "react";
 
 
 
@@ -46,8 +47,8 @@ function Modalpage(props) {
     }
 
 
-    // 카테고리 변경
 
+    // 카테고리 변경
     const onSubmit = async () => {
         try {
             const response = await axios.patch(ServerUrl, {
@@ -71,6 +72,7 @@ function Modalpage(props) {
           console.error(error);
         }
       };
+    
   
 
     return (

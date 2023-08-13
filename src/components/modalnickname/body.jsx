@@ -67,6 +67,11 @@ function Modalpage (props){
         }
     };
 
+     useEffect(() => {
+        getUser();
+    }, [currentNickname]); // currentNickname 상태가 변경될 때마다 useEffect 실행
+
+
 
     // 닉네임 우효성 검사
     const onChangeNickname = useCallback((e) => {

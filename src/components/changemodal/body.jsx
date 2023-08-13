@@ -51,7 +51,7 @@ function Modalpage(props) {
 
     useEffect(() => {
         getUser();
-    }, [])
+    }, [data])
 
 
     // true 값인 카테고리 필터링

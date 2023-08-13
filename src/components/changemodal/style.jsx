@@ -114,6 +114,7 @@ export const Category = styled.div`
     padding-top: 30px;
     p {
         font-size: 12px;
+        cursor: pointer;
     }
 
 `
