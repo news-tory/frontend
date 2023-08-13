@@ -20,10 +20,6 @@ function Body(props) {
 
     const [data, setData] = useState('');
 
-    // local Storage의 토큰
-
-    const accToken = localStorage.getItem('accToken')
-
 
     // 로그인 판별
     // const [isloggedin, setIsloggedin] = useState(!!TOKEN)
@@ -36,7 +32,7 @@ function Body(props) {
     const serverApi = axios.create({
         headers: {
             // 'Authorization': "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzM2NTk3LCJpYXQiOjE2OTE3MzQ3OTcsImp0aSI6ImQ5ODVkZjExNmQ2NjQ3MjhiNDIxY2M4Y2MyMjRjNjk5IiwidXNlcl9pZCI6MX0.GGgA8q0fjRmYNT6yj9rJWfHTii03pqrFyreA1wTf4ic",
-            'Authorization': `token ${accToken}`
+            'Authorization': `token ${props.accessToken}`
         },
     });
 
@@ -50,7 +46,7 @@ function Body(props) {
     }
 
     const getUser = async () => {
-        if (accToken) {
+        if (props.isLoggedIn) {
             const nowData = await userApi();
             setData(nowData);
         }

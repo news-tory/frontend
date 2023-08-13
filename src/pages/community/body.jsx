@@ -1,4 +1,5 @@
-import { MainWrapper,
+import {
+    MainWrapper,
     MainContainer,
     CommunityText,
     CommunityContainer,
@@ -6,12 +7,13 @@ import { MainWrapper,
     CommunityNewsWrapper,
     CommunityContent,
     ModalBackground,
-    ModalContainer, 
+    ModalContainer,
     PostUser,
     NewsAbstract,
     ButtonSection,
     HeartButton,
-    PostButton} from "./style";
+    PostButton
+} from "./style";
 import { useState, useCallback, useEffect } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
@@ -21,96 +23,109 @@ import CommunityNewsview from "../../components/communityNewsView/communitynewsv
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment } from "@fortawesome/free-solid-svg-icons";
 
+import { connect } from 'react-redux';
 
 
-function Body() {
-const serverUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/community/posts/"
-const [communityList, setCommunityList] = useState([]);
-const [selectedNews,setSelectedNews] = useState([]);
-const [activeMyFav, setActiveMyFav] = useState(false);
-const navigate = useNavigate();
-let [modal, setModal] = useState(false);
 
-const changeModal = () => {
-    setModal(!modal);
-};
 
-const stopPropagation = (e) => {
-    e.stopPropagation();
-};
+function Body(props) {
+    
+    const serverUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/community/posts/"
+    const [communityList, setCommunityList] = useState([]);
+    const [selectedNews, setSelectedNews] = useState([]);
+    const [activeMyFav, setActiveMyFav] = useState(false);
+    const navigate = useNavigate();
+    let [modal, setModal] = useState(false);
 
-const fetchCommunity = async () => {
-    try {
-        const token = localStorage.getItem('accToken')
-        const response = await axios.get(serverUrl,{
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        console.log(token);
-        console.log(response.data); // 서버의 응답 데이터 확인
-        setCommunityList(response.data);
-    } catch (error) {
-        alert('데이터 로딩에 실패했습니다.')
-        console.error(error);
-        navigate('/')
-    }
-};
+    const changeModal = () => {
+        setModal(!modal);
+    };
 
-const onClickNews = (news) => {
-    setSelectedNews(news);
-    changeModal();
-}
+    const stopPropagation = (e) => {
+        e.stopPropagation();
+    };
 
-useEffect(() => {
-    fetchCommunity();
-}, []);
+    console.log('ComToken', props.accessToken);
 
-const onClickMyFav = () => {
-    setActiveMyFav(!activeMyFav)
-    console.log(activeMyFav)
-}
-
-return (
-    <>
-        <MainContainer>
-            <MainWrapper>
-                <CommunityText>Community</CommunityText>
-                <CommunityContainer>
-                    {communityList.map((list, index) => (
-                    <CommunityWrapper key={index}>
-                        <PostUser>
-                            <div>{list.user}</div>
-                            <NewsAbstract>{list.created_at}</NewsAbstract>
-                        </PostUser>
-                        <CommunityContent>{list.content}</CommunityContent>
-                        <CommunityNewsWrapper>
-                            <CommunityNews newsId = {list.article}/>
-                        </CommunityNewsWrapper>
-                        <ButtonSection>
-                            <HeartButton>
-                                <FontAwesomeIcon icon={faHeart} />
-                                <p>{list.like_cnt}</p>
-                            </HeartButton>
-                            <PostButton onClick={() => onClickNews(list)}>
-                                <FontAwesomeIcon icon={faComment}/>
-                                <p>Comment</p>
-                            </PostButton>
-                        </ButtonSection>
-                    </CommunityWrapper>
-                    ))}
-                </CommunityContainer>
-            </MainWrapper>
-        </MainContainer>
-        { modal &&
-        <ModalBackground onClick={changeModal}>
-            <ModalContainer onClick={stopPropagation}>
-                <CommunityNewsview postId = {selectedNews.id} articleId = {selectedNews.article}/>
-            </ModalContainer>
-        </ModalBackground>
+    const fetchCommunity = async () => {
+        try {
+            // const token = localStorage.getItem('accToken')
+            const response = await axios.get(serverUrl, {
+                headers: {
+                    Authorization: `Bearer ${props.accessToken}`
+                }
+            });
+            // console.log(token);
+            console.log(response.data); // 서버의 응답 데이터 확인
+            setCommunityList(response.data);
+        } catch (error) {
+            alert('데이터 로딩에 실패했습니다.')
+            console.error(error);
+            navigate('/')
         }
-    </>            
-);
+    };
+
+    const onClickNews = (news) => {
+        setSelectedNews(news);
+        changeModal();
+    }
+
+    useEffect(() => {
+        fetchCommunity();
+    }, []);
+
+    const onClickMyFav = () => {
+        setActiveMyFav(!activeMyFav)
+        console.log(activeMyFav)
+    }
+
+    return (
+        <>
+            <MainContainer>
+                <MainWrapper>
+                    <CommunityText>Community</CommunityText>
+                    <CommunityContainer>
+                        {communityList.map((list, index) => (
+                            <CommunityWrapper key={index}>
+                                <PostUser>
+                                    <div>{list.user}</div>
+                                    <NewsAbstract>{list.created_at}</NewsAbstract>
+                                </PostUser>
+                                <CommunityContent>{list.content}</CommunityContent>
+                                <CommunityNewsWrapper>
+                                    <CommunityNews newsId={list.article} />
+                                </CommunityNewsWrapper>
+                                <ButtonSection>
+                                    <HeartButton>
+                                        <FontAwesomeIcon icon={faHeart} />
+                                        <p>{list.like_cnt}</p>
+                                    </HeartButton>
+                                    <PostButton onClick={() => onClickNews(list)}>
+                                        <FontAwesomeIcon icon={faComment} />
+                                        <p>Comment</p>
+                                    </PostButton>
+                                </ButtonSection>
+                            </CommunityWrapper>
+                        ))}
+                    </CommunityContainer>
+                </MainWrapper>
+            </MainContainer>
+            {modal &&
+                <ModalBackground onClick={changeModal}>
+                    <ModalContainer onClick={stopPropagation}>
+                        <CommunityNewsview postId={selectedNews.id} articleId={selectedNews.article} />
+                    </ModalContainer>
+                </ModalBackground>
+            }
+        </>
+    );
 };
 
-export default Body;
+
+const mapStateToProps = (state) => ({
+    isLoggedIn: state.auth.isLoggedIn,
+    accessToken: state.auth.accessToken,
+});
+
+
+export default connect(mapStateToProps)(Body);

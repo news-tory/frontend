@@ -42,8 +42,7 @@ function LoginForm(props) {
             // REDUX에 accessToken 저장
             const accToken = response.data.token.access;
             props.loginSuccess(accToken);
-            dispatch(saveResponseData(accToken));
-            console.log("gu: ", props.accessToken)
+            dispatch(props.saveResponseData(accToken));
 
             // local에 accessToken, refreshToken 저장
             const refToken = response.data.token.refresh;
@@ -54,7 +53,7 @@ function LoginForm(props) {
             navigate('/');
             console.log('Isloggedinlogin:', props.isLoggedIn)
 
-            console.log('TOken: ', props.accessToken)
+            // console.log('TOken: ', props.accessToken)
             
         } catch (error) {
             props.loginFailure();
