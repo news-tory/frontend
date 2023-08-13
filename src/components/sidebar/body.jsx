@@ -146,7 +146,7 @@ function Body(props) {
                         </Goto>
                         <Goto>
                             <img className="gotoimage" src={mypage}></img>
-                            <Link to='mypage' className="noline">
+                            <Link to='/mypage' className="noline">
                                 <p>MyPage</p></Link>
                         </Goto>
                     </Section>

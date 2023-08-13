@@ -18,6 +18,7 @@ export const NewsViewSection = styled.div`
     flex-direction: column;
     padding: 20px 20px 0px 20px;
     align-items: center;
+    overflow: auto;
 `
 
 export const PostingSection = styled.div`
@@ -116,6 +117,7 @@ export const NewsPostSection = styled.div`
     height: 100%;
     display: flex;
     flex-direction: column;
+    overflow: auto;
     `
 export const CommentPostWrapper = styled.div`
     width: 100%;
