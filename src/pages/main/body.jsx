@@ -36,7 +36,9 @@ import { faHeart, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 function Body() {
     const serverUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/articles/"
     const UserServerUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/"
+    const HotnewsUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/articles/popularity/"
     const [newslist, setNewsList] = useState([]);
+    const [hotnewsList,setHotnewsList] = useState([]);
     const [selectedNews,setSelectedNews] = useState([]);
     const [activeMyFav, setActiveMyFav] = useState(false);
     const navigate = useNavigate();
@@ -53,11 +55,22 @@ function Body() {
     
     const fetchnews = async () => {
         try {
+            const response = await axios.get(HotnewsUrl);
+            console.log(response.data); // 서버의 응답 데이터 확인
+            setHotnewsList(response.data);
+        } catch (error) {
+            alert('뉴스데이터 로딩에 실패했습니다.')
+            navigate('/')
+        }
+    };
+    
+    const fetchHotnews = async () => {
+        try {
             const response = await axios.get(serverUrl);
             console.log(response.data); // 서버의 응답 데이터 확인
             setNewsList(response.data);
         } catch (error) {
-            alert('데이터 로딩에 실패했습니다.')
+            alert('실시간 뉴스 로딩에 실패했습니다.')
             navigate('/')
         }
     };
@@ -70,6 +83,7 @@ function Body() {
     useEffect(() => {
         fetchnews();
         getUser();
+        fetchHotnews();
     }, []);
 
     const onClickMyFav = () => {
@@ -90,7 +104,7 @@ function Body() {
             setFilteredNews(newslist.filter(news => trueKeys.includes(news.section)));
         }
             catch(error){
-                alert('실패')
+                alert('유저 정보 가져오기 실패')
                 console.error(error);   
             }
         }
@@ -166,7 +180,7 @@ function Body() {
                     <HotNewsText>
                         <div>실시간 인기 뉴스</div>
                     </HotNewsText>
-                    {newslist.map((news,index) => (
+                    {hotnewsList.map((news,index) => (
                         <HotNewsWrapper onClick={() => onClickNews(news)}>
                             <HotNewsPaper>
                                 <div>{news.paper}</div>

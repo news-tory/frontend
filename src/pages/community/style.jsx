@@ -77,7 +77,7 @@ export const MyFavoriteText = styled.div`
     cursor: pointer;
     `
 
-    export const ModalBackground = styled.div`
+export const ModalBackground = styled.div`
     padding-left: 100px;
     position: fixed;
     top: 0;
@@ -138,7 +138,6 @@ export const CommunityContent =  styled.div`
     width: 100%;
     font-size: 20px;
     padding-left: 50px;
-
 `
 export const NewsAbstract = styled.div`
     font-size: 17px;
