@@ -37,7 +37,8 @@ export const Profile = styled.div`
         margin-top: 30px;
     }
     h4 {
-        margin-left: 210px;
+        /* margin-left: 210px; */
+        text-align: center;
     }
     p {
         font-size: 12px;
@@ -113,8 +114,6 @@ export const Category = styled.div`
     padding-top: 30px;
     p {
         font-size: 12px;
-        cursor: pointer;
-
     }
 
 `
@@ -123,13 +122,11 @@ export const CategoryButton = styled.div`
     border-radius: 20px;
     font-size: 15px;
     margin: 7px;
-    width: 140px;
+    width: 100px;
     height: 25px;
     background-color: ${({ active }) => (active ? '#f2f2f2' : 'transparent')};
-    border: 1px solid #4ad395
-    
-
-    `
+    border: 1px solid #4ad395  
+`
 
 export const CategoryWrapper = styled.div`
     width: 500px;
@@ -139,7 +136,6 @@ export const CategoryWrapper = styled.div`
     justify-content: left;
     text-align: center;
     padding: 10px 0px 20px 0px;
-    cursor: pointer;
 `
 
 export const Itsmodal = styled.div`
@@ -166,3 +162,4 @@ export const ModalContainer = styled.div`
     /* pointer-events: none;  */
 
 `;
+

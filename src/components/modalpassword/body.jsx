@@ -1,10 +1,12 @@
 import { useState, useRef, useCallback } from "react";
 import axios from "axios";
 import { All, Password } from './style';
+import { connect } from 'react-redux';
 
-const ServerUrl = 'https://port-0-minibackrepo1-k19y2klk242hfg.sel4.cloudtype.app/members/'
+const ServerUrl = 'https://port-0-minibackrepo1-k19y2klk242hfg.sel4.cloudtype.app/accounts/update/'
 
-const Modalpage = () => {
+const Modalpage = (props) => {
+
 
     const [userpassword, setUserpassword] = useState('123456aa!')
     const [password, setPassword] = useState('');
@@ -16,15 +18,24 @@ const Modalpage = () => {
     const [userpasswordMessage, setUserpasswordMessage] = useState('');
     const [isTruepassword, setIsTruepassword] = useState(false);
 
+    console.log('passToken: ', props.accessToken);
+    console.log(passwordConfirm);
+
     // 정보 변경 버튼
     const onSubmit = async () => {
         try {
             const response = await axios.patch(ServerUrl, {
-                //정보 입력
+                password: passwordConfirm,
+            },{
+                headers: {
+                    Authorization: `token ${props.accessToken}`
+                }
             });
             console.log(response.data); // 서버의 응답 데이터 확인
             alert('변경이 완료되었습니다!')
+            setPasswordConfirm("")
         } catch (error) {
+            alert('변경에 실패했습니다. 인터넷 연결을 확인 후 다시 시도해보시겠어요?')
             console.error(error);
         }
     };
@@ -124,4 +135,11 @@ const Modalpage = () => {
     )
 };
 
-export default Modalpage;
+
+const mapStateToProps = (state) => ({
+    isLoggedIn: state.auth.isLoggedIn,
+    accessToken: state.auth.accessToken,
+});
+
+
+export default connect(mapStateToProps)(Modalpage);

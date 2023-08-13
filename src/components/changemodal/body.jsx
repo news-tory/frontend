@@ -1,4 +1,4 @@
-import { All, Profile, Password, Category, Every, Itsmodal, ModalContainer } from "./style";
+import { All, Profile, Password, Category, Every, Itsmodal, ModalContainer, CategoryButton, CategoryWrapper } from "./style";
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import basicimage from "../user.png";
@@ -20,27 +20,28 @@ const ServerUrl = 'https://port-0-minibackrepo1-k19y2klk242hfg.sel4.cloudtype.ap
 
 
 
-function Modalpage(props){
+function Modalpage(props) {
 
     const [data, setData] = useState('');
 
     console.log('modalToken', props.accessToken);
 
+    // 유저 정보 가져오기
     const serverApi = axios.create({
         headers: {
             //   'Authorization': "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzM2NTk3LCJpYXQiOjE2OTE3MzQ3OTcsImp0aSI6ImQ5ODVkZjExNmQ2NjQ3MjhiNDIxY2M4Y2MyMjRjNjk5IiwidXNlcl9pZCI6MX0.GGgA8q0fjRmYNT6yj9rJWfHTii03pqrFyreA1wTf4ic",
-                // 'Authorization': localStorage.getItem('token')
-            'Authorization' : `token ${props.accessToken}`
+            // 'Authorization': localStorage.getItem('token')
+            'Authorization': `token ${props.accessToken}`
         },
-     });
-      const userApi = async () => {
-          let user = [];
-          await serverApi.get(`https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/`).then((response) => {
-              user = response.data;
-             //  console.log(user);
-          })
-          return user;
-      }
+    });
+    const userApi = async () => {
+        let user = [];
+        await serverApi.get(`https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/`).then((response) => {
+            user = response.data;
+            //  console.log(user);
+        })
+        return user;
+    }
 
     const getUser = async () => {
         const nowDetail = await userApi();
@@ -52,7 +53,26 @@ function Modalpage(props){
         getUser();
     }, [])
 
+
+    // true 값인 카테고리 필터링
+    const filteredCategories = Object.keys(data)
+        .filter((key) => data[key] === true)
+        .map((key) => key);
     
+    // 카테고리 매핑
+    const categoryMapping = {
+        sport: "스포츠",
+        world: "세계",
+        art: "예술",
+        film: "영화",
+        society: "사회",
+        books: "도서",
+        business: "비즈니스",
+        tech: "기술",
+        culture: "문화",
+    };
+        
+
     // 이미지 모달창 관리
     let [modalimage, setModalimage] = useState(false);
     const openModalimage = () => {
@@ -93,18 +113,7 @@ function Modalpage(props){
     };
 
 
-    // 정보 변경 버튼
-    const onSubmit = async () => {
-        try {
-            const response = await axios.patch(ServerUrl, {
-                //정보 입력
-            });
-            console.log(response.data); // 서버의 응답 데이터 확인
-            alert('변경이 완료되었습니다!')
-        } catch (error) {
-            console.error(error);
-        }
-    };
+
 
 
     return (
@@ -119,7 +128,7 @@ function Modalpage(props){
                     <FontAwesomeIcon
                         onClick={openModalimage} className='pencil' icon={faPencil} />
                     <div className="nickname">
-                        <h4>nickname</h4>
+                        <h4>{data.nickname}</h4>
                         <p onClick={openModalnickname}>닉네임 변경</p>
                         <p onClick={openModalpassword}>비밀번호 변경</p>
                     </div>
@@ -127,6 +136,15 @@ function Modalpage(props){
                 <Category>
                     <h4 className="smalltitle">선호 카테고리</h4>
                     <p onClick={openModalcategory}>선호 카테고리 변경</p>
+                    <CategoryWrapper>
+                        {filteredCategories.map((category) => (
+                            categoryMapping[category] && (
+                            <CategoryButton key={category}>
+                                <p className="catbutton">{categoryMapping[category]}</p>
+                            </CategoryButton>
+                            )
+                        ))}
+                    </CategoryWrapper>
                 </Category>
                 {modalimage &&
                     <Itsmodal onClick={closeModalimage}>
