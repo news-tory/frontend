@@ -10,44 +10,47 @@ import Modalnickname from '../modalnickname';
 import Modalpassword from '../modalpassword';
 import Modalcategory from '../modalcategory';
 
+import { connect } from 'react-redux';
+
+
 
 const ServerUrl = 'https://port-0-minibackrepo1-k19y2klk242hfg.sel4.cloudtype.app/members/'
 
-// const TOKEN = localStorage.getItem('token')
-
-// const serverApi = axios.create({
-//     headers: {
-//         //   'Authorization': "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzM2NTk3LCJpYXQiOjE2OTE3MzQ3OTcsImp0aSI6ImQ5ODVkZjExNmQ2NjQ3MjhiNDIxY2M4Y2MyMjRjNjk5IiwidXNlcl9pZCI6MX0.GGgA8q0fjRmYNT6yj9rJWfHTii03pqrFyreA1wTf4ic",
-//             // 'Authorization': localStorage.getItem('token')
-//         'Authorization' : `token ${TOKEN}`
-//     },
-//  });
-//   const userApi = async () => {
-//       let user = [];
-//       await serverApi.get(`https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/`).then((response) => {
-//           user = response.data;
-//          //  console.log(user);
-//       })
-//       return user;
-//   }
 
 
-const Modalpage = (pops) => {
 
-    // const TOKEN = localStorage.getItem('token')
-    // console.log(TOKEN)
-    // const [data, setData] = useState('');
 
-    // const getUser = async () => {
-    //     const nowDetail = await userApi();
-    //     setData(nowDetail);
-    // }
-    // console.log(data.nickname);
+function Modalpage(props){
 
-    // useEffect(() => {
-    //     getUser();
-    //     // getComment();
-    // }, [])
+    const [data, setData] = useState('');
+
+    console.log('modalToken', props.accessToken);
+
+    const serverApi = axios.create({
+        headers: {
+            //   'Authorization': "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzM2NTk3LCJpYXQiOjE2OTE3MzQ3OTcsImp0aSI6ImQ5ODVkZjExNmQ2NjQ3MjhiNDIxY2M4Y2MyMjRjNjk5IiwidXNlcl9pZCI6MX0.GGgA8q0fjRmYNT6yj9rJWfHTii03pqrFyreA1wTf4ic",
+                // 'Authorization': localStorage.getItem('token')
+            'Authorization' : `token ${props.accessToken}`
+        },
+     });
+      const userApi = async () => {
+          let user = [];
+          await serverApi.get(`https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/`).then((response) => {
+              user = response.data;
+             //  console.log(user);
+          })
+          return user;
+      }
+
+    const getUser = async () => {
+        const nowDetail = await userApi();
+        setData(nowDetail);
+    }
+    console.log(data.nickname);
+
+    useEffect(() => {
+        getUser();
+    }, [])
 
     
     // 이미지 모달창 관리
@@ -161,6 +164,12 @@ const Modalpage = (pops) => {
 }
 
 
-export default Modalpage;
+const mapStateToProps = (state) => ({
+    isLoggedIn: state.auth.isLoggedIn,
+    accessToken: state.auth.accessToken,
+});
+
+
+export default connect(mapStateToProps)(Modalpage);
 
 

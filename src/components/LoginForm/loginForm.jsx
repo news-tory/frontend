@@ -43,7 +43,6 @@ function LoginForm(props) {
             const accToken = response.data.token.access;
             props.loginSuccess(accToken);
             dispatch(props.saveResponseData(accToken));
-            console.log("gu: ", props.accessToken)
 
             // local에 accessToken, refreshToken 저장
             const refToken = response.data.token.refresh;
@@ -54,7 +53,7 @@ function LoginForm(props) {
             navigate('/');
             console.log('Isloggedinlogin:', props.isLoggedIn)
 
-            console.log('TOken: ', props.accessToken)
+            // console.log('TOken: ', props.accessToken)
             
         } catch (error) {
             props.loginFailure();
