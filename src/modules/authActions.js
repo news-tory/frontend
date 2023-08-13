@@ -3,7 +3,7 @@ import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT, SAVE_RESPONSE_DATA  } from './aut
 
 export const loginSuccess = (accessToken) => ({
   type: LOGIN_SUCCESS,
-  payload: accessToken ,
+  payload: accessToken,
 });
 
 export const saveResponseData = (accessToken) => ({

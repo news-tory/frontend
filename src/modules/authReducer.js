@@ -17,7 +17,7 @@ const authReducer = (state = initialState, action) => {
     case SAVE_RESPONSE_DATA:
       return {
         ...state,
-        accessToken: state.accessToken,
+        accessToken: action.payload,
       };
     case LOGOUT:
       return {

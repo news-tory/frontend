@@ -42,7 +42,7 @@ function LoginForm(props) {
             // REDUX에 accessToken 저장
             const accToken = response.data.token.access;
             props.loginSuccess(accToken);
-            dispatch(props.saveResponseData(accToken));
+            dispatch(saveResponseData(accToken));
             console.log("gu: ", props.accessToken)
 
             // local에 accessToken, refreshToken 저장
