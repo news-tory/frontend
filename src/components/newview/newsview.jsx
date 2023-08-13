@@ -22,7 +22,9 @@ import { faPenToSquare, faHeart} from '@fortawesome/free-solid-svg-icons';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-export default function Newsview(props) {
+import { connect } from 'react-redux';
+
+function Newsview(props) {
     const [like, setLike] = useState(false);
     const {news} = props ;
     const navigate = useNavigate()
@@ -35,17 +37,17 @@ export default function Newsview(props) {
     const serverUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/community/posts/"
     const postfeed = async () => {
         try {
-            const token = localStorage.getItem('accToken');
+            // const token = localStorage.getItem('accToken');
             const response = await axios.post(serverUrl,{
                 article: news.id,
                 content: posting
             },{
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${props.accessToken}`
                 }
             });
             console.log(response.data); // 서버의 응답 데이터 확인
-            alert('게시되었습니다.')
+            alert('게시되었습니당.')
             setPosting("")
         } catch (error) {
             alert('업로드에 실패했습니다. 인터넷 연결을 확인 후 다시 시도해보시겠어요?')
@@ -123,3 +125,10 @@ export default function Newsview(props) {
 
 }
 
+const mapStateToProps = (state) => ({
+    isLoggedIn: state.auth.isLoggedIn,
+    accessToken: state.auth.accessToken,
+});
+
+
+export default connect(mapStateToProps)(Newsview);
