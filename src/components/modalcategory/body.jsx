@@ -5,22 +5,12 @@ import { All, Category, CategoryWrapper, CategoryButton } from './style';
 
 
 
-const ServerUrl = 'https://port-0-minibackrepo1-k19y2klk242hfg.sel4.cloudtype.app/members/'
+const ServerUrl = 'https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/'
 
-const Modalpage = () => {
+function Modalpage(props) {
 
-    // 정보 변경 버튼
-    const onSubmit = async () => {
-        try {
-            const response = await axios.patch(ServerUrl, {
-                //정보 입력
-            });
-            console.log(response.data); // 서버의 응답 데이터 확인
-            alert('변경이 완료되었습니다!')
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    console.log("cateToken", props.accessToken);
+
 
     // 선호 카테고리
     const navigate = useNavigate();
@@ -52,6 +42,34 @@ const Modalpage = () => {
     const loginActive = () => {
         setActiveSignupForm('login');
     }
+
+
+    // 카테고리 변경
+
+    const onSubmit = async () => {
+        try {
+            const response = axios.post(ServerUrl, {
+                nickname: nickname,
+                email: email,
+                password: password,
+                sport: favorite.includes('스포츠'),
+                world: favorite.includes('세계'),
+                art: favorite.includes('예술'),
+                film: favorite.includes('영화'),
+                society: favorite.includes('사회'),
+                books: favorite.includes('도서'),
+                business: favorite.includes('경영'),
+                tech: favorite.includes('기술'),
+                culture: favorite.includes('문화')
+              });
+              console.log(response.data); // 서버의 응답 데이터 확인
+              alert('회원가입이 완료되었습니다! 로그인을 다시 해주세요 :)')
+              updateActiveNextForm(false);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+  
 
     return (
         <All>
