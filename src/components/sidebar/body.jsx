@@ -40,7 +40,6 @@ function Body(props) {
         let user = [];
         await serverApi.get(`https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/`).then((response) => {
             user = response.data;
-            console.log(user);
         })
         return user;
     }
@@ -56,12 +55,10 @@ function Body(props) {
         getUser();
     }, [])
 
-    console.log('isLoggedInBody:', props.isLoggedIn);
-    console.log('TOken: ', props.accessToken)
 
     useEffect(() => {
         getUser();
-    }, [data.nickname]); 
+    }, [data]); 
 
 
     // 로그아웃

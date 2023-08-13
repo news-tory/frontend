@@ -16,9 +16,6 @@ function Modalpage (props){
     const [nicknameMessage, setNicknameMessage] = useState('')
 
 
-    console.log("nickToken", props.accessToken);
-
-
     // 원래 정보 불러오기
     const serverApi = axios.create({
         headers: {
@@ -40,7 +37,6 @@ function Modalpage (props){
         const nowDetail = await userApi();
         setData(nowDetail);
     }
-    console.log(data.nickname);
 
     useEffect(() => {
         getUser();
@@ -57,7 +53,6 @@ function Modalpage (props){
                     Authorization: `token ${props.accessToken}`
                 }
             });
-            console.log(response.data); // 서버의 응답 데이터 확인
             alert('변경이 완료되었습니다!')
             setNickname("")
             setCurrentNickname(nickname)

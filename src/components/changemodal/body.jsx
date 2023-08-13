@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 
 
 
-const ServerUrl = 'https://port-0-minibackrepo1-k19y2klk242hfg.sel4.cloudtype.app/members/'
+const ServerUrl = 'https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/'
 
 
 
@@ -24,7 +24,6 @@ function Modalpage(props) {
 
     const [data, setData] = useState('');
 
-    console.log('modalToken', props.accessToken);
 
     // 유저 정보 가져오기
     const serverApi = axios.create({
@@ -36,9 +35,8 @@ function Modalpage(props) {
     });
     const userApi = async () => {
         let user = [];
-        await serverApi.get(`https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/`).then((response) => {
+        await serverApi.get(ServerUrl).then((response) => {
             user = response.data;
-            //  console.log(user);
         })
         return user;
     }
@@ -47,7 +45,6 @@ function Modalpage(props) {
         const nowDetail = await userApi();
         setData(nowDetail);
     }
-    console.log(data.nickname);
 
     useEffect(() => {
         getUser();
@@ -61,15 +58,15 @@ function Modalpage(props) {
     
     // 카테고리 매핑
     const categoryMapping = {
-        sport: "스포츠",
-        world: "세계",
-        art: "예술",
-        film: "영화",
-        society: "사회",
-        books: "도서",
-        business: "비즈니스",
-        tech: "기술",
-        culture: "문화",
+        Sport: "스포츠",
+        World: "세계",
+        Art: "예술",
+        Film: "영화",
+        Society: "사회",
+        Books: "도서",
+        Business: "경영",
+        Tech: "기술",
+        Culture: "문화",
     };
         
 
