@@ -44,10 +44,10 @@ function LoginForm(props) {
             props.loginSuccess(accToken);
             dispatch(props.saveResponseData(accToken));
 
-            // local에 accessToken, refreshToken 저장
+            // local에 refreshToken 저장
             const refToken = response.data.token.refresh;
             localStorage.setItem('refToken', refToken)
-            localStorage.setItem('accToken', accToken)
+            // localStorage.setItem('accToken', accToken)
 
             alert('환영합니다');
             navigate('/');

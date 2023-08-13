@@ -47,7 +47,7 @@ function Newsview(props) {
                 }
             });
             console.log(response.data); // 서버의 응답 데이터 확인
-            alert('게시되었습니당.')
+            alert('게시되었습니다.')
             setPosting("")
         } catch (error) {
             alert('업로드에 실패했습니다. 인터넷 연결을 확인 후 다시 시도해보시겠어요?')
