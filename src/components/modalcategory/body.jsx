@@ -2,6 +2,8 @@ import { useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import { All, Category, CategoryWrapper, CategoryButton } from './style';
+import { connect } from 'react-redux';
+
 
 
 
@@ -48,10 +50,7 @@ function Modalpage(props) {
 
     const onSubmit = async () => {
         try {
-            const response = axios.post(ServerUrl, {
-                nickname: nickname,
-                email: email,
-                password: password,
+            const response = await axios.patch(ServerUrl, {
                 sport: favorite.includes('스포츠'),
                 world: favorite.includes('세계'),
                 art: favorite.includes('예술'),
@@ -60,11 +59,14 @@ function Modalpage(props) {
                 books: favorite.includes('도서'),
                 business: favorite.includes('경영'),
                 tech: favorite.includes('기술'),
-                culture: favorite.includes('문화')
+                culture: favorite.includes('문화'),
+              },{
+                headers: {
+                    Authorization: `token ${props.accessToken}`
+                }
               });
-              console.log(response.data); // 서버의 응답 데이터 확인
-              alert('회원가입이 완료되었습니다! 로그인을 다시 해주세요 :)')
-              updateActiveNextForm(false);
+              console.log(response.data); 
+              alert('카테고리 변경이 완료되었습니다.')
         } catch (error) {
           console.error(error);
         }
@@ -92,4 +94,10 @@ function Modalpage(props) {
     )
 };
 
-export default Modalpage;
+const mapStateToProps = (state) => ({
+    isLoggedIn: state.auth.isLoggedIn,
+    accessToken: state.auth.accessToken,
+});
+
+
+export default connect(mapStateToProps)(Modalpage);
