@@ -63,7 +63,7 @@ function Modalpage(props) {
                 Culture: favorite.includes('문화'),
               },{
                 headers: {
-                    Authorization: `token ${props.accessToken}`
+                    Authorization: `bearer ${props.accessToken}`
                 }
               });
               console.log(response.data); 

@@ -14,6 +14,7 @@ function Modalpage(props) {
     const fileInputRef = useRef(null);
     const [data, setData] = useState('');
     const [userimg, setUserimg] = useState('')
+    const imgInput = useRef(null);
 
 
     // 원래 정보 불러오기
@@ -21,17 +22,18 @@ function Modalpage(props) {
         headers: {
             //   'Authorization': "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzM2NTk3LCJpYXQiOjE2OTE3MzQ3OTcsImp0aSI6ImQ5ODVkZjExNmQ2NjQ3MjhiNDIxY2M4Y2MyMjRjNjk5IiwidXNlcl9pZCI6MX0.GGgA8q0fjRmYNT6yj9rJWfHTii03pqrFyreA1wTf4ic",
             // 'Authorization': localStorage.getItem('token')
-            'Authorization': `token ${props.accessToken}`
+            'Authorization': `bearer ${props.accessToken}`
         },
     });
     const userApi = async () => {
         let user = [];
         await serverApi.get(ServerUrl).then((response) => {
             user = response.data;
-            //  console.log(user);
+            //  console.log(user.userImg);
         })
         return user;
     }
+             console.log(data.userImg);
 
     const getUser = async () => {
         const nowDetail = await userApi();
@@ -45,37 +47,28 @@ function Modalpage(props) {
     const formData = new FormData();
 
     // 이미지 파일 저장 (URL.createObjectURL : client 내에서만 이용 가능. 미리보기)
+    // formData로 변환
     const saveFileImage = (e) => {
         e.preventDefault();
         setFileImage(URL.createObjectURL(e.target.files[0]));
 
         const uploadFile = e.target.files[0]
         const formData = new FormData()
-        formData.append('userImg', uploadFile)
-
-        // // console.log(e.target.files[0]);
-        // setUserimg(e.target.files[0])
-        // console.log(userimg)
-        // formData.append('userImg', fileImage);
-
+        formData.append('userImg', imgInput.current.files[0])
     };
 
 
-
-
-
-    // 이미지 서버로 전송?
+    // 이미지 서버로 전송
     const UploadFile = async () => {
         if (!fileImage) {
             alert('이미지를 먼저 선택하시오');
             return;
         }
-
         try {
 
             const response = await axios.patch(ServerUrl, formData, {
                 headers: {
-                    Authorization: `token ${props.accessToken}`,
+                    Authorization: `bearer ${props.accessToken}`,
                 },
             });
             console.log('이미지 업로드 성공:', response.data);
@@ -114,14 +107,15 @@ function Modalpage(props) {
                     />
                     : <img
                         className="viewimage"
-                        src={basicimage} />
+                        src={data.userImg} />
                 }
                 {!fileImage &&
                     <input
                         className="changeimg"
                         type="file"
                         accept="image/*"
-                        onChange={saveFileImage} />
+                        onChange={saveFileImage}
+                        ref={imgInput} />
                 }
                 <div className="buttons">
                     <button className="button"

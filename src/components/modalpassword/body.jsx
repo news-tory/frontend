@@ -17,9 +17,7 @@ const Modalpage = (props) => {
     const [isPasswordConfirm, setIsPasswordConfirm] = useState(false)
     const [userpasswordMessage, setUserpasswordMessage] = useState('');
     const [isTruepassword, setIsTruepassword] = useState(false);
-
-    console.log('password', password);
-    console.log(props.accessToken)
+    const [userinputpassword, setUserinputpassword] = useState('');
 
 
     // 정보 변경 버튼
@@ -27,9 +25,9 @@ const Modalpage = (props) => {
         try {
             const response = await axios.patch(ServerUrl, {
                 password: password,
-            },{
+            }, {
                 headers: {
-                    Authorization: `token ${props.accessToken}`
+                    Authorization: `bearer ${props.accessToken}`
                 }
             });
             console.log('password', passwordConfirm);
@@ -44,15 +42,42 @@ const Modalpage = (props) => {
     // 현재 비밀번호 일치 검사
 
     const onChangeUserpassword = useCallback((e) => {
-        const Userinputpassword = e.target.value
-        if (Userinputpassword === userpassword) {
-            setUserpasswordMessage('비밀번호가 일치합니다')
-            setIsTruepassword(true)
-        } else {
-            setUserpasswordMessage('현재 비밀번호를 올바르게 입력해주세요')
-            setIsTruepassword(false)
-        }
+        const inputed = e.target.value;
+        setUserinputpassword(inputed);
+        // const Userinputpassword = e.target.value
+        // if (Userinputpassword === userpassword) {
+        //     setUserpasswordMessage('비밀번호가 일치합니다')
+        //     setIsTruepassword(true)
+        // } else {
+        //     setUserpasswordMessage('현재 비밀번호를 올바르게 입력해주세요')
+        //     setIsTruepassword(false)
+        // }
+
     }, [])
+
+    const onConfirm = async () => {
+        try {
+            const response = await axios.post(ServerUrl, {
+                password: '3dlrkdms!',
+            }, {
+                headers: {
+                    Authorization: `bearer ${props.accessToken}`,
+                }
+            });
+            // console.log('password', passwordConfirm);
+            // setUserpassword(password)
+            alert('확인이 완료되었습니다!')
+            console.log(response);
+            console.log(userinputpassword);
+
+        } catch (error) {
+            alert('확인에 실패했습니다. 인터넷 연결을 확인 후 다시 시도해보시겠어요?')
+            console.error(error);
+            console.log(userinputpassword);
+        }
+    };
+
+
 
     // 비밀번호 유효성 검사
 
@@ -92,17 +117,19 @@ const Modalpage = (props) => {
         <All>
             <Password>
                 <h4 className="smalltitle">비밀번호 변경</h4>
-                {/* <div>
+                <div>
                     <input
                         className="input"
                         placeholder="현재 비밀번호"
                         title="비밀번호"
                         onChange={onChangeUserpassword}
                         typeTitle="password" />
-                    {password.length > 0 ? (
+                    <button onClick={onConfirm}>확인</button>
+                    {/* {password.length > 0 ? (
                         <div id="message" className={`message ${isTruepassword ? 'success' : 'error'}`}>{userpasswordMessage}</div>
-                    ) : <div id="nomessage"> </div>}
-                </div> */}
+                    ) : <div id="nomessage"> </div>} */}
+
+                </div>
                 <div>
                     <input
                         className="input"
@@ -110,9 +137,9 @@ const Modalpage = (props) => {
                         placeholder="새 비밀번호"
                         onChange={onChangePassword}
                         title="비밀번호"
-                        typeTitle="password" 
-                        // disabled={!isTruepassword}
-                        />
+                        typeTitle="password"
+                        disabled={!isTruepassword}
+                    />
                     {password.length > 0 ? (
                         <div id="message" className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</div>
                     ) : <div id="nomessage"> </div>}
@@ -125,8 +152,8 @@ const Modalpage = (props) => {
                         placeholder="비밀번호 확인"
                         title="비밀번호 확인"
                         typeTitle="passwordConfirm"
-                        // disabled={!isTruepassword} 
-                        />
+                        disabled={!isTruepassword}
+                    />
                     <button onClick={onSubmit}>변경</button>
                     {passwordConfirm.length > 0 ? (
                         <div id="message" className={`message ${isPasswordConfirm ? 'success' : 'error'}`}>{passwordConfirmMessage}</div>
