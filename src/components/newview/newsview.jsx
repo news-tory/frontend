@@ -23,6 +23,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import { connect } from 'react-redux';
+import { authApi } from '../../modules/axiosInterceptor';
 
 function Newsview(props) {
     const [like, setLike] = useState(false);
@@ -34,17 +35,12 @@ function Newsview(props) {
         const movetoLink = prompt(news.url);
         }
 
-    const serverUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/community/posts/"
     const postfeed = async () => {
         try {
             // const token = localStorage.getItem('accToken');
-            const response = await axios.post(serverUrl,{
+            const response = await authApi.post('/community/posts/',{
                 article: news.id,
                 content: posting
-            },{
-                headers: {
-                    Authorization: `Bearer ${props.accessToken}`
-                }
             });
             console.log(response.data); // 서버의 응답 데이터 확인
             alert('게시되었습니다.')
