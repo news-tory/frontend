@@ -31,7 +31,7 @@ function Body(props) {
 
     const userApi = async () => {
         let user = [];
-        await authApi.get(`https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/`).then((response) => {
+        await authApi.get(`/accounts/update/`).then((response) => {
             user = response.data;
             console.log(user);
         })
@@ -42,6 +42,7 @@ function Body(props) {
         if (props.isLoggedIn) {
             const nowData = await userApi();
             setData(nowData);
+            console.log(data)
         }
     }
 

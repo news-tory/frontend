@@ -26,7 +26,7 @@ authApi.interceptors.response.use(
     response => response, //그대로 response로 내보냄
     async error => {
         const originalRequest = error.config;
-        const refreshToken = localStorage.getItem('refToken'); // 리프레시 토큰 가져오기
+        const refreshToken = localStorage.getItem('refToken');
       if (error.response.status === 401 && !originalRequest._retry && refreshToken) {
         originalRequest._retry = true;
   
@@ -43,14 +43,14 @@ authApi.interceptors.response.use(
           originalRequest.headers.Authorization = `Bearer ${refreshResponse.data.access}`;
           return noAuthApi(originalRequest);
         } catch (refreshError) {
-            alert("401 갱신 실패")
+            console.log("401 갱신 실패")
           // 리프레시 토큰 갱신 실패 시 로그아웃 등의 처리
           // 예: store.dispatch(logoutAction());
           return Promise.reject(refreshError);
         }
       }
      
-      if (error.response.status === 403) {
+      if (error.response.status === 403 && refreshToken) {
         try {
           // 리프레시 토큰으로 새로운 엑세스 토큰 발급 받기
           const refreshResponse = await noAuthApi.post('/accounts/auth/refresh/', {
@@ -64,7 +64,7 @@ authApi.interceptors.response.use(
           originalRequest.headers.Authorization = `Bearer ${refreshResponse.data.access}`;
           return noAuthApi(originalRequest);
         } catch (refreshError) {
-          alert('403 갱신 실패');
+          console.log('403 갱신 실패');
           return Promise.reject(refreshError);
         }
       }

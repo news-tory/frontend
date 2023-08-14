@@ -66,7 +66,7 @@ function Body(props) {
             const response = await noAuthApi.get('/articles/popularity/');
             setHotnewsList(response.data);
         } catch (error) {
-            console.log('실시간 뉴스 로딩에 실패했습니다.')
+            console.log('실시간 인기 뉴스 로딩에 실패했습니다.')
             navigate('/')
         }
     };
@@ -92,6 +92,7 @@ function Body(props) {
     }
 
     const getUser = async () => {
+        if(props.isLoggedIn) {
         try{
             const response = await authApi.get('/accounts/update/');
             setUserData(response.data);
@@ -101,7 +102,7 @@ function Body(props) {
                 console.log('유저 정보 가져오기 실패')
                 console.error(error);   
             }
-        }
+        }}
 
     return (
         <>
