@@ -31,11 +31,8 @@ function CommunityNews(props) {
 
   const fetchnews = async () => {
     try {
-      const response = await noAuthApi.get('/articles/');
-      console.log(response.data); // 서버의 응답 데이터 확인
-      setNewslist(response.data);
-      const filteredNews = response.data.filter(news => news.id === newsId); // 수정된 부분
-      setSelectedNews(filteredNews[0]); // 선택된 뉴스 설정
+      const response = await noAuthApi.get(`/articles/${newsId}/`);
+      setSelectedNews(response.data); // 선택된 뉴스 설정
     } catch (error) {
       console.log('communitynews error');
     }
