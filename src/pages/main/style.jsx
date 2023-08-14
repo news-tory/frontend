@@ -49,7 +49,8 @@ export const HomeText = styled.div`
 `
 export const Text = styled.div`
 border-bottom: ${props => props.active ? '3px solid #4ad395' : ''};
-    padding: 5px;
+    padding: 10px;
+    box-sizing: border-box;
 `
 export const ArticleSection = styled.div`
     display: flex;
@@ -67,7 +68,6 @@ export const ArticleText = styled.div`
 `
 export const MyFavoriteText = styled.div`
     display: flex;
-    border-right: 2px solid #eaeaea;
     width: 50%;
     justify-content: center;
     align-items: center;

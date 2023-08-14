@@ -27,7 +27,7 @@ export const NewsPaper = styled.div`
 
 export const NewsImage = styled.img`
     width: 100%;
-    height: 40%;`
+    height: 50%;`
     
 
 export const ButtonSection = styled.div`
@@ -95,8 +95,8 @@ export const PostText = styled.div`
 
 export const PostInput = styled.textarea`
     text-align: left;
-    width: 300px;
-    height: 200px;
+    width: 80%;
+    height: 30%;
     resize: none;
     margin: 0px 20px 20px 20px;
     border: none;

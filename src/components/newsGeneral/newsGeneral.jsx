@@ -52,8 +52,7 @@ function NewsGeneral() {
             setNewslist(response.data);
             setNewsLen(response.data.length)
         } catch (error) {
-            alert('데이터 로딩에 실패했습니다.')
-            navigate('/')
+            console.log('newsGeneral fetchnews error')
         }
     };
 

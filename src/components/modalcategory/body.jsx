@@ -4,11 +4,10 @@ import axios from "axios";
 import { All, Category, CategoryWrapper, CategoryButton } from './style';
 import { connect } from 'react-redux';
 import { useEffect } from "react";
+import { authApi } from "../../modules/axiosInterceptor";
 
 
 
-
-const ServerUrl = 'https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/'
 
 function Modalpage(props) {
 
@@ -51,7 +50,7 @@ function Modalpage(props) {
     // 카테고리 변경
     const onSubmit = async () => {
         try {
-            const response = await axios.patch(ServerUrl, {
+            const response = await authApi.patch('/accounts/update/', {
                 sport: favorite.includes('스포츠'),
                 world: favorite.includes('세계'),
                 art: favorite.includes('예술'),
@@ -61,10 +60,6 @@ function Modalpage(props) {
                 business: favorite.includes('경영'),
                 tech: favorite.includes('기술'),
                 culture: favorite.includes('문화'),
-              },{
-                headers: {
-                    Authorization: `token ${props.accessToken}`
-                }
               });
               console.log(response.data); 
               alert('카테고리 변경이 완료되었습니다.')
