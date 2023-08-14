@@ -32,6 +32,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import { connect } from 'react-redux';
+import { authApi, noAuthApi } from '../../modules/axiosInterceptor';
 
 
 function CommunityNewsview(props) {
@@ -47,17 +48,10 @@ function CommunityNewsview(props) {
         const movetoLink = prompt(newsData.url);
     }
 
-    const postingDetailUrl = `https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/community/posts/${postId}/`
-    const postCommentUrl = `https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/community/posts/${postId}/comment/`
-    const newsUrl = `https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/articles/`
     const fetchPosting = async () => {
         try {
             // const token = localStorage.getItem('accToken');
-            const response = await axios.get(postingDetailUrl, {
-                headers: {
-                    Authorization: `Bearer ${props.accessToken}`
-                }
-            });
+            const response = await authApi.get(`/community/posts/${postId}/`);
             console.log(response.data); // 서버의 응답 데이터 확인
             setPosting(response.data);
             setComments(response.data.comments);
@@ -69,7 +63,7 @@ function CommunityNewsview(props) {
 
     const fetchnews = async () => {
         try {
-            const response = await axios.get(newsUrl);
+            const response = await noAuthApi.get('/articles/');
             console.log(response.data); // 서버의 응답 데이터 확인
             const filteredNews = response.data.filter(news => news.id === articleId); // 수정된 부분
             setNewsData(filteredNews[0]); // 선택된 뉴스 설정
@@ -91,12 +85,8 @@ function CommunityNewsview(props) {
     const onClickCommentPost = async () => {
         try {
             // const token = localStorage.getItem('accToken');
-            const response = await axios.post(postCommentUrl, {
+            const response = await axios.post(`/community/posts/${postId}/comment/`, {
                 content: writeComment
-            }, {
-                headers: {
-                    Authorization: `Bearer ${props.accessToken}`
-                }
             });
             alert('댓글이 작성되었습니다.');
             fetchPosting();

@@ -31,15 +31,14 @@ import NewsGeneral from "../../components/newsGeneral/newsGeneral";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
+import { authApi, noAuthApi } from "../../modules/axiosInterceptor";
 
 function Body(props) {
-    const serverUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/articles/"
-    const UserServerUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/"
-    const HotnewsUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/articles/popularity/"
     const [newslist, setNewsList] = useState([]);
     const [hotnewsList,setHotnewsList] = useState([]);
     const [selectedNews,setSelectedNews] = useState([]);
     const [activeMyFav, setActiveMyFav] = useState(false);
+    const [userData, setUserData] = useState({});
     const navigate = useNavigate();
     const [filteredNews,setFilteredNews] = useState([]);
     let [modal, setModal] = useState(false);
@@ -54,22 +53,20 @@ function Body(props) {
     
     const fetchnews = async () => {
         try {
-            const response = await axios.get(HotnewsUrl);
-            console.log(response.data); // 서버의 응답 데이터 확인
-            setHotnewsList(response.data);
+            const response = await noAuthApi.get('/articles/');
+            setNewsList(response.data);
         } catch (error) {
-            alert('뉴스데이터 로딩에 실패했습니다.')
+            console.log('뉴스데이터 로딩에 실패했습니다.')
             navigate('/')
         }
     };
     
     const fetchHotnews = async () => {
         try {
-            const response = await axios.get(serverUrl);
-            console.log(response.data); // 서버의 응답 데이터 확인
-            setNewsList(response.data);
+            const response = await noAuthApi.get('/articles/popularity/');
+            setHotnewsList(response.data);
         } catch (error) {
-            alert('실시간 뉴스 로딩에 실패했습니다.')
+            console.log('실시간 뉴스 로딩에 실패했습니다.')
             navigate('/')
         }
     };
@@ -81,28 +78,27 @@ function Body(props) {
     
     useEffect(() => {
         fetchnews();
-        getUser();
         fetchHotnews();
-    }, []);
+        getUser();
+    },[]);
 
+    useEffect(() => {
+        const trueKeys = Object.keys(userData).filter(key => userData[key] === true);
+        setFilteredNews(newslist.filter(news => trueKeys.includes(news.section)));
+    }, [userData, newslist]);
+    
     const onClickMyFav = () => {
         setActiveMyFav(!activeMyFav)
-        console.log(activeMyFav)
     }
 
     const getUser = async () => {
         try{
-            const response = await axios.get(UserServerUrl, {
-                headers: {
-                    Authorization: `token ${props.accessToken}`
-                }
-            });
-            const userData = response.data;
-            const trueKeys = Object.keys(userData).filter(key => userData[key] === true);
-            setFilteredNews(newslist.filter(news => trueKeys.includes(news.section)));
+            const response = await authApi.get('/accounts/update/');
+            setUserData(response.data);
+            console.log(userData)
         }
             catch(error){
-                alert('유저 정보 가져오기 실패')
+                console.log('유저 정보 가져오기 실패')
                 console.error(error);   
             }
         }

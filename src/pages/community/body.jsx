@@ -22,9 +22,9 @@ import CommunityNews from "../../components/communitynews/communitynews"
 import CommunityNewsview from "../../components/communityNewsView/communitynewsview";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment } from "@fortawesome/free-solid-svg-icons";
-
+import {authApi} from "../../modules/axiosInterceptor";
 import { connect } from 'react-redux';
-
+import store from "../../store";
 
 
 
@@ -46,22 +46,17 @@ function Body(props) {
     };
 
     console.log('ComToken', props.accessToken);
-
     const fetchCommunity = async () => {
         try {
             // const token = localStorage.getItem('accToken')
-            const response = await axios.get(serverUrl, {
-                headers: {
-                    Authorization: `Bearer ${props.accessToken}`
-                }
-            });
+            const response = await authApi.get('/community/posts/');
             // console.log(token);
             console.log(response.data); // 서버의 응답 데이터 확인
             setCommunityList(response.data);
         } catch (error) {
-            alert('데이터 로딩에 실패했습니다.')
+            alert('인터셉터에 실패했습니다.')
+            console.log(store.getState())
             console.error(error);
-            navigate('/')
         }
     };
 

@@ -19,9 +19,9 @@ import {AllNews,
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight, faCircleChevronLeft, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { noAuthApi } from '../../modules/axiosInterceptor';
 
 function NewsGeneral() {
-    const serverUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/articles/"
     const [currentSlide, setCurrentSlide] = useState(0);
     const SlideRef = useRef(null);
     const [newsLen, setNewsLen] = useState(0);
@@ -47,7 +47,7 @@ function NewsGeneral() {
 
     const fetchnews = async () => {
         try {
-            const response = await axios.get(serverUrl);
+            const response = await noAuthApi.get('/articles/');
             console.log(response.data); // 서버의 응답 데이터 확인
             setNewslist(response.data);
             setNewsLen(response.data.length)
