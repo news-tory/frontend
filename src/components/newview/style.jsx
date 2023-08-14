@@ -35,19 +35,26 @@ export const ButtonSection = styled.div`
     display: flex;
     height: 30px;
     justify-content: space-between;
+    margin-top: 10px;
     
 `
 
 export const ViewWrapper = styled.div`
     display:flex;
+    gap: 20px;
+    
     `
 
 export const HeartView = styled.div`
-    font-size: 25px;
+    font-size: 20px;
+    display: flex;
+    gap: 10px;
     `
 
 export const PostView = styled.div`
-    font-size: 25px;
+    font-size: 20px;
+    display: flex;
+    gap: 10px;
     `
 
 export const NewsTitle = styled.div`
@@ -103,3 +110,27 @@ export const PostButton = styled.button`
     cursor: pointer;
     font-size: 15px;
 `
+
+export const LoginInform = styled.div`
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    position: relative;
+`
+export const LoginInformImage = styled.img`
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 60%;
+`
+export const LoginInformText = styled.div`
+    width: 100%;
+    position: absolute;
+    top: 17%;
+    left: 50%;
+    font-size: 20px;
+    color: #fff;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 2;
+    `
