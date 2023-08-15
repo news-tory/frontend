@@ -18,14 +18,6 @@ function Modalpage (props){
 
     // 원래 정보 불러오기
 
-    const serverApi = axios.create({
-        headers: {
-            //   'Authorization': "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzM2NTk3LCJpYXQiOjE2OTE3MzQ3OTcsImp0aSI6ImQ5ODVkZjExNmQ2NjQ3MjhiNDIxY2M4Y2MyMjRjNjk5IiwidXNlcl9pZCI6MX0.GGgA8q0fjRmYNT6yj9rJWfHTii03pqrFyreA1wTf4ic",
-            // 'Authorization': localStorage.getItem('token')
-            'Authorization': `bearer ${props.accessToken}`
-        },
-    });
-
     const userApi = async () => {
         let user = [];
         await authApi.get('/accounts/update/').then((response) => {
@@ -47,13 +39,8 @@ function Modalpage (props){
     // 닉네임 변경
     const onSubmit = async () => {
         try {
-            const response = await axios.patch(ServerUrl,{
+            const response = await axios.patch('/accounts/update/',{
                 "nickname": nickname,
-            },{
-                headers: {
-                    Authorization: `bearer ${props.accessToken}`
-                }
-
             });
             alert('변경이 완료되었습니다!')
             setNickname("")

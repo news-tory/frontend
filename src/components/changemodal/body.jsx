@@ -9,17 +9,7 @@ import Modalimage from '../modalimage';
 import Modalnickname from '../modalnickname';
 import Modalpassword from '../modalpassword';
 import Modalcategory from '../modalcategory';
-
 import { connect } from 'react-redux';
-
-
-
-
-const ServerUrl = 'https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/'
-
-
-
-
 import { authApi } from "../../modules/axiosInterceptor";
 
 
@@ -30,18 +20,9 @@ function Modalpage(props) {
 
 
     // 유저 정보 가져오기
-
-    const serverApi = axios.create({
-        headers: {
-            //   'Authorization': "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzM2NTk3LCJpYXQiOjE2OTE3MzQ3OTcsImp0aSI6ImQ5ODVkZjExNmQ2NjQ3MjhiNDIxY2M4Y2MyMjRjNjk5IiwidXNlcl9pZCI6MX0.GGgA8q0fjRmYNT6yj9rJWfHTii03pqrFyreA1wTf4ic",
-            // 'Authorization': localStorage.getItem('token')
-            'Authorization': `bearer ${props.accessToken}`
-        },
-    });
     const userApi = async () => {
         let user = [];
-        await serverApi.get(ServerUrl).then((response) => {
-
+        await authApi.get('/accounts/update/').then((response) => {
             user = response.data;
         })
         return user;
