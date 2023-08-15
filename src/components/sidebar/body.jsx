@@ -36,6 +36,7 @@ function Body(props) {
             try {
                 const response = await authApi.get('/accounts/update/');
                 setData(response.data);
+                console.log(data);
             } catch (error) {
                 console.log('유저 정보 가져오기 실패');
                 console.error(error);
@@ -106,7 +107,8 @@ function Body(props) {
                     <img className='logo' src={logo}></img>
 
                     <Profile>
-                    <img className='basicimage' src="{{data.userImg.url}}" ></img>
+                    <img className='basicimage' src={`https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app${data.userImg}`} alt="User Profile" />
+
                     {props.isLoggedIn ?
                             <div style={{ display: 'flex', marginLeft: '10px' }}>
                                 <h4>{data.nickname}</h4>

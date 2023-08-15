@@ -34,7 +34,7 @@ import { faHeart, faComment, faTrash, faFilePen } from "@fortawesome/free-solid-
 import { connect } from "react-redux";
 import CommunityNews from "../../components/communitynews/communitynews";
 import CommunityNewsview from "../../components/communityNewsView/communitynewsview";
-import postrevise from "../../components/postrevise/postrevise";
+import PostRevise from "../../components/postrevise/postrevise";
 import { authApi, noAuthApi } from "../../modules/axiosInterceptor";
 
 
@@ -49,6 +49,7 @@ let [modal, setModal] = useState(false);
 let [reviseModal, setReviseModal] = useState(false);
 const [communityList, setCommunityList] = useState([]);
 const [nickname, setNickname] = useState("");
+const [liked,setLiked] = useState(false);
 
 
 const fetchCommunity = async () => {
@@ -119,6 +120,19 @@ const fetchLikedNews = async () => {
         }
     }, [nickname]);
 
+    const onClickLike = async (postId) => {
+        if(props.isLoggedIn){
+            try{
+                const response = await authApi.post(`/community/posts/${postId}/like/`)
+                setLiked(!liked);
+                fetchCommunity();
+            }
+            catch(error){
+                console.log('like api error')
+                console.error(error);
+            }
+        }
+    }
 
 
 const onClickDelete = async (postId) => {
@@ -152,8 +166,8 @@ return (
                                     <div>{list.user}님의 이야기</div>
                                     <NewsAbstract>
                                         <div>{list.created_at}</div>
-                                        <FontAwesomeIcon icon={faFilePen} style={{color: 'grey'}} onClick={() => onClickRevise(list)} />
-                                        <FontAwesomeIcon icon={faTrash} style={{color: 'grey'}} onClick={() => onClickDelete(list.id)}/>
+                                        <FontAwesomeIcon icon={faFilePen} style={{color: 'grey', cursor: 'pointer'}} onClick={() => onClickRevise(list)} />
+                                        <FontAwesomeIcon icon={faTrash} style={{color: 'grey', cursor: 'pointer'}} onClick={() => onClickDelete(list.id)}/>
                                     </NewsAbstract>
                                 </PostUser>
                                 <CommunityContent>{list.content}</CommunityContent>
@@ -162,7 +176,7 @@ return (
                                 </CommunityNewsWrapper>
                                 <ButtonSection>
                                     <HeartButton>
-                                        <FontAwesomeIcon icon={faHeart} />
+                                        <FontAwesomeIcon icon={faHeart} onClick={() => onClickLike(list.id)}/>
                                         <p>{list.like_cnt}</p>
                                     </HeartButton>
                                     <PostButton onClick={() => onClickNews(list)}>
@@ -201,9 +215,9 @@ return (
             </ModalBackground>
         }
         {reviseModal &&
-            <ModalBackground onClick={changeModal}>
+            <ModalBackground onClick={changereviseModal}>
                 <ModalContainer onClick={stopPropagation}>
-                    <CommunityNewsview postingInf={selectedPost} />
+                    <PostRevise postingInf={selectedPost} />
                 </ModalContainer>
             </ModalBackground>
         }

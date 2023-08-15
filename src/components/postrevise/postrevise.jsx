@@ -32,7 +32,7 @@ function PostRevise(props) {
     const [like, setLike] = useState(false);
     const {postingInf} = props;
     const navigate = useNavigate()
-    const [posting, setPosting] = useState(postingInf.content);
+    const [posting, setPosting] = useState(`${postingInf.content}`);
     const [userData,setUserData] = useState([]);
     const [postData, setPostData] = useState({});
     const [news,setNews] = useState([]);
@@ -44,15 +44,16 @@ function PostRevise(props) {
     const revisefeed = async () => {
         try {
             // const token = localStorage.getItem('accToken');
-            const response = await authApi.put(`/community/posts/${postingInf.id}`,{
+            const response = await authApi.put(`/community/posts/${postingInf.id}/`,{
                 content: posting
             });
             console.log(response.data); // 서버의 응답 데이터 확인
-            alert('게시되었습니다.')
+            alert('수정되었습니다.')
             setPosting("")
         } catch (error) {
             alert('업로드에 실패했습니다. 인터넷 연결을 확인 후 다시 시도해보시겠어요?')
             console.error(error)
+            console.log(error);
         }
     };
 
@@ -81,7 +82,7 @@ function PostRevise(props) {
     }
 
     useEffect(() => {
-        
+        fetcharticle();
     },[])
 
     
@@ -124,6 +125,7 @@ function PostRevise(props) {
                         </PostText>
                         <PostInput 
                             placeholder='다양한 분야에서 해당 기사를 공부한 글을 적어주세요!'
+                            value={posting}
                             onChange={onChangePosting}
                             />
                     </>
