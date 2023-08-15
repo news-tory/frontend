@@ -43,7 +43,9 @@ const Modalpage = (props) => {
 
     const onChangeUserpassword = useCallback((e) => {
         const inputed = e.target.value;
-        setUserinputpassword(inputed);
+        setUserinputpassword(inputed); 
+        setIsTruepassword(false)
+
         // const Userinputpassword = e.target.value
         // if (Userinputpassword === userpassword) {
         //     setUserpasswordMessage('비밀번호가 일치합니다')
@@ -55,6 +57,7 @@ const Modalpage = (props) => {
 
     }, [])
     console.log(userinputpassword);
+
 
     const onConfirm = async () => {
         try {
@@ -70,11 +73,22 @@ const Modalpage = (props) => {
             alert('확인이 완료되었습니다!')
             console.log(response);
             console.log(userinputpassword);
+            setIsTruepassword(true)
+
+            // if (isTruepassword) {
+            //     setUserpasswordMessage('비밀번호가 일치합니다')
+            //     setIsTruepassword(true)
+            // } else {
+            //     setUserpasswordMessage('현재 비밀번호를 올바르게 입력해주세요')
+            //     setIsTruepassword(false)
+            // }
 
         } catch (error) {
-            alert('확인에 실패했습니다. 인터넷 연결을 확인 후 다시 시도해보시겠어요?')
+            alert('잘못된 비밀번호를 입력하셨습니다.')
             console.error(error);
-            console.log(userinputpassword);
+            setIsTruepassword(false)
+            console.log(isTruepassword);
+
         }
     };
 
@@ -126,9 +140,10 @@ const Modalpage = (props) => {
                         onChange={onChangeUserpassword}
                         typeTitle="password" />
                     <button onClick={onConfirm}>확인</button>
-                    {/* {password.length > 0 ? (
-                        <div id="message" className={`message ${isTruepassword ? 'success' : 'error'}`}>{userpasswordMessage}</div>
-                    ) : <div id="nomessage"> </div>} */}
+                  
+                    {isTruepassword ? (
+                        <div id="message" className={`message ${isPassword ? 'success' : 'error'}`}>새로운 비밀번호를 입력해 주세요</div>
+                    ) : <div id="nomessage"> </div>}                  
 
                 </div>
                 <div>
@@ -139,7 +154,7 @@ const Modalpage = (props) => {
                         onChange={onChangePassword}
                         title="비밀번호"
                         typeTitle="password"
-                    //     disabled={!isTruepassword}
+                        disabled={!isTruepassword}
                     />
                     {password.length > 0 ? (
                         <div id="message" className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</div>
@@ -153,7 +168,7 @@ const Modalpage = (props) => {
                         placeholder="비밀번호 확인"
                         title="비밀번호 확인"
                         typeTitle="passwordConfirm"
-                        // disabled={!isTruepassword}
+                        disabled={!isTruepassword}
                     />
                     <button onClick={onSubmit}>변경</button>
                     {passwordConfirm.length > 0 ? (
