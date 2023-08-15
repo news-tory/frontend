@@ -42,6 +42,7 @@ function Body(props) {
     const navigate = useNavigate();
     const [filteredNews,setFilteredNews] = useState([]);
     let [modal, setModal] = useState(false);
+    const [liked,setLiked] = useState(false);
 
     const changeModal = () => {
         setModal(!modal);
@@ -104,6 +105,20 @@ function Body(props) {
             }
         }}
 
+    const onClickLike = async (newsId) => {
+        if(props.isLoggedIn){
+            try{
+                const response = await authApi.post(`/articles/${newsId}/likes/`)
+                setLiked(!liked);
+            }
+            catch(error){
+                console.log('like api error')
+                console.error(error);
+            }
+        }
+    }
+    
+
     return (
         <>
             <MainContainer>
@@ -121,16 +136,17 @@ function Body(props) {
                     </ArticleSection>
                     <NewsContainer>
                         {newslist.map((news, index) => (
-                        <NewsWrapper key={index} onClick={() => onClickNews(news)}>
+                        <NewsWrapper key={index}>
                             <NewsPaper>{news.paper}</NewsPaper>
                             <NewsImage src={news.img_url}></NewsImage>
                             <NewsTitle>{news.title}</NewsTitle>
                             <NewsAbstract>{news.abstract}</NewsAbstract>
                             <ButtonSection>
                                 <HeartButton>
-                                    <FontAwesomeIcon icon={faHeart} />
+                                    <FontAwesomeIcon icon={faHeart} style={{color: liked ? 'red' : 'grey'}} onClick={() => onClickLike(news.id)}/>
+                                    <div>{news.like_cnt}</div>
                                 </HeartButton>
-                                <PostButton>
+                                <PostButton onClick={() => onClickNews(news)}>
                                     <FontAwesomeIcon icon={faPenToSquare} />
                                     <p> Post</p>
                                 </PostButton>
@@ -159,10 +175,11 @@ function Body(props) {
                             <ButtonSection>
                                 <HeartButton>
                                     <FontAwesomeIcon icon={faHeart} />
+                                    <p>{news.like_cnt}</p>
                                 </HeartButton>
                                 <PostButton onClick={() => onClickNews(news)}>
                                     <FontAwesomeIcon icon={faPenToSquare} />
-                                    <p> Post</p>
+                                    <div> Post</div>
                                 </PostButton>
                             </ButtonSection>
                         </NewsWrapper>

@@ -158,6 +158,7 @@ export const HeartButton = styled.div`
     align-items: center;
     border-right: 2px solid #656565;
     cursor: pointer;
+    gap: 7px;
 `
 export const PostButton = styled.div`
     width: 50%;
@@ -165,6 +166,7 @@ export const PostButton = styled.div`
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    gap: 7px;
 `
 
 export const RightWrapper = styled.div`

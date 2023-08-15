@@ -21,7 +21,7 @@ import Newsview from "../../components/newview/newsview";
 import CommunityNews from "../../components/communitynews/communitynews"
 import CommunityNewsview from "../../components/communityNewsView/communitynewsview";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faComment } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faComment, faTrash , faFilePen} from "@fortawesome/free-solid-svg-icons";
 import {authApi} from "../../modules/axiosInterceptor";
 import { connect } from 'react-redux';
 import store from "../../store";
@@ -84,7 +84,9 @@ function Body(props) {
                             <CommunityWrapper key={index}>
                                 <PostUser>
                                     <div>{list.user}</div>
-                                    <NewsAbstract>{list.created_at}</NewsAbstract>
+                                    <NewsAbstract>
+                                        <div>{list.created_at}</div>
+                                    </NewsAbstract>
                                 </PostUser>
                                 <CommunityContent>{list.content}</CommunityContent>
                                 <CommunityNewsWrapper>

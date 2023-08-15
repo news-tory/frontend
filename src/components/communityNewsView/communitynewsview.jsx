@@ -27,10 +27,9 @@ import {
 } from './style';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare, faHeart, faPen } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faHeart, faPen, faTrash, faFilePen} from '@fortawesome/free-solid-svg-icons';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-
 import { connect } from 'react-redux';
 import { authApi, noAuthApi } from '../../modules/axiosInterceptor';
 
@@ -85,7 +84,7 @@ function CommunityNewsview(props) {
     const onClickCommentPost = async () => {
         try {
             // const token = localStorage.getItem('accToken');
-            const response = await axios.post(`/community/posts/${postId}/comment/`, {
+            const response = await authApi.post(`/community/posts/${postId}/comment/`, {
                 content: writeComment
             });
             alert('댓글이 작성되었습니다.');
@@ -139,12 +138,12 @@ function CommunityNewsview(props) {
                     <ButtonSection>
                         <ViewWrapper>
                             <HeartView>
-                                <FontAwesomeIcon icon={faHeart} style={{ color: like ? '#BABABA' : '#ededed' }} />
-                                <p>{newsData.like_cnt}</p>
+                                <FontAwesomeIcon icon={faHeart} style={{ color: like ? 'red' : 'grey' }} />
+                                <div>{newsData.like_cnt}</div>
                             </HeartView>
                             <PostView>
                                 <FontAwesomeIcon icon={faPenToSquare} style={{ color: "grey", }} />
-                                <p></p>
+                                <div>{newsData.post_cnt}</div>
                             </PostView>
                         </ViewWrapper>
                         <div>이미지를 누르면 뉴스 사이트로 이동합니다.</div>

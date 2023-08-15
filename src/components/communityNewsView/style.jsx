@@ -77,14 +77,21 @@ export const ButtonSection = styled.div`
 
 export const ViewWrapper = styled.div`
     display:flex;
+    box-sizing: border-box;
+    padding-left: 30px;
+    gap: 10px;
     `
 
 export const HeartView = styled.div`
-    font-size: 25px;
+    font-size: 20px;
+    display: flex;
+    gap: 7px;
     `
 
 export const PostView = styled.div`
-    font-size: 25px;
+    font-size: 20px;
+    display: flex;
+    gap: 7px;
     `
 
 export const NewsTitle = styled.div`
@@ -141,6 +148,11 @@ export const CommentPostButton = styled(FontAwesomeIcon)`
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    `
+
+export const PostDeleteButton = styled(FontAwesomeIcon)`
+    font-size: 10px;
     `
 export const CommentWrapper = styled.div`
     width: 100%;

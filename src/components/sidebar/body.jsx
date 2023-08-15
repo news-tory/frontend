@@ -42,7 +42,6 @@ function Body(props) {
         if (props.isLoggedIn) {
             const nowData = await userApi();
             setData(nowData);
-            console.log(data)
         }
     }
 
