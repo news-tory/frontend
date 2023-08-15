@@ -50,16 +50,20 @@ function Modalpage(props) {
     // 카테고리 변경
     const onSubmit = async () => {
         try {
-            const response = await authApi.patch('/accounts/update/', {
-                sport: favorite.includes('스포츠'),
-                world: favorite.includes('세계'),
-                art: favorite.includes('예술'),
-                film: favorite.includes('영화'),
-                society: favorite.includes('사회'),
-                books: favorite.includes('도서'),
-                business: favorite.includes('경영'),
-                tech: favorite.includes('기술'),
-                culture: favorite.includes('문화'),
+            const response = await axios.patch(ServerUrl, {
+                Sport: favorite.includes('스포츠'),
+                World: favorite.includes('세계'),
+                Art: favorite.includes('예술'),
+                Film: favorite.includes('영화'),
+                Society: favorite.includes('사회'),
+                Books: favorite.includes('도서'),
+                Business: favorite.includes('경영'),
+                Tech: favorite.includes('기술'),
+                Culture: favorite.includes('문화'),
+              },{
+                headers: {
+                    Authorization: `bearer ${props.accessToken}`
+                }
               });
               console.log(response.data); 
               alert('카테고리 변경이 완료되었습니다.')

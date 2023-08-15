@@ -39,13 +39,15 @@ export const Goto = styled.div`
     display: flex;
     .gotoimage {
         position: absolute;
-        width: 25px;
-        height: 25px;
-        padding-top: 13px;
-        padding-left: 60px;
+        width: 35px;
+        height: 35px;
+        padding-top: 20px;
+        padding-left: 50px;
     }
     p {
         padding-left: 100px;
+        padding-top: 10px;
+        font-size: 18px;
     }
 `
 
@@ -64,7 +66,7 @@ export const All = styled.div`
     text-align: center;
     .logo {
         width: 220px;
-        height:30px;
+        height:25px;
         padding-top: 25px;
         padding-left: 15px;
     }
@@ -82,7 +84,7 @@ export const All = styled.div`
         justify-content: space-between;
       }
     .logout {
-        margin-top: 33vh;
+        margin-top: 27vh;
         padding-left: 20px;
         font-size: 12px;
         cursor: pointer;
@@ -95,7 +97,7 @@ export const All = styled.div`
         padding-left: 20px;
     }
     .bottom2 {
-        padding-top:35vh;
+        padding-top:30vh;
         color: #4ad395;
         font-weight: lighter;
         padding-left: 20px;

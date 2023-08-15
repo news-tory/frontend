@@ -16,15 +16,21 @@ function Modalpage (props){
     const [nicknameMessage, setNicknameMessage] = useState('')
 
 
-    console.log("nickToken", props.accessToken);
-
-
     // 원래 정보 불러오기
+
+    const serverApi = axios.create({
+        headers: {
+            //   'Authorization': "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzM2NTk3LCJpYXQiOjE2OTE3MzQ3OTcsImp0aSI6ImQ5ODVkZjExNmQ2NjQ3MjhiNDIxY2M4Y2MyMjRjNjk5IiwidXNlcl9pZCI6MX0.GGgA8q0fjRmYNT6yj9rJWfHTii03pqrFyreA1wTf4ic",
+            // 'Authorization': localStorage.getItem('token')
+            'Authorization': `bearer ${props.accessToken}`
+        },
+    });
+
     const userApi = async () => {
         let user = [];
         await authApi.get('/accounts/update/').then((response) => {
             user = response.data;
-            //  console.log(user);
+             console.log(user);
         })
         return user;
     }
@@ -33,20 +39,22 @@ function Modalpage (props){
         const nowDetail = await userApi();
         setData(nowDetail);
     }
-    console.log(data.nickname);
 
     useEffect(() => {
         getUser();
     }, [])
 
-
     // 닉네임 변경
     const onSubmit = async () => {
         try {
-            const response = await authApi.patch('/accounts/update/',{
-                nickname: nickname,
+            const response = await axios.patch(ServerUrl,{
+                "nickname": nickname,
+            },{
+                headers: {
+                    Authorization: `bearer ${props.accessToken}`
+                }
+
             });
-            console.log(response.data); // 서버의 응답 데이터 확인
             alert('변경이 완료되었습니다!')
             setNickname("")
             setCurrentNickname(nickname)

@@ -11,21 +11,38 @@ import Modalpassword from '../modalpassword';
 import Modalcategory from '../modalcategory';
 
 import { connect } from 'react-redux';
+
+
+
+
+const ServerUrl = 'https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/'
+
+
+
+
 import { authApi } from "../../modules/axiosInterceptor";
+
 
 
 function Modalpage(props) {
 
     const [data, setData] = useState('');
 
-    console.log('modalToken', props.accessToken);
 
     // 유저 정보 가져오기
+
+    const serverApi = axios.create({
+        headers: {
+            //   'Authorization': "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzM2NTk3LCJpYXQiOjE2OTE3MzQ3OTcsImp0aSI6ImQ5ODVkZjExNmQ2NjQ3MjhiNDIxY2M4Y2MyMjRjNjk5IiwidXNlcl9pZCI6MX0.GGgA8q0fjRmYNT6yj9rJWfHTii03pqrFyreA1wTf4ic",
+            // 'Authorization': localStorage.getItem('token')
+            'Authorization': `bearer ${props.accessToken}`
+        },
+    });
     const userApi = async () => {
         let user = [];
-        await authApi.get(`/accounts/update/`).then((response) => {
+        await serverApi.get(ServerUrl).then((response) => {
+
             user = response.data;
-            //  console.log(user);
         })
         return user;
     }
@@ -34,7 +51,6 @@ function Modalpage(props) {
         const nowDetail = await userApi();
         setData(nowDetail);
     }
-    console.log(data.nickname);
 
     useEffect(() => {
         getUser();
@@ -48,15 +64,15 @@ function Modalpage(props) {
     
     // 카테고리 매핑
     const categoryMapping = {
-        sport: "스포츠",
-        world: "세계",
-        art: "예술",
-        film: "영화",
-        society: "사회",
-        books: "도서",
-        business: "비즈니스",
-        tech: "기술",
-        culture: "문화",
+        Sport: "스포츠",
+        World: "세계",
+        Art: "예술",
+        Film: "영화",
+        Society: "사회",
+        Books: "도서",
+        Business: "경영",
+        Tech: "기술",
+        Culture: "문화",
     };
         
 

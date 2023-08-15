@@ -3,7 +3,7 @@ import axios from "axios";
 import { All, Password } from './style';
 import { connect } from 'react-redux';
 
-const ServerUrl = 'https://port-0-minibackrepo1-k19y2klk242hfg.sel4.cloudtype.app/accounts/update/'
+const ServerUrl = 'https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/'
 
 const Modalpage = (props) => {
 
@@ -17,23 +17,22 @@ const Modalpage = (props) => {
     const [isPasswordConfirm, setIsPasswordConfirm] = useState(false)
     const [userpasswordMessage, setUserpasswordMessage] = useState('');
     const [isTruepassword, setIsTruepassword] = useState(false);
+    const [userinputpassword, setUserinputpassword] = useState('');
 
-    console.log('passToken: ', props.accessToken);
-    console.log(passwordConfirm);
 
     // 정보 변경 버튼
     const onSubmit = async () => {
         try {
             const response = await axios.patch(ServerUrl, {
-                password: passwordConfirm,
-            },{
+                password: password,
+            }, {
                 headers: {
-                    Authorization: `token ${props.accessToken}`
+                    Authorization: `bearer ${props.accessToken}`
                 }
             });
-            console.log(response.data); // 서버의 응답 데이터 확인
+            console.log('password', passwordConfirm);
+            setUserpassword(password)
             alert('변경이 완료되었습니다!')
-            setPasswordConfirm("")
         } catch (error) {
             alert('변경에 실패했습니다. 인터넷 연결을 확인 후 다시 시도해보시겠어요?')
             console.error(error);
@@ -43,15 +42,57 @@ const Modalpage = (props) => {
     // 현재 비밀번호 일치 검사
 
     const onChangeUserpassword = useCallback((e) => {
-        const Userinputpassword = e.target.value
-        if (Userinputpassword === userpassword) {
-            setUserpasswordMessage('비밀번호가 일치합니다')
-            setIsTruepassword(true)
-        } else {
-            setUserpasswordMessage('현재 비밀번호를 올바르게 입력해주세요')
-            setIsTruepassword(false)
-        }
+        const inputed = e.target.value;
+        setUserinputpassword(inputed); 
+        setIsTruepassword(false)
+
+        // const Userinputpassword = e.target.value
+        // if (Userinputpassword === userpassword) {
+        //     setUserpasswordMessage('비밀번호가 일치합니다')
+        //     setIsTruepassword(true)
+        // } else {
+        //     setUserpasswordMessage('현재 비밀번호를 올바르게 입력해주세요')
+        //     setIsTruepassword(false)
+        // }
+
     }, [])
+    console.log(userinputpassword);
+
+
+    const onConfirm = async () => {
+        try {
+            const response = await axios.post(ServerUrl, {
+                password: userinputpassword,
+            }, {
+                headers: {
+                    Authorization: `bearer ${props.accessToken}`,
+                }
+            });
+            // console.log('password', passwordConfirm);
+            // setUserpassword(password)
+            alert('확인이 완료되었습니다!')
+            console.log(response);
+            console.log(userinputpassword);
+            setIsTruepassword(true)
+
+            // if (isTruepassword) {
+            //     setUserpasswordMessage('비밀번호가 일치합니다')
+            //     setIsTruepassword(true)
+            // } else {
+            //     setUserpasswordMessage('현재 비밀번호를 올바르게 입력해주세요')
+            //     setIsTruepassword(false)
+            // }
+
+        } catch (error) {
+            alert('잘못된 비밀번호를 입력하셨습니다.')
+            console.error(error);
+            setIsTruepassword(false)
+            console.log(isTruepassword);
+
+        }
+    };
+
+
 
     // 비밀번호 유효성 검사
 
@@ -98,9 +139,11 @@ const Modalpage = (props) => {
                         title="비밀번호"
                         onChange={onChangeUserpassword}
                         typeTitle="password" />
-                    {password.length > 0 ? (
-                        <div id="message" className={`message ${isTruepassword ? 'success' : 'error'}`}>{userpasswordMessage}</div>
-                    ) : <div id="nomessage"> </div>}
+                    <button onClick={onConfirm}>확인</button>
+                    {isTruepassword ? (
+                        <div id="message" className={`message ${isPassword ? 'success' : 'error'}`}>새로운 비밀번호를 입력해 주세요.</div>
+                    ) : <div id="nomessage"> </div>}                  
+
                 </div>
                 <div>
                     <input
@@ -109,8 +152,9 @@ const Modalpage = (props) => {
                         placeholder="새 비밀번호"
                         onChange={onChangePassword}
                         title="비밀번호"
-                        typeTitle="password" 
-                        disabled={!isTruepassword}/>
+                        typeTitle="password"
+                        disabled={!isTruepassword}
+                    />
                     {password.length > 0 ? (
                         <div id="message" className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</div>
                     ) : <div id="nomessage"> </div>}
@@ -123,8 +167,9 @@ const Modalpage = (props) => {
                         placeholder="비밀번호 확인"
                         title="비밀번호 확인"
                         typeTitle="passwordConfirm"
-                        disabled={!isTruepassword} />
-                    <button onClick={onSubmit}>변경</button>
+                        disabled={!isTruepassword}
+                    />
+                    <button onClick={onSubmit} disabled={!isTruepassword}>변경</button>
                     {passwordConfirm.length > 0 ? (
                         <div id="message" className={`message ${isPasswordConfirm ? 'success' : 'error'}`}>{passwordConfirmMessage}</div>
                     ) : <div id="nomessage"> </div>}

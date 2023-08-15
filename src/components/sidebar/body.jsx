@@ -16,11 +16,9 @@ import { connect } from 'react-redux';
 import { logout } from '../../modules/authActions';
 import { authApi } from "../../modules/axiosInterceptor";
 
+const ServerURL = `https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/`
 
 function Body(props) {
-
-    const [data, setData] = useState('');
-
 
     // 로그인 판별
     // const [isloggedin, setIsloggedin] = useState(!!TOKEN)
@@ -29,11 +27,21 @@ function Body(props) {
 
 
 
+
+    // 유저 정보 get
+    const [data, setData] = useState('');
+
+    const serverApi = axios.create({
+        headers: {
+            'Authorization': `bearer ${props.accessToken}`,
+        },
+    });
+
     const userApi = async () => {
         let user = [];
-        await authApi.get(`/accounts/update/`).then((response) => {
+        await serverApi.get(ServerURL).then((response) => {
+
             user = response.data;
-            console.log(user);
         })
         return user;
     }
@@ -48,14 +56,13 @@ function Body(props) {
 
     useEffect(() => {
         getUser();
-    }, [])
-
-    console.log('isLoggedInBody:', props.isLoggedIn);
-    console.log('TOken: ', props.accessToken)
+    }, [data]);
 
     useEffect(() => {
         getUser();
-    }, [data.nickname]); 
+    }, [])
+
+
 
 
     // 로그아웃
@@ -103,16 +110,19 @@ function Body(props) {
     // console.log(isloggedin)
 
 
+    // console.log(data);
+
+
     return (
         <Modaltoo>
             <Sidebar className="v-line">
 
                 <All>
-                <img className='logo' src={logo}></img>
+                    <img className='logo' src={logo}></img>
 
                     <Profile>
-                        <img className='basicimage' src={basicimage}></img>
-                        {props.isLoggedIn ?
+                    <img className='basicimage' src="{{data.userImg.url}}" ></img>
+                    {props.isLoggedIn ?
                             <div style={{ display: 'flex', marginLeft: '10px' }}>
                                 <h4>{data.nickname}</h4>
                                 <FontAwesomeIcon
@@ -147,13 +157,13 @@ function Body(props) {
                                 <p>MyPage</p></Link>
                         </Goto>
                     </Section>
-                    { props.isLoggedIn ?
-                    <>
-                    <div className='logout' onClick={Onclicklogout}>로그아웃</div>
-                    <h5 className="bottom">NewStory</h5>
-                    </>
-                    : 
-                    <h5 className="bottom2">NewStory</h5>               
+                    {props.isLoggedIn ?
+                        <>
+                            <div className='logout' onClick={Onclicklogout}>로그아웃</div>
+                            <h5 className="bottom">NewStory</h5>
+                        </>
+                        :
+                        <h5 className="bottom2">NewStory</h5>
                     }
                 </All>
             </Sidebar>
@@ -171,11 +181,11 @@ function Body(props) {
 const mapStateToProps = (state) => ({
     isLoggedIn: state.auth.isLoggedIn,
     accessToken: state.auth.accessToken,
-  });
-  
-  const mapDispatchToProps = {
+});
+
+const mapDispatchToProps = {
     logout,
-  };
+};
 
 
-  export default connect(mapStateToProps, mapDispatchToProps)(Body);
+export default connect(mapStateToProps, mapDispatchToProps)(Body);
