@@ -8,11 +8,11 @@ import SignupForm from "../signupForm/signupForm.jsx";
 import { connect } from 'react-redux';
 import { loginSuccess, loginFailure, saveResponseData } from '../../modules/authActions.js'
 import { useDispatch, useSelector } from "react-redux";
+import { noAuthApi } from "../../modules/axiosInterceptor.js";
 
 
 
 function LoginForm(props) {
-    const ServerUrl = 'https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/auth/';
     const navigate = useNavigate();
     const [activeSignupForm, setActiveSignupForm] = useState('login');
     // 정보확인
@@ -33,7 +33,7 @@ function LoginForm(props) {
 
     const onSubmit = async () => {
         try {
-            const response = await axios.post(ServerUrl, {
+            const response = await noAuthApi.post('/accounts/auth/', {
                 email: email,
                 password: password
             });

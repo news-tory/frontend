@@ -6,7 +6,6 @@ import { useSignupContext } from "../signupForm/signupContext.js";
 import newstory from "../../images/newstory.png"
 import LoginForm from "../LoginForm/loginForm.jsx";
 
-const ServerUrl = 'https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/register/';
 
 function SignupNextForm({updateActiveNextForm}){
     const navigate = useNavigate();
@@ -28,19 +27,19 @@ function SignupNextForm({updateActiveNextForm}){
 
     const onSubmit = async () => {
       try {
-          const response = axios.post(ServerUrl, {
+          const response = axios.post('/accounts/register/', {
               nickname: nickname,
               email: email,
               password: password,
-              sport: favorite.includes('스포츠'),
-              world: favorite.includes('세계'),
-              art: favorite.includes('예술'),
-              film: favorite.includes('영화'),
-              society: favorite.includes('사회'),
-              books: favorite.includes('도서'),
-              business: favorite.includes('경영'),
-              tech: favorite.includes('기술'),
-              culture: favorite.includes('문화')
+              Sport: favorite.includes('스포츠'),
+              World: favorite.includes('세계'),
+              Art: favorite.includes('예술'),
+              Film: favorite.includes('영화'),
+              Society: favorite.includes('사회'),
+              Books: favorite.includes('도서'),
+              Business: favorite.includes('경영'),
+              Tech: favorite.includes('기술'),
+              Culture: favorite.includes('문화')
             });
             console.log(response.data); // 서버의 응답 데이터 확인
             alert('회원가입이 완료되었습니다! 로그인을 다시 해주세요 :)')

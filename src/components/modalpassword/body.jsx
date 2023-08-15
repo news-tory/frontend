@@ -2,12 +2,9 @@ import { useState, useRef, useCallback } from "react";
 import axios from "axios";
 import { All, Password } from './style';
 import { connect } from 'react-redux';
-
-const ServerUrl = 'https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/'
+import { authApi } from "../../modules/axiosInterceptor";
 
 const Modalpage = (props) => {
-
-
     const [userpassword, setUserpassword] = useState('123456aa!')
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -23,12 +20,8 @@ const Modalpage = (props) => {
     // 정보 변경 버튼
     const onSubmit = async () => {
         try {
-            const response = await axios.patch(ServerUrl, {
+            const response = await authApi.patch('/accounts/update/', {
                 password: password,
-            }, {
-                headers: {
-                    Authorization: `bearer ${props.accessToken}`
-                }
             });
             console.log('password', passwordConfirm);
             setUserpassword(password)
@@ -61,12 +54,8 @@ const Modalpage = (props) => {
 
     const onConfirm = async () => {
         try {
-            const response = await axios.post(ServerUrl, {
+            const response = await authApi.post('/accounts/update/', {
                 password: userinputpassword,
-            }, {
-                headers: {
-                    Authorization: `bearer ${props.accessToken}`,
-                }
             });
             // console.log('password', passwordConfirm);
             // setUserpassword(password)

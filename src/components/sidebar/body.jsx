@@ -31,32 +31,18 @@ function Body(props) {
     // 유저 정보 get
     const [data, setData] = useState('');
 
-    const serverApi = axios.create({
-        headers: {
-            'Authorization': `bearer ${props.accessToken}`,
-        },
-    });
-
-    const userApi = async () => {
-        let user = [];
-        await serverApi.get(ServerURL).then((response) => {
-
-            user = response.data;
-        })
-        return user;
-    }
-
     const getUser = async () => {
         if (props.isLoggedIn) {
-            const nowData = await userApi();
-            setData(nowData);
+            try {
+                const response = await authApi.get('/accounts/update/');
+                setData(response.data);
+            } catch (error) {
+                console.log('유저 정보 가져오기 실패');
+                console.error(error);
+            }
         }
-    }
-
-    useEffect(() => {
-        getUser();
-    }, [data]);
-
+    };
+    
     useEffect(() => {
         getUser();
     }, [])
