@@ -61,6 +61,7 @@ function Body(props) {
     }, [data]); 
 
 
+
     // 로그아웃
     const Onclicklogout = async () => {
         try {

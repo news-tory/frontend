@@ -140,9 +140,8 @@ const Modalpage = (props) => {
                         onChange={onChangeUserpassword}
                         typeTitle="password" />
                     <button onClick={onConfirm}>확인</button>
-                  
                     {isTruepassword ? (
-                        <div id="message" className={`message ${isPassword ? 'success' : 'error'}`}>새로운 비밀번호를 입력해 주세요</div>
+                        <div id="message" className={`message ${isPassword ? 'success' : 'error'}`}>새로운 비밀번호를 입력해 주세요.</div>
                     ) : <div id="nomessage"> </div>}                  
 
                 </div>
@@ -170,7 +169,7 @@ const Modalpage = (props) => {
                         typeTitle="passwordConfirm"
                         disabled={!isTruepassword}
                     />
-                    <button onClick={onSubmit}>변경</button>
+                    <button onClick={onSubmit} disabled={!isTruepassword}>변경</button>
                     {passwordConfirm.length > 0 ? (
                         <div id="message" className={`message ${isPasswordConfirm ? 'success' : 'error'}`}>{passwordConfirmMessage}</div>
                     ) : <div id="nomessage"> </div>}
