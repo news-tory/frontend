@@ -47,30 +47,35 @@ function Modalpage(props) {
 
     // 이미지 파일 저장 (URL.createObjectURL : client 내에서만 이용 가능. 미리보기)
     // formData로 변환
+
+    const [uploadFile, setUploadFile] = useState('');
+
     const saveFileImage = (e) => {
         e.preventDefault();
         setFileImage(URL.createObjectURL(e.target.files[0]));
 
-        const uploadFile = e.target.files[0]
-        // console.log('gg', uploadFile)
-        formData.current.append('userImg', e.target.files[0]); // formData에 이미지 추가
+        setUploadFile(e.target.files[0])
     };
 
+    console.log('uploadfile:',uploadFile);
 
     // 이미지 서버로 전송
-    const UploadFile = async () => {
+    const UploadFile = async (uploadFile) => {
+        const formData = new FormData();
+        formData.append('userImg', uploadFile);
+        console.log('form');
+        for (const [key, value] of formData.entries()) {
+            console.log(key, value);
+          }
         if (!fileImage) {
             alert('이미지를 먼저 선택하시오');
             return;
         }
-        // 확인용: formData 내용 출력
-        console.log("formData contents:");
-        for (const entry of formData.current.entries()) {
-            console.log(entry);
-        }
+
             try {
                 const response = await axios.patch(ServerUrl, formData, {
                     headers: {
+                        "Content-Type": "multipart/form-data", 
                         Authorization: `bearer ${props.accessToken}`,
                     },
                 });
@@ -89,6 +94,7 @@ function Modalpage(props) {
             }
             URL.revokeObjectURL(fileImage);
             setFileImage('');
+            setUploadFile('');
             if (fileInputRef.current) {
                 fileInputRef.current.value = '';
             }

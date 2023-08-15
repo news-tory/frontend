@@ -15,11 +15,9 @@ import mypage from './mypage.png';
 import { connect } from 'react-redux';
 import { logout } from '../../modules/authActions';
 
+const ServerURL = `https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/`
 
 function Body(props) {
-
-    const [data, setData] = useState('');
-
 
     // 로그인 판별
     // const [isloggedin, setIsloggedin] = useState(!!TOKEN)
@@ -29,16 +27,17 @@ function Body(props) {
 
 
     // 유저 정보 get
+    const [data, setData] = useState('');
+
     const serverApi = axios.create({
         headers: {
-            // 'Authorization': "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzM2NTk3LCJpYXQiOjE2OTE3MzQ3OTcsImp0aSI6ImQ5ODVkZjExNmQ2NjQ3MjhiNDIxY2M4Y2MyMjRjNjk5IiwidXNlcl9pZCI6MX0.GGgA8q0fjRmYNT6yj9rJWfHTii03pqrFyreA1wTf4ic",
-            'Authorization': `bearer ${props.accessToken}`
+            'Authorization': `bearer ${props.accessToken}`,
         },
     });
 
     const userApi = async () => {
         let user = [];
-        await serverApi.get(`https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/`).then((response) => {
+        await serverApi.get(ServerURL).then((response) => {
             user = response.data;
         })
         return user;
@@ -53,12 +52,12 @@ function Body(props) {
 
     useEffect(() => {
         getUser();
-    }, [])
-
+    }, [data]);
 
     useEffect(() => {
         getUser();
-    }, [data]); 
+    }, [])
+
 
 
 
@@ -108,16 +107,19 @@ function Body(props) {
     // console.log(isloggedin)
 
 
+    // console.log(data);
+
+
     return (
         <Modaltoo>
             <Sidebar className="v-line">
 
                 <All>
-                <img className='logo' src={logo}></img>
+                    <img className='logo' src={logo}></img>
 
                     <Profile>
-                        <img className='basicimage' src={basicimage}></img>
-                        {props.isLoggedIn ?
+                    <img className='basicimage' src="{{data.userImg.url}}" ></img>
+                    {props.isLoggedIn ?
                             <div style={{ display: 'flex', marginLeft: '10px' }}>
                                 <h4>{data.nickname}</h4>
                                 <FontAwesomeIcon
@@ -152,13 +154,13 @@ function Body(props) {
                                 <p>MyPage</p></Link>
                         </Goto>
                     </Section>
-                    { props.isLoggedIn ?
-                    <>
-                    <div className='logout' onClick={Onclicklogout}>로그아웃</div>
-                    <h5 className="bottom">NewStory</h5>
-                    </>
-                    : 
-                    <h5 className="bottom2">NewStory</h5>               
+                    {props.isLoggedIn ?
+                        <>
+                            <div className='logout' onClick={Onclicklogout}>로그아웃</div>
+                            <h5 className="bottom">NewStory</h5>
+                        </>
+                        :
+                        <h5 className="bottom2">NewStory</h5>
                     }
                 </All>
             </Sidebar>
@@ -176,11 +178,11 @@ function Body(props) {
 const mapStateToProps = (state) => ({
     isLoggedIn: state.auth.isLoggedIn,
     accessToken: state.auth.accessToken,
-  });
-  
-  const mapDispatchToProps = {
+});
+
+const mapDispatchToProps = {
     logout,
-  };
+};
 
 
-  export default connect(mapStateToProps, mapDispatchToProps)(Body);
+export default connect(mapStateToProps, mapDispatchToProps)(Body);
