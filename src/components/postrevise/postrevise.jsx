@@ -26,24 +26,25 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import newscat from '../../images/catnews.png'
 import { connect } from 'react-redux';
-import { authApi } from '../../modules/axiosInterceptor';
+import { authApi, noAuthApi } from '../../modules/axiosInterceptor';
 
-function Newsview(props) {
+function PostRevise(props) {
     const [like, setLike] = useState(false);
-    const {news} = props ;
+    const {postingInf} = props;
     const navigate = useNavigate()
-    const [posting, setPosting] = useState("");
+    const [posting, setPosting] = useState(postingInf.content);
     const [userData,setUserData] = useState([]);
+    const [postData, setPostData] = useState({});
+    const [news,setNews] = useState([]);
     
     const onClickNewsSite = () => {
         const movetoLink = prompt(news.url);
         }
 
-    const postfeed = async () => {
+    const revisefeed = async () => {
         try {
             // const token = localStorage.getItem('accToken');
-            const response = await authApi.post('/community/posts/',{
-                article: news.id,
+            const response = await authApi.put(`/community/posts/${postingInf.id}`,{
                 content: posting
             });
             console.log(response.data); // 서버의 응답 데이터 확인
@@ -55,44 +56,33 @@ function Newsview(props) {
         }
     };
 
-    const getUser = async () => {
-        try{
-            const response = await authApi.get('/accounts/update/');
-            setUserData(response.data);
-            console.log(userData)
-        }
-            catch(error){
-                console.log('유저 정보 가져오기 실패')
-                console.error(error);   
-            }
-        }
+    // const fetchPosting = aync () => {
+    //     try{
+    //         const response = await authApi.get(`/community/posts/${postId}`)
+    //         setPostData(response.data);
+    //         setPosting(response.data.content)
+    //     }
+    //     catch(error){
+    //         console.log('fetchposting Error')
+    //     }
+    // } 
     
+    const fetcharticle = async() => {
+        try{
+            const response = await noAuthApi.get(`/articles/${postingInf.article}/`)
+            setNews(response.data)
+        }
+        catch(error){
+            console.log('fetcharticle error');
+        }
+    } 
     const onChangePosting = (e) => {
         setPosting(e.target.value)
     }
 
     useEffect(() => {
-        getUser();
+        
     },[])
-
-    // useEffect(async () => {
-    //     const fetchData = async() => {
-    //         const res = await axios.get()
-    //         if (res.data.type === 'liked') setLike(true)
-    //     }
-    // fetchData()
-    // },[])
-
-    // const toggleLike = async(e) => {
-    //     const res = await axios.post()
-    //     setLike(!like)
-    // }
-        // useEffect(async () => {
-    //     const fetchData = async() => {
-    //         const res = await axios.get()
-    //     }
-    // fetchData()
-    // },[])
 
     
     return(
@@ -128,7 +118,7 @@ function Newsview(props) {
                     <>
                         <PostText>
                             <div>{userData.nickname}</div>
-                            <PostButton onClick={postfeed}>
+                            <PostButton onClick={revisefeed}>
                                 공유하기 <FontAwesomeIcon icon={faPenToSquare} style={{color: "#4ad395",}} />
                                 </PostButton>
                         </PostText>
@@ -157,4 +147,4 @@ const mapStateToProps = (state) => ({
 });
 
 
-export default connect(mapStateToProps)(Newsview);
+export default connect(mapStateToProps)(PostRevise);

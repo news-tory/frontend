@@ -30,29 +30,26 @@ import { useNavigate } from "react-router-dom";
 import Newsview from "../../components/newview/newsview";
 import NewsGeneral from "../../components/newsGeneral/newsGeneral";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faComment } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faComment, faTrash, faFilePen } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import CommunityNews from "../../components/communitynews/communitynews";
 import CommunityNewsview from "../../components/communityNewsView/communitynewsview";
+import postrevise from "../../components/postrevise/postrevise";
 import { authApi, noAuthApi } from "../../modules/axiosInterceptor";
 
 
 function Body(props) {
 const [newslist, setNewsList] = useState([]);
 const [selectedNews,setSelectedNews] = useState([]);
+const [selectedPost,setSelectedPost] = useState({});
 const [activeMyFav, setActiveMyFav] = useState(false);
 const navigate = useNavigate();
 const [filteredNews,setFilteredNews] = useState([]);
 let [modal, setModal] = useState(false);
+let [reviseModal, setReviseModal] = useState(false);
 const [communityList, setCommunityList] = useState([]);
 const [nickname, setNickname] = useState("");
-const changeModal = () => {
-    setModal(!modal);
-};
 
-const stopPropagation = (e) => {
-    e.stopPropagation();
-};
 
 const fetchCommunity = async () => {
     try {
@@ -72,6 +69,22 @@ const onClickNews = (news) => {
     setSelectedNews(news);
     changeModal();
 }
+const changeModal = () => {
+    setModal(!modal);
+};
+
+const stopPropagation = (e) => {
+    e.stopPropagation();
+};
+
+const onClickRevise = (post) => {
+    setSelectedPost(post);
+    changereviseModal();
+}
+const changereviseModal = () => {
+    setReviseModal(!reviseModal);
+};
+
 
 const getUser = async () => {
     try{
@@ -106,9 +119,19 @@ const fetchLikedNews = async () => {
         }
     }, [nickname]);
 
-const onClickMyFav = () => {
-    setActiveMyFav(!activeMyFav)
-    console.log(activeMyFav)
+
+
+const onClickDelete = async (postId) => {
+    const confirmMessage = window.confirm('정말로 삭제하시겠습니까?')
+    if(confirmMessage){
+    try {
+        const response = await authApi.delete(`/community/posts/${postId}/`)
+        fetchCommunity();
+    }
+    catch(error) {
+        console.log('onClickDelete Error')
+    }
+    }
 }
 
 
@@ -127,7 +150,11 @@ return (
                             <CommunityWrapper key={index}>
                                 <PostUser>
                                     <div>{list.user}님의 이야기</div>
-                                    <NewsAbstract>{list.created_at}</NewsAbstract>
+                                    <NewsAbstract>
+                                        <div>{list.created_at}</div>
+                                        <FontAwesomeIcon icon={faFilePen} style={{color: 'grey'}} onClick={() => onClickRevise(list)} />
+                                        <FontAwesomeIcon icon={faTrash} style={{color: 'grey'}} onClick={() => onClickDelete(list.id)}/>
+                                    </NewsAbstract>
                                 </PostUser>
                                 <CommunityContent>{list.content}</CommunityContent>
                                 <CommunityNewsWrapper>
@@ -170,6 +197,13 @@ return (
             <ModalBackground onClick={changeModal}>
                 <ModalContainer onClick={stopPropagation}>
                     <CommunityNewsview postId={selectedNews.id} articleId={selectedNews.article} />
+                </ModalContainer>
+            </ModalBackground>
+        }
+        {reviseModal &&
+            <ModalBackground onClick={changeModal}>
+                <ModalContainer onClick={stopPropagation}>
+                    <CommunityNewsview postingInf={selectedPost} />
                 </ModalContainer>
             </ModalBackground>
         }
