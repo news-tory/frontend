@@ -54,11 +54,12 @@ const Modalpage = (props) => {
         // }
 
     }, [])
+    console.log(userinputpassword);
 
     const onConfirm = async () => {
         try {
             const response = await axios.post(ServerUrl, {
-                password: '3dlrkdms!',
+                password: userinputpassword,
             }, {
                 headers: {
                     Authorization: `bearer ${props.accessToken}`,
@@ -138,7 +139,7 @@ const Modalpage = (props) => {
                         onChange={onChangePassword}
                         title="비밀번호"
                         typeTitle="password"
-                        disabled={!isTruepassword}
+                    //     disabled={!isTruepassword}
                     />
                     {password.length > 0 ? (
                         <div id="message" className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</div>
@@ -152,7 +153,7 @@ const Modalpage = (props) => {
                         placeholder="비밀번호 확인"
                         title="비밀번호 확인"
                         typeTitle="passwordConfirm"
-                        disabled={!isTruepassword}
+                        // disabled={!isTruepassword}
                     />
                     <button onClick={onSubmit}>변경</button>
                     {passwordConfirm.length > 0 ? (

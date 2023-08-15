@@ -14,7 +14,7 @@ function Modalpage(props) {
     const fileInputRef = useRef(null);
     const [data, setData] = useState('');
     const [userimg, setUserimg] = useState('')
-    const imgInput = useRef(null);
+    const formData = useRef(new FormData()); // formData를 useRef로 생성
 
 
     // 원래 정보 불러오기
@@ -33,7 +33,7 @@ function Modalpage(props) {
         })
         return user;
     }
-             console.log(data.userImg);
+    console.log(data.userImg);
 
     const getUser = async () => {
         const nowDetail = await userApi();
@@ -44,7 +44,6 @@ function Modalpage(props) {
         getUser();
     }, [])
 
-    const formData = new FormData();
 
     // 이미지 파일 저장 (URL.createObjectURL : client 내에서만 이용 가능. 미리보기)
     // formData로 변환
@@ -53,8 +52,8 @@ function Modalpage(props) {
         setFileImage(URL.createObjectURL(e.target.files[0]));
 
         const uploadFile = e.target.files[0]
-        const formData = new FormData()
-        formData.append('userImg', imgInput.current.files[0])
+        // console.log('gg', uploadFile)
+        formData.current.append('userImg', e.target.files[0]); // formData에 이미지 추가
     };
 
 
@@ -64,75 +63,79 @@ function Modalpage(props) {
             alert('이미지를 먼저 선택하시오');
             return;
         }
-        try {
-
-            const response = await axios.patch(ServerUrl, formData, {
-                headers: {
-                    Authorization: `bearer ${props.accessToken}`,
-                },
-            });
-            console.log('이미지 업로드 성공:', response.data);
-        } catch (error) {
-            console.error('이미지 업로드 실패:', error);
+        // 확인용: formData 내용 출력
+        console.log("formData contents:");
+        for (const entry of formData.current.entries()) {
+            console.log(entry);
         }
+            try {
+                const response = await axios.patch(ServerUrl, formData, {
+                    headers: {
+                        Authorization: `bearer ${props.accessToken}`,
+                    },
+                });
+                console.log('이미지 업로드 성공:', response.data);
+            } catch (error) {
+                console.error('이미지 업로드 실패:', error);
+            }
+        };
+
+
+        // 이미지 파일 삭제 (미리보기)
+        const deleteFileImage = () => {
+            if (!fileImage) {
+                alert('이미지가 없습니다')
+                return;
+            }
+            URL.revokeObjectURL(fileImage);
+            setFileImage('');
+            if (fileInputRef.current) {
+                fileInputRef.current.value = '';
+            }
+        };
+
+        console.log(data)
+
+
+        return (
+            <All>
+                <Image>
+
+                    <h4 className="smalltitle">프로필 이미지 변경</h4>
+                    {fileImage ?
+                        <img
+                            className="viewimage"
+                            src={fileImage}
+                        // alt="이미지 미리보기" 
+                        />
+                        : <img
+                            className="viewimage"
+                            src={data.userImg} />
+                    }
+                    {!fileImage &&
+                        <input
+                            className="changeimg"
+                            type="file"
+                            accept="image/*"
+                            onChange={saveFileImage}
+                        />
+                    }
+                    <div className="buttons">
+                        <button className="button"
+                            onClick={() => deleteFileImage()}> 삭제 </button>
+                        <button className="button"
+                            onClick={UploadFile}>변경</button>
+                    </div>
+                </Image>
+            </All>
+
+        )
     };
 
-
-    // 이미지 파일 삭제 (미리보기)
-    const deleteFileImage = () => {
-        if (!fileImage) {
-            alert('이미지가 없습니다')
-            return;
-        }
-        URL.revokeObjectURL(fileImage);
-        setFileImage('');
-        if (fileInputRef.current) {
-            fileInputRef.current.value = '';
-        }
-    };
-
-    console.log(data)
+    const mapStateToProps = (state) => ({
+        isLoggedIn: state.auth.isLoggedIn,
+        accessToken: state.auth.accessToken,
+    });
 
 
-    return (
-        <All>
-            <Image>
-
-                <h4 className="smalltitle">프로필 이미지 변경</h4>
-                {fileImage ?
-                    <img
-                        className="viewimage"
-                        src={fileImage}
-                    // alt="이미지 미리보기" 
-                    />
-                    : <img
-                        className="viewimage"
-                        src={data.userImg} />
-                }
-                {!fileImage &&
-                    <input
-                        className="changeimg"
-                        type="file"
-                        accept="image/*"
-                        onChange={saveFileImage}
-                        ref={imgInput} />
-                }
-                <div className="buttons">
-                    <button className="button"
-                        onClick={() => deleteFileImage()}> 삭제 </button>
-                    <button className="button"
-                        onClick={UploadFile}>변경</button>
-                </div>
-            </Image>
-        </All>
-
-    )
-};
-
-const mapStateToProps = (state) => ({
-    isLoggedIn: state.auth.isLoggedIn,
-    accessToken: state.auth.accessToken,
-});
-
-
-export default connect(mapStateToProps)(Modalpage);
+    export default connect(mapStateToProps)(Modalpage);
