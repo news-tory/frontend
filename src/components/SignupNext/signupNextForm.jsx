@@ -5,6 +5,7 @@ import {Wrapper, TitleText, FootButton, SubTitleText, SignupFormStructure, Categ
 import { useSignupContext } from "../signupForm/signupContext.js";
 import newstory from "../../images/newstory.png"
 import LoginForm from "../LoginForm/loginForm.jsx";
+import { noAuthApi } from "../../modules/axiosInterceptor.js";
 
 
 function SignupNextForm({updateActiveNextForm}){
@@ -27,7 +28,7 @@ function SignupNextForm({updateActiveNextForm}){
 
     const onSubmit = async () => {
       try {
-          const response = axios.post('/accounts/register/', {
+          const response = noAuthApi.post('/accounts/register/', {
               nickname: nickname,
               email: email,
               password: password,
