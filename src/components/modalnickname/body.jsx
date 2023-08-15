@@ -39,8 +39,8 @@ function Modalpage (props){
     // 닉네임 변경
     const onSubmit = async () => {
         try {
-            const response = await axios.patch('/accounts/update/',{
-                "nickname": nickname,
+            const response = await authApi.patch('/accounts/update/',{
+                nickname: nickname,
             });
             alert('변경이 완료되었습니다!')
             setNickname("")
