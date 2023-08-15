@@ -14,6 +14,7 @@ import mypage from './mypage.png';
 
 import { connect } from 'react-redux';
 import { logout } from '../../modules/authActions';
+import { authApi } from "../../modules/axiosInterceptor";
 
 const ServerURL = `https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/`
 
@@ -23,6 +24,7 @@ function Body(props) {
     // const [isloggedin, setIsloggedin] = useState(!!TOKEN)
 
     // const [isloggedin, setIsloggedin] = useState(false)
+
 
 
 
@@ -38,6 +40,7 @@ function Body(props) {
     const userApi = async () => {
         let user = [];
         await serverApi.get(ServerURL).then((response) => {
+
             user = response.data;
         })
         return user;
@@ -47,6 +50,7 @@ function Body(props) {
         if (props.isLoggedIn) {
             const nowData = await userApi();
             setData(nowData);
+            console.log(data)
         }
     }
 
@@ -65,7 +69,6 @@ function Body(props) {
     const Onclicklogout = async () => {
         try {
             localStorage.removeItem('refToken');
-            localStorage.removeItem('accToken');
 
             const response = await axios.delete(`https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/auth/`, {
             });

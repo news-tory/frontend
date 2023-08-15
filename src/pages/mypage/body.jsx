@@ -34,12 +34,10 @@ import { faHeart, faComment } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import CommunityNews from "../../components/communitynews/communitynews";
 import CommunityNewsview from "../../components/communityNewsView/communitynewsview";
+import { authApi, noAuthApi } from "../../modules/axiosInterceptor";
 
 
 function Body(props) {
-const serverUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/articles/"
-const communityServerUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/community/posts/"
-const UserServerUrl = "https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/"
 const [newslist, setNewsList] = useState([]);
 const [selectedNews,setSelectedNews] = useState([]);
 const [activeMyFav, setActiveMyFav] = useState(false);
@@ -59,17 +57,13 @@ const stopPropagation = (e) => {
 const fetchCommunity = async () => {
     try {
         // const token = localStorage.getItem('accToken')
-        const response = await axios.get(communityServerUrl, {
-            headers: {
-                Authorization: `Bearer ${props.accessToken}`
-            }
-        });
+        const response = await authApi.get('/community/posts/');
         // console.log(token);
         console.log(response.data); // 서버의 응답 데이터 확인
         const userArticles = response.data.filter(article => article.user === nickname);
         setCommunityList(userArticles);
     } catch (error) {
-        alert('데이터 로딩에 실패했습니다.')
+        console.log('데이터 로딩에 실패했습니다.')
         console.error(error);
     }
 };
@@ -81,11 +75,7 @@ const onClickNews = (news) => {
 
 const getUser = async () => {
     try{
-        const response = await axios.get(UserServerUrl, {
-            headers: {
-                Authorization: `token ${props.accessToken}`
-            }
-        });
+        const response = await authApi.get('/accounts/update/');
         const userData = response.data;
         setNickname(userData.nickname)
     }
@@ -97,12 +87,11 @@ const getUser = async () => {
     }
 const fetchLikedNews = async () => {
         try {
-            const response = await axios.get(serverUrl);
+            const response = await noAuthApi.get('/articles/');
             console.log(response.data); // 서버의 응답 데이터 확인
             setNewsList(response.data);
         } catch (error) {
-            alert('실시간 뉴스 로딩에 실패했습니다.')
-            navigate('/')
+            console.log('실시간 뉴스 로딩에 실패했습니다.')
         }
     };
 

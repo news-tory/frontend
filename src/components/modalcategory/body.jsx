@@ -4,11 +4,10 @@ import axios from "axios";
 import { All, Category, CategoryWrapper, CategoryButton } from './style';
 import { connect } from 'react-redux';
 import { useEffect } from "react";
+import { authApi } from "../../modules/axiosInterceptor";
 
 
 
-
-const ServerUrl = 'https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/'
 
 function Modalpage(props) {
 
