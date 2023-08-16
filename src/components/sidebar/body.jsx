@@ -108,7 +108,7 @@ function Body(props) {
 
                     <Profile>
 
-                    <img className='basicimage' src={`https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app${data.userImg}`} alt="User Profile" />                    {props.isLoggedIn ?
+                    <img className='basicimage' src={`https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app${data.userImg}`} alt="User Profile" />                    
 
 
                     {props.isLoggedIn ?

@@ -3,6 +3,7 @@ import basicimage from "../user.png";
 import axios from "axios";
 import { All, Image } from './style';
 import { connect } from 'react-redux';
+import { authApi } from "../../modules/axiosInterceptor";
 
 
 const ServerUrl = 'https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/'
