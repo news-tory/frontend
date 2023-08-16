@@ -28,14 +28,15 @@ function Modalpage(props) {
         return user;
     }
 
-    const getUser = async () => {
-        const nowDetail = await userApi();
-        setData(nowDetail);
-    }
+
 
     useEffect(() => {
+        const getUser = async () => {
+            const nowDetail = await userApi();
+            setData(nowDetail);
+        }
         getUser();
-    }, []);
+    }, [data]);
 
 
     // true 값인 카테고리 필터링

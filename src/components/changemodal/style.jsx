@@ -110,8 +110,9 @@ export const Password = styled.div`
 `
 
 export const Category = styled.div`
-    padding-left: 20px;
-    padding-top: 30px;
+    padding-left: 50px;
+    padding-top: 10px;
+
     p {
         font-size: 12px;
     }
@@ -128,6 +129,7 @@ export const CategoryButton = styled.div`
     margin: 7px;
     width: 100px;
     height: 32px;
+    margin-right: 30px;
     background-color: ${({ active }) => (active ? '#f2f2f2' : 'transparent')};
     border: 1px solid #4ad395;
     .catbutton {
