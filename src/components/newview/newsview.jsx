@@ -30,7 +30,7 @@ import { authApi } from '../../modules/axiosInterceptor';
 
 function Newsview(props) {
     const [like, setLike] = useState(false);
-    const {news} = props ;
+    const {news, changeModal} = props;
     const navigate = useNavigate()
     const [posting, setPosting] = useState("");
     const [userData,setUserData] = useState([]);
@@ -38,7 +38,9 @@ function Newsview(props) {
     const onClickNewsSite = () => {
         const movetoLink = prompt(news.url);
         }
-
+    const backtomain = () => {
+        changeModal();
+    }
     const postfeed = async () => {
         try {
             // const token = localStorage.getItem('accToken');
@@ -47,8 +49,9 @@ function Newsview(props) {
                 content: posting
             });
             console.log(response.data); // 서버의 응답 데이터 확인
-            alert('게시되었습니다.')
-            setPosting("")
+            alert('게시되었습니다.');
+            setPosting("");
+            backtomain();
         } catch (error) {
             alert('업로드에 실패했습니다. 인터넷 연결을 확인 후 다시 시도해보시겠어요?')
             console.error(error)
@@ -134,6 +137,7 @@ function Newsview(props) {
                         </PostText>
                         <PostInput 
                             placeholder='다양한 분야에서 해당 기사를 공부한 글을 적어주세요!'
+                            value={posting}
                             onChange={onChangePosting}
                             />
                     </>

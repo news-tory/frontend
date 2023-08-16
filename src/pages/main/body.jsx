@@ -110,6 +110,7 @@ function Body(props) {
             try{
                 const response = await authApi.post(`/articles/${newsId}/likes/`)
                 setLiked(!liked);
+                fetchnews();
             }
             catch(error){
                 console.log('like api error')
@@ -146,7 +147,7 @@ function Body(props) {
                                     <FontAwesomeIcon icon={faHeart} style={{color: liked ? 'red' : 'grey'}} onClick={() => onClickLike(news.id)}/>
                                     <div>{news.like_cnt}</div>
                                 </HeartButton>
-                                <PostButton onClick={() => onClickNews(news)}>
+                                <PostButton onClick={() => onClickNews(news)} modal = {modal} changeModal={changeModal}>
                                     <FontAwesomeIcon icon={faPenToSquare} />
                                     <p> Post</p>
                                 </PostButton>
@@ -177,7 +178,7 @@ function Body(props) {
                                     <FontAwesomeIcon icon={faHeart} />
                                     <p>{news.like_cnt}</p>
                                 </HeartButton>
-                                <PostButton onClick={() => onClickNews(news)}>
+                                <PostButton onClick={() => onClickNews(news)} modal={modal} changeModal={changeModal}>
                                     <FontAwesomeIcon icon={faPenToSquare} />
                                     <div> Post</div>
                                 </PostButton>
