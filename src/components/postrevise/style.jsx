@@ -27,7 +27,9 @@ export const NewsPaper = styled.div`
 
 export const NewsImage = styled.img`
     width: 100%;
-    height: 50%;`
+    height: 50%;
+    cursor: pointer;
+    `
     
 
 export const ButtonSection = styled.div`

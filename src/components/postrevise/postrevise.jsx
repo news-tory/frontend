@@ -36,20 +36,20 @@ function PostRevise(props) {
     const [userData,setUserData] = useState([]);
     const [postData, setPostData] = useState({});
     const [news,setNews] = useState([]);
+    const [liked, setLiked] = useState(false);
     
     const onClickNewsSite = () => {
-        const movetoLink = prompt(news.url);
+            window.open(news.url, '_blank');
         }
 
     const revisefeed = async () => {
         try {
             // const token = localStorage.getItem('accToken');
-            const response = await authApi.put(`/community/posts/${postingInf.id}/`,{
+            const response = await authApi.patch(`/community/posts/${postingInf.id}/`,{
                 content: posting
             });
             console.log(response.data); // 서버의 응답 데이터 확인
             alert('수정되었습니다.')
-            setPosting("")
         } catch (error) {
             alert('업로드에 실패했습니다. 인터넷 연결을 확인 후 다시 시도해보시겠어요?')
             console.error(error)
@@ -85,18 +85,31 @@ function PostRevise(props) {
         fetcharticle();
     },[])
 
-    
+    const onClickLike = async (newsId) => {
+        if(props.isLoggedIn){
+            try{
+                const response = await authApi.post(`/articles/${newsId}/likes/`)
+                setLiked(!liked);
+                fetcharticle();
+            }
+            catch(error){
+                console.log('like api error')
+                console.error(error);
+            }
+        }
+    }
+
     return(
         <Container>
             <NewsViewSection>
                 <NewsPaper>
                     {news.paper}
                 </NewsPaper>
-                <NewsImage src={news.img_url}/>
+                <NewsImage src={news.img_url} onClick={onClickNewsSite}/>
                 <ButtonSection>
                     <ViewWrapper>
                     <HeartView>
-                        <FontAwesomeIcon icon={faHeart} style={{ color: like ? '#BABABA' : 'grey' }} />
+                        <FontAwesomeIcon icon={faHeart} style={{ color: liked ? 'red' : 'grey' , cursor: 'pointer'}}  onClick={() => onClickLike(news.id)}/>
                         <div>{news.like_cnt}</div>
                     </HeartView>
                     <PostView>
@@ -120,7 +133,7 @@ function PostRevise(props) {
                         <PostText>
                             <div>{userData.nickname}</div>
                             <PostButton onClick={revisefeed}>
-                                공유하기 <FontAwesomeIcon icon={faPenToSquare} style={{color: "#4ad395",}} />
+                                공유하기
                                 </PostButton>
                         </PostText>
                         <PostInput 

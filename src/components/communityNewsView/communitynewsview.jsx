@@ -23,11 +23,14 @@ import {
     CommmentContent,
     CommentPostWrapper,
     CommmentPostContent,
-    CommentPostButton
+    CommentPostButton,
+    CommentInfWrapper,
+    CommentSettingWrapper,
+    ReviseCommentarea
 } from './style';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare, faHeart, faPen, faTrash, faFilePen} from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faHeart, faPen, faXmark, faWrench} from '@fortawesome/free-solid-svg-icons';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
@@ -42,6 +45,9 @@ function CommunityNewsview(props) {
     const [comments, setComments] = useState([]);
     const [writeComment, setWriteComment] = useState("");
     const [newsData, setNewsData] = useState([]);
+    const [username,setUsername] = useState("");
+    const [reviseComment, setReviseComment] = useState("")
+    const [reviseCommentInput, setReviseCommentInput] = useState(false);
 
     const onClickNewsSite = (props) => {
         const movetoLink = prompt(newsData.url);
@@ -62,10 +68,9 @@ function CommunityNewsview(props) {
 
     const fetchnews = async () => {
         try {
-            const response = await noAuthApi.get('/articles/');
+            const response = await noAuthApi.get(`/articles/${articleId}/`);
             console.log(response.data); // 서버의 응답 데이터 확인
-            const filteredNews = response.data.filter(news => news.id === articleId); // 수정된 부분
-            setNewsData(filteredNews[0]); // 선택된 뉴스 설정
+            setNewsData(response.data); // 선택된 뉴스 설정
         } catch (error) {
             alert('데이터 로딩에 실패했습니다.');
             navigate('/');
@@ -75,6 +80,7 @@ function CommunityNewsview(props) {
     useEffect(() => {
         fetchPosting();
         fetchnews();
+        getUser();
     }, [])
 
     const onChangeCommenting = (e) => {
@@ -114,7 +120,52 @@ function CommunityNewsview(props) {
     //     }
     // fetchData()
     // },[])
+    const getUser = async () => {
+        try{
+            const response = await authApi.get('/accounts/update/');
+            setUsername(response.data.nickname);
+        }
+            catch(error){
+                console.log('유저 정보 가져오기 실패')
+                console.error(error);   
+            }
+        }
+    
+    const reviseCmt = async (commentId) => {
+        try{
+            const response = await authApi.put(`/community/posts/${postId}/comment/${commentId}/`,{
+                content: reviseComment
+            });
+        }
+            catch(error){
+                console.log('reviseComment Error');
+            }
+    }
 
+    const deleteCmt = async (commentId) => {
+        const confirmMessage = window.confirm('댓글을 삭제하시겠습니까?')
+        if(confirmMessage){
+        try{
+            const response = await authApi.delete(`/community/posts/${postId}/comment/${commentId}/`);
+            fetchPosting();
+        }
+        catch(error){
+            console.log('deleteCmt Error');
+        }
+        }
+    }
+
+    const reviseSubmit = (commentId) => {
+        reviseCmt(commentId);
+        alert("수정되었습니다.");
+        setReviseCommentInput(!reviseCommentInput);
+        fetchPosting();
+    }
+
+    const onClickRevise = (reviseData) => {
+        setReviseCommentInput(!reviseCommentInput);
+        setReviseComment(reviseData)
+    }
 
     return (
         <Container>
@@ -159,13 +210,29 @@ function CommunityNewsview(props) {
             </NewsViewSection>
             <NewsPostSection>
                 <CommentPostWrapper>
-                    <CommmentPostContent onChange={onChangeCommenting} placeholder='당신의 이야기를 들려주세요.' />
+                    <CommmentPostContent onChange={onChangeCommenting} value={writeComment} placeholder='당신의 이야기를 들려주세요.' />
                     <CommentPostButton icon={faPen} onClick={onClickCommentPost} />
                 </CommentPostWrapper>
                 {comments.map((cmt) => (
                     <CommentWrapper>
+                        <CommentInfWrapper>
                         <CommentUser>{cmt.user}</CommentUser>
-                        <CommmentContent>{cmt.content}</CommmentContent>
+                        {reviseCommentInput == true ? (
+                            <ReviseCommentarea value={reviseComment} onChange={(e) => setReviseComment(e.target.value) }/>
+                        ):(
+                            <CommmentContent>{cmt.content}</CommmentContent>
+                        )}
+                        </CommentInfWrapper>
+                        {username === cmt.user && !reviseCommentInput ? (
+                            <CommentSettingWrapper>
+                                <FontAwesomeIcon icon={faWrench} onClick={() => onClickRevise(cmt.content)}/>
+                                <FontAwesomeIcon icon={faXmark} onClick={() => deleteCmt(cmt.id)}/>
+                            </CommentSettingWrapper>
+                        ) : (
+                            <CommentSettingWrapper>
+                                <p onClick={() => reviseSubmit(cmt.id)}>수정</p>
+                            </CommentSettingWrapper>
+                        )}
                     </CommentWrapper>
                 ))}
             </NewsPostSection>
