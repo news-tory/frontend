@@ -35,7 +35,7 @@ function Modalpage(props) {
 
     useEffect(() => {
         getUser();
-    }, [])
+    }, []);
 
 
     // true 값인 카테고리 필터링
@@ -108,7 +108,7 @@ function Modalpage(props) {
                 <Profile>
                     <img
                         className="viewimage"
-                        src={basicimage} />
+                        src={`https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app${data.userImg}`} />
                     <FontAwesomeIcon
                         onClick={openModalimage} className='pencil' icon={faPencil} />
                     <div className="nickname">

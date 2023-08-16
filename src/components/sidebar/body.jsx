@@ -46,7 +46,7 @@ function Body(props) {
     
     useEffect(() => {
         getUser();
-    }, [])
+    }, [data.nickname])
 
 
 
@@ -107,9 +107,12 @@ function Body(props) {
                     <img className='logo' src={logo}></img>
 
                     <Profile>
-                    <img className='basicimage' src={`https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app${data.userImg}`} alt="User Profile" />
+
+                    <img className='basicimage' src={`https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app${data.userImg}`} alt="User Profile" />                    {props.isLoggedIn ?
+
 
                     {props.isLoggedIn ?
+
                             <div style={{ display: 'flex', marginLeft: '10px' }}>
                                 <h4>{data.nickname}</h4>
                                 <FontAwesomeIcon
