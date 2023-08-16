@@ -159,10 +159,23 @@ export const CommentWrapper = styled.div`
     display: flex;
     box-sizing: border-box;
     padding: 10px 20px 10px 20px;
-    gap: 10px;
     flex-wrap: wrap;
+    justify-content: space-between;
     `
 
+export const CommentInfWrapper = styled.div`
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    gap : 15px;
+    align-items: center;
+    `
+
+export const CommentSettingWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+`
 export const CommentUser = styled.div`
     font-size: 15px;
     `
@@ -188,3 +201,9 @@ export const PostButton = styled.button`
     cursor: pointer;
     font-size: 15px;
 `
+
+export const ReviseCommentarea = styled.textarea`
+    width: 20rem;
+    resize: none;
+    `
+

@@ -43,6 +43,7 @@ function Body(props) {
     const [filteredNews,setFilteredNews] = useState([]);
     let [modal, setModal] = useState(false);
     const [liked,setLiked] = useState(false);
+    const [likedData, setLikedData] = useState([]);
 
     const changeModal = () => {
         setModal(!modal);
@@ -56,6 +57,7 @@ function Body(props) {
         try {
             const response = await noAuthApi.get('/articles/');
             setNewsList(response.data);
+            console.log(newslist)
         } catch (error) {
             console.log('뉴스데이터 로딩에 실패했습니다.')
             navigate('/')
@@ -78,9 +80,9 @@ function Body(props) {
     }
     
     useEffect(() => {
+        getUser();
         fetchnews();
         fetchHotnews();
-        getUser();
     },[]);
 
     useEffect(() => {
@@ -88,6 +90,7 @@ function Body(props) {
         setFilteredNews(newslist.filter(news => trueKeys.includes(news.section)));
     }, [userData, newslist]);
     
+
     const onClickMyFav = () => {
         setActiveMyFav(!activeMyFav)
     }
@@ -104,6 +107,7 @@ function Body(props) {
                 console.error(error);   
             }
         }}
+
 
     const onClickLike = async (newsId) => {
         if(props.isLoggedIn){
@@ -144,7 +148,7 @@ function Body(props) {
                             <NewsAbstract>{news.abstract}</NewsAbstract>
                             <ButtonSection>
                                 <HeartButton>
-                                    <FontAwesomeIcon icon={faHeart} style={{color: liked ? 'red' : 'grey'}} onClick={() => onClickLike(news.id)}/>
+                                    <FontAwesomeIcon icon={faHeart} style={{color: news.liked ? 'red' : 'grey'}} onClick={() => onClickLike(news.id)}/>
                                     <div>{news.like_cnt}</div>
                                 </HeartButton>
                                 <PostButton onClick={() => onClickNews(news)} modal = {modal} changeModal={changeModal}>

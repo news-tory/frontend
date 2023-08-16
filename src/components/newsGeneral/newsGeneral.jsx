@@ -25,7 +25,7 @@ function NewsGeneral() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const SlideRef = useRef(null);
     const [newsLen, setNewsLen] = useState(0);
-    const category = [{스포츠: 'us'},
+    const category = [{스포츠: 'Sport'},
                         {세계: 'World'},
                         {예술:'Art'},
                         {영화:'Film'},
@@ -55,23 +55,6 @@ function NewsGeneral() {
             console.log('newsGeneral fetchnews error')
         }
     };
-
-    const NextSlide = () => {
-        if (currentSlide >= newsLen - 2){
-            setCurrentSlide(0);
-        } else {
-            setCurrentSlide(currentSlide + 2);
-        }
-    }
-    
-    const PrevSlide = () => {
-        if (currentSlide <= 0){
-            setCurrentSlide(newsLen - 2);
-        } else{
-            setCurrentSlide(currentSlide - 2);
-        }
-    }
-    
 
 
     const onClickFav = useCallback(

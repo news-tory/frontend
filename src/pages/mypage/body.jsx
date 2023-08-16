@@ -40,17 +40,20 @@ import { authApi, noAuthApi } from "../../modules/axiosInterceptor";
 
 function Body(props) {
 const [newslist, setNewsList] = useState([]);
-const [selectedNews,setSelectedNews] = useState([]);
-const [selectedPost,setSelectedPost] = useState({});
+const [filteredNews,setFilteredNews] = useState([]);
 const [activeMyFav, setActiveMyFav] = useState(false);
 const navigate = useNavigate();
-const [filteredNews,setFilteredNews] = useState([]);
-let [modal, setModal] = useState(false);
-let [reviseModal, setReviseModal] = useState(false);
 const [communityList, setCommunityList] = useState([]);
 const [nickname, setNickname] = useState("");
 const [liked,setLiked] = useState(false);
 
+//모달창 관리 State
+const [postModal, setPostModal] = useState(false);
+const [newsModal, setNewsModal] = useState(false);
+const [reviseModal, setReviseModal] = useState(false);
+const [selectedPost,setSelectedPost] = useState({});
+const [selectedCommunityPost,setSelectedCommunityPost] = useState({});
+const [selectedNews, setSelectedNews] = useState({})
 
 const fetchCommunity = async () => {
     try {
@@ -66,18 +69,22 @@ const fetchCommunity = async () => {
     }
 };
 
-const onClickNews = (news) => {
-    setSelectedNews(news);
-    changeModal();
-}
-const changeModal = () => {
-    setModal(!modal);
-};
-
+// 모달 배경 제어
 const stopPropagation = (e) => {
     e.stopPropagation();
 };
 
+//마이페이지에서 내 포스트 눌렀을 때 뜨는 모달
+const onClickCommunityPost = (post) => {
+    setSelectedCommunityPost(post);
+    changePostModal();
+}
+const changePostModal = () => {
+    setPostModal(!postModal);
+};
+
+
+//수정버튼 눌렀을 때 뜨는 모달
 const onClickRevise = (post) => {
     setSelectedPost(post);
     changereviseModal();
@@ -85,7 +92,14 @@ const onClickRevise = (post) => {
 const changereviseModal = () => {
     setReviseModal(!reviseModal);
 };
-
+//인기뉴스 눌렀을 때 뜨는 모달
+const onClickNews = (news) => {
+    setSelectedNews(news);
+    changeNewsModal();
+}
+const changeNewsModal = () => {
+    setNewsModal(!newsModal);
+};
 
 const getUser = async () => {
     try{
@@ -101,22 +115,24 @@ const getUser = async () => {
     }
 const fetchLikedNews = async () => {
         try {
-            const response = await noAuthApi.get('/articles/');
+            const response = await authApi.get(`/articles/like/user/${nickname}/`);
+            console.log('124124')
             console.log(response.data); // 서버의 응답 데이터 확인
             setNewsList(response.data);
         } catch (error) {
-            console.log('실시간 뉴스 로딩에 실패했습니다.')
+            console.log('좋아요한 뉴스 로딩에 실패했습니다.')
+            console.log(nickname)
         }
     };
 
     useEffect(() => {
         getUser();
-        fetchLikedNews();
     }, []);
 
     useEffect(() => {
         if (nickname) {
             fetchCommunity(); // nickname이 설정된 이후에 fetchCommunity 호출
+            fetchLikedNews();
         }
     }, [nickname]);
 
@@ -179,7 +195,7 @@ return (
                                         <FontAwesomeIcon icon={faHeart} onClick={() => onClickLike(list.id)}/>
                                         <p>{list.like_cnt}</p>
                                     </HeartButton>
-                                    <PostButton onClick={() => onClickNews(list)}>
+                                    <PostButton onClick={() => onClickCommunityPost(list)}>
                                         <FontAwesomeIcon icon={faComment} />
                                         <p>Comment</p>
                                     </PostButton>
@@ -207,10 +223,10 @@ return (
                 ))}
             </RightWrapper>
         </MainContainer>
-        {modal &&
-            <ModalBackground onClick={changeModal}>
+        {postModal &&
+            <ModalBackground onClick={changePostModal}>
                 <ModalContainer onClick={stopPropagation}>
-                    <CommunityNewsview postId={selectedNews.id} articleId={selectedNews.article} />
+                    <CommunityNewsview postId={selectedCommunityPost.id} articleId={selectedCommunityPost.article} />
                 </ModalContainer>
             </ModalBackground>
         }
@@ -218,6 +234,13 @@ return (
             <ModalBackground onClick={changereviseModal}>
                 <ModalContainer onClick={stopPropagation}>
                     <PostRevise postingInf={selectedPost} />
+                </ModalContainer>
+            </ModalBackground>
+        }
+        {newsModal &&
+            <ModalBackground onClick={changeNewsModal}>
+                <ModalContainer onClick={stopPropagation}>
+                    <Newsview news = {selectedNews} />
                 </ModalContainer>
             </ModalBackground>
         }
