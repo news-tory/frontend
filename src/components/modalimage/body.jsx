@@ -11,7 +11,7 @@ const ServerUrl = 'https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.ap
 function Modalpage(props) {
 
 
-    const [fileImage, setFileImage] = useState('');
+    const [fileImage, setFileImage] = useState(''); 
     const fileInputRef = useRef(null);
     const [data, setData] = useState('');
     const [userimg, setUserimg] = useState('')
