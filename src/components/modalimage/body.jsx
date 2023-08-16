@@ -1,17 +1,18 @@
 import { useState, useRef, useEffect } from "react";
-import basicimage from "../user.png";
+import basicimage from "../../images/BasicProfile.png";
 import axios from "axios";
 import { All, Image } from './style';
 import { connect } from 'react-redux';
 import { authApi } from "../../modules/axiosInterceptor";
 
 
-const ServerUrl = 'https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/'
+
+// const ServerUrl = 'https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app/accounts/update/'
 
 function Modalpage(props) {
 
 
-    const [fileImage, setFileImage] = useState(''); 
+    const [fileImage, setFileImage] = useState('');
     const fileInputRef = useRef(null);
     const [data, setData] = useState('');
     const [userimg, setUserimg] = useState('')
@@ -27,13 +28,13 @@ function Modalpage(props) {
             user = response.data;
             console.log(user);
 
-    const serverApi = axios.create({
-        headers: {
-            //   'Authorization': "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzM2NTk3LCJpYXQiOjE2OTE3MzQ3OTcsImp0aSI6ImQ5ODVkZjExNmQ2NjQ3MjhiNDIxY2M4Y2MyMjRjNjk5IiwidXNlcl9pZCI6MX0.GGgA8q0fjRmYNT6yj9rJWfHTii03pqrFyreA1wTf4ic",
-            // 'Authorization': localStorage.getItem('token')
-            'Authorization': `bearer ${props.accessToken}`
-        },
-    });
+            const serverApi = axios.create({
+                headers: {
+                    //   'Authorization': "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzM2NTk3LCJpYXQiOjE2OTE3MzQ3OTcsImp0aSI6ImQ5ODVkZjExNmQ2NjQ3MjhiNDIxY2M4Y2MyMjRjNjk5IiwidXNlcl9pZCI6MX0.GGgA8q0fjRmYNT6yj9rJWfHTii03pqrFyreA1wTf4ic",
+                    // 'Authorization': localStorage.getItem('token')
+                    'Authorization': `bearer ${props.accessToken}`
+                },
+            });
 
         })
         return user;
@@ -77,20 +78,38 @@ function Modalpage(props) {
         }
 
         try {
-            const response = await axios.patch(ServerUrl, formData, {
+            const response = await authApi.patch('/accounts/update/', formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     Authorization: `bearer ${props.accessToken}`,
                 },
             });
             console.log('이미지 업로드 성공:', response.data);
+            alert('프로필 이미지가 변경되었습니다!');
         } catch (error) {
             console.error('이미지 업로드 실패:', error);
+            alert('프로필 이미지가 변경되지 않았습니다. 인터넷 연결을 확인해주세요.');
         }
     };
 
+    // 기본 이미지로 설정
+    const DeleteFile = async () => {
+            try {
+            const response = await authApi.delete('/accounts/upload/', {
+                headers: {
+                    Authorization: `bearer ${props.accessToken}`,
+                },
+            });
+            console.log('이미지 삭제 성공:', response.data);
+            alert('기본 프로필 이미지로 변경되었습니다')
+        } catch (error) {
+            console.error('이미지 삭제 실패:', error);
+            alert('프로필 이미지가 변경되지 않았습니다. 인터넷 연결을 확인해주세요.');
 
-    // 이미지 파일 삭제 (미리보기)
+        }
+    };
+
+    // 이미지  삭제 (미리보기)
     const deleteFileImage = () => {
         if (!fileImage) {
             alert('이미지가 없습니다')
@@ -132,13 +151,13 @@ function Modalpage(props) {
                 }
                 {!fileImage ?
                     <div className="buttons">
-                        <button className="button"
-                            onClick={() => deleteFileImage()}> 기본 이미지로 변경 </button>
+                        <button className="buttonoriginal"
+                            onClick={() => DeleteFile()}> 기본 이미지로 변경 </button>
                     </div>
-                    : <div className="buttons">
-                        <button className="button"
+                    : <div className="buttons2">
+                        <button className="buttonother"
                             onClick={() => deleteFileImage()}> 다른 이미지 선택 </button>
-                        <button className="button"
+                        <button className="buttonchosen"
                             onClick={UploadFile}>선택한 이미지로 변경</button>
                     </div>
                 }

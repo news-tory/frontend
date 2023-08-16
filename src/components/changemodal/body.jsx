@@ -119,7 +119,7 @@ function Modalpage(props) {
                 </Profile>
                 <Category>
                     <h4 className="smalltitle">선호 카테고리</h4>
-                    <p onClick={openModalcategory}>선호 카테고리 변경</p>
+                    <p className="changecategory" onClick={openModalcategory}>선호 카테고리 변경</p>
                     <CategoryWrapper>
                         {filteredCategories.map((category) => (
                             categoryMapping[category] && (

@@ -24,7 +24,7 @@ export const Profile = styled.div`
     padding-bottom: 10vh;
     display: flex;
     .pencil {
-        padding-top: 80px;
+        padding-top: 84px;
         padding-left: 7px;
         cursor: pointer;
         font-size: 13px;
@@ -33,19 +33,20 @@ export const Profile = styled.div`
         padding-left: 10px;
         padding-top: 60px;
         text-align: right;    }
+    
 `
 
 export const Goto = styled.div`
     display: flex;
     .gotoimage {
         position: absolute;
-        width: 35px;
-        height: 35px;
+        width: 32px;
+        height: 32px;
         padding-top: 20px;
-        padding-left: 50px;
+        padding-left: 38px;
     }
     p {
-        padding-left: 100px;
+        padding-left: 95px;
         padding-top: 10px;
         font-size: 18px;
     }
@@ -68,14 +69,14 @@ export const All = styled.div`
         width: 220px;
         height:25px;
         padding-top: 25px;
-        padding-left: 15px;
+        padding-left: 12px;
     }
     .basicimage {
         width:40px;
         height: 40px;
-        padding-top: 70px;
-        border-radius: 10%;
-        padding-left: 35px;
+        margin-top: 70px;
+        /* border-radius: 20px; */
+        margin-left: 35px;
     }
     .noline {
         text-decoration: none;
@@ -84,8 +85,8 @@ export const All = styled.div`
         justify-content: space-between;
       }
     .logout {
-        margin-top: 27vh;
-        padding-left: 20px;
+        margin-top: 26vh;
+        padding-left: 15px;
         font-size: 12px;
         cursor: pointer;
         color: gray;
@@ -94,13 +95,13 @@ export const All = styled.div`
         /* padding-top:15vh; */
         color: #4ad395;
         font-weight: lighter;
-        padding-left: 20px;
+        padding-left: 15px;
     }
     .bottom2 {
-        padding-top:30vh;
+        padding-top:27.5vh;
         color: #4ad395;
         font-weight: lighter;
-        padding-left: 20px;
+        padding-left: 15px;
     }
 `
 export const Modaltoo = styled.div`

@@ -1,6 +1,6 @@
 import { Sidebar, Profile, All, Modaltoo, Itsmodal, ModalContainer, Tologin, Section, Goto } from "./style";
 import { useState, useEffect } from "react";
-import basicimage from "../user.png";
+import basicimage from "../../images/BasicProfile.png";
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -43,7 +43,7 @@ function Body(props) {
             }
         }
     };
-    
+
     useEffect(() => {
         getUser();
     }, [data.nickname])
@@ -107,18 +107,25 @@ function Body(props) {
                     <img className='logo' src={logo}></img>
 
                     <Profile>
+                        {props.isLoggedIn ?
+                            <img style={{borderRadius:'50px'}} className='basicimage' src={`https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app${data.userImg}`} alt="User Profile" />
 
-                    <img className='basicimage' src={`https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app${data.userImg}`} alt="User Profile" />                    
+                            :
+                            <img className='basicimage' src={basicimage} alt="User Profile" />
+                        }
 
 
-                    {props.isLoggedIn ?
 
-                            <div style={{ display: 'flex', marginLeft: '10px' }}>
-                                <h4>{data.nickname}</h4>
-                                <FontAwesomeIcon
-                                    onClick={openModal} className='pencil' icon={faPencil} />
+                        {props.isLoggedIn ?
+                            <>
 
-                            </div> :
+                                <div style={{ display: 'flex', marginLeft: '10px' }}>
+                                    <h4>{data.nickname}</h4>
+                                    <FontAwesomeIcon
+                                        onClick={openModal} className='pencil' icon={faPencil} />
+
+                                </div>
+                            </> :
                             <Tologin>
                                 <Link to="/login" className="tologin">
                                     <h5>로그인을 해주세요.</h5>

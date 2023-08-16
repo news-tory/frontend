@@ -114,7 +114,10 @@ export const Category = styled.div`
     padding-top: 30px;
     p {
         font-size: 12px;
+    }
+    .changecategory {
         cursor: pointer;
+
     }
 
 `
@@ -124,9 +127,11 @@ export const CategoryButton = styled.div`
     font-size: 15px;
     margin: 7px;
     width: 100px;
-    height: 25px;
+    height: 32px;
     background-color: ${({ active }) => (active ? '#f2f2f2' : 'transparent')};
-    border: 1px solid #4ad395  
+    border: 1px solid #4ad395;
+    .catbutton {
+        }
 `
 
 export const CategoryWrapper = styled.div`
