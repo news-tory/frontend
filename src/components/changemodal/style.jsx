@@ -118,6 +118,9 @@ export const Category = styled.div`
     }
     .changecategory {
         cursor: pointer;
+        text-align: right;
+        margin-right: 50px;
+        margin-top:  20px;
 
     }
 
@@ -125,25 +128,35 @@ export const Category = styled.div`
 
 export const CategoryButton = styled.div`
     border-radius: 20px;
-    font-size: 15px;
-    margin: 7px;
+    font-size: 20px;
+    /* margin: 7px; */
     width: 100px;
-    height: 32px;
-    margin-right: 30px;
+    height: 20px;
+    padding-top: 5px;
+    margin-bottom: 10px;
     background-color: ${({ active }) => (active ? '#f2f2f2' : 'transparent')};
     border: 1px solid #4ad395;
+    align-items: center;
+    text-align: center;
     .catbutton {
-        }
+        font-size: 12px;
+        font-weight: lighter;
+            }
 `
 
 export const CategoryWrapper = styled.div`
-    width: 500px;
-    display: flex;
+    width: 390px;
+    height: 105px;
+    display: grid;
+    grid-template-columns: 140px 140px 130px;
+    padding-left: 8px;
+    padding-top: 5px;
     /* background-color: white; */
     flex-wrap: wrap;
     justify-content: left;
     text-align: center;
-    padding: 10px 0px 20px 0px;
+    border: 1px solid lightgray;
+    
 `
 
 export const Itsmodal = styled.div`

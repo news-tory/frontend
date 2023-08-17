@@ -108,7 +108,7 @@ function Body(props) {
 
                     <Profile>
                         {props.isLoggedIn ?
-                            <img style={{borderRadius:'50px'}} className='basicimage' src={`https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app${data.userImg}`} alt="User Profile" />
+                            <img style={{ borderRadius: '50px' }} className='basicimage' src={`https://port-0-hackbackend-20zynm2mljmm4yrc.sel4.cloudtype.app${data.userImg}`} alt="User Profile" />
 
                             :
                             <img className='basicimage' src={basicimage} alt="User Profile" />
@@ -119,8 +119,8 @@ function Body(props) {
                         {props.isLoggedIn ?
                             <>
 
-                                <div style={{ display: 'flex', marginLeft: '10px' }}>
-                                    <h4>{data.nickname}</h4>
+                                <div style={{ display: 'flex' }}>
+                                    <h5 className="nickname">{data.nickname}</h5>
                                     <FontAwesomeIcon
                                         onClick={openModal} className='pencil' icon={faPencil} />
 
@@ -148,11 +148,19 @@ function Body(props) {
                             <Link to='/community' className="noline">
                                 <p>Community</p></Link>
                         </Goto>
-                        <Goto>
-                            <img className="gotoimage" src={mypage}></img>
-                            <Link to='/mypage' className="noline">
-                                <p>MyPage</p></Link>
-                        </Goto>
+                        {props.isLoggedIn ?
+                            <Goto>
+                                <img className="gotoimage" src={mypage}></img>
+                                <Link to='/mypage' className="noline">
+                                    <p>MyPage</p></Link>
+                            </Goto>
+                            :
+                            <Goto>
+                                <img className="gotoimage" src={mypage}></img>
+                                <Link to='/mypage' className="noline">
+                                    <p>MyPage</p></Link>
+                            </Goto>
+                        }
                     </Section>
                     {props.isLoggedIn ?
                         <>

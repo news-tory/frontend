@@ -120,16 +120,17 @@ function Modalpage(props) {
                 </Profile>
                 <Category>
                     <h4 className="smalltitle">선호 카테고리</h4>
-                    <p className="changecategory" onClick={openModalcategory}>선호 카테고리 변경</p>
                     <CategoryWrapper>
                         {filteredCategories.map((category) => (
                             categoryMapping[category] && (
                             <CategoryButton key={category}>
-                                <p className="catbutton">{categoryMapping[category]}</p>
+                                <div className="catbutton">{categoryMapping[category]}</div>
                             </CategoryButton>
                             )
                         ))}
                     </CategoryWrapper>
+                    <p className="changecategory" onClick={openModalcategory}>선호 카테고리 변경</p>
+
                 </Category>
                 {modalimage &&
                     <Itsmodal onClick={closeModalimage}>
@@ -159,8 +160,6 @@ function Modalpage(props) {
                         </ModalContainer>
                     </Itsmodal>
                 }
-
-
             </All>
         </Every>
     )

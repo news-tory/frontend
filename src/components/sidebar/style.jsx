@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Sidebar = styled.div`
-    width: 220px;
+    width: 210px;
 
     /* background-color: #aac8a7; */
 
@@ -24,21 +24,14 @@ export const Profile = styled.div`
     padding-bottom: 10vh;
     display: flex;
     .pencil {
-        padding-top: 94px;
+        padding-top: 84px;
         padding-left: 7px;
         cursor: pointer;
         font-size: 13px;
     }
-        .basicimage {
-        width:40px;
-        height: 40px;
-        margin-top: 80px;
-        /* border-radius: 20px; */
-        margin-left: 13px;
-    }
-    h4 {
-        padding-left: 5px;
-        padding-top: 70px;
+    .nickname {
+        padding-left: 10px;
+        padding-top: 60px;
         text-align: right;    }
     
 `
@@ -47,14 +40,13 @@ export const Goto = styled.div`
     display: flex;
     .gotoimage {
         position: absolute;
-        width: 27px;
-        height: 27px;
+        width: 25px;
+        height: 25px;
         padding-top: 20px;
-        padding-left: 38px;
+        padding-left: 20px;
     }
-    
     p {
-        padding-left: 95px;
+        padding-left: 65px;
         padding-top: 10px;
         font-size: 15px;
     }
@@ -66,7 +58,7 @@ export const Tologin = styled.div`
     color: black;
     }
     h5 {
-        padding-top: 70px;
+        padding-top: 60px;
         padding-left: 10px;
     }
 `
@@ -74,10 +66,16 @@ export const Tologin = styled.div`
 export const All = styled.div`
     text-align: center;
     .logo {
-        width: 190px;
-        height:25px;
-        padding-top: 28px;
-        padding-left: 2px;
+        width: 150px;
+        height:20px;
+        padding-top: 25px;
+        padding-left: 20px;
+    }
+    .basicimage {
+        width:40px;
+        height: 40px;
+        margin-top: 70px;
+        margin-left: 20px;
     }
     .noline {
         text-decoration: none;
@@ -86,9 +84,9 @@ export const All = styled.div`
         justify-content: space-between;
       }
     .logout {
-        margin-top: 22vh;
-        padding-left: 15px;
-        font-size: 12px;
+        margin-top: 26vh;
+        padding-left: 23px;
+        font-size: 10px;
         cursor: pointer;
         color: gray;
     }
@@ -96,13 +94,13 @@ export const All = styled.div`
         /* padding-top:15vh; */
         color: #4ad395;
         font-weight: lighter;
-        padding-left: 15px;
+        padding-left: 23px;
     }
     .bottom2 {
-        padding-top:24vh;
+        padding-top:27.5vh;
         color: #4ad395;
         font-weight: lighter;
-        padding-left: 15px;
+        padding-left: 23px;
     }
 `
 export const Modaltoo = styled.div`
