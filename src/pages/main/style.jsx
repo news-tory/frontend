@@ -35,13 +35,14 @@ export const LeftWrapper = styled.div`
     border-right: 2px solid #eaeaea;
     display: flex;
     flex-direction: column;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 `
 
 export const HomeText = styled.div`
     height: 50px;
     width: 100%;
-    padding: 10px 10px 10px 20px;
+    padding: 20px 10px 10px 20px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
