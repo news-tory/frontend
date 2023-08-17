@@ -51,7 +51,7 @@ export const Text = styled.div`
 `
 export const ArticleSection = styled.div`
     display: flex;
-    width: 100%;
+    width: 95%;
     height: 50px;
     border-bottom: 2px solid #eaeaea;
 `

@@ -40,7 +40,7 @@ export const MainWrapper = styled.div`
 
 export const CommunityText = styled.div`
     width: 78%;
-    padding: 20px 10px 20px 20px;
+    padding: 25px 10px 20px 20px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
