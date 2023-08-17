@@ -69,9 +69,16 @@ function Body(props) {
     };
     
 
+ 
     useEffect(() => {
-        fetchCommunity();
-    }, []);
+        if (!props.isLoggedIn) {
+            alert('로그인이 필요한 서비스입니다.')
+            navigate("/");
+        } else {
+            fetchCommunity();
+        }
+    }, [props.isLoggedIn]);
+    
 
 
     const newsclick = (post) => {

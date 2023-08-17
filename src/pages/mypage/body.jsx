@@ -55,6 +55,8 @@ const [selectedPost,setSelectedPost] = useState({});
 const [selectedCommunityPost,setSelectedCommunityPost] = useState({});
 const [selectedNews, setSelectedNews] = useState({})
 
+
+
 const fetchCommunity = async () => {
     try {
         // const token = localStorage.getItem('accToken')
@@ -108,8 +110,6 @@ const getUser = async () => {
         setNickname(userData.nickname)
     }
     catch(error){
-            
-            alert('실패')
             console.error(error);   
         }
     }
@@ -125,16 +125,18 @@ const fetchLikedNews = async () => {
         }
     };
 
-    useEffect(() => {
-        getUser();
-    }, []);
 
     useEffect(() => {
-        if (nickname) {
-            fetchCommunity(); // nickname이 설정된 이후에 fetchCommunity 호출
+        if (!props.isLoggedIn) {
+            alert('로그인이 필요한 서비스입니다.')
+            navigate("/");
+        } else {
+            getUser();
+            fetchCommunity();
             fetchLikedNews();
         }
-    }, [nickname]);
+    }, [props.isLoggedIn]);
+    
 
     const onClickLike = async (postId) => {
         if(props.isLoggedIn){
