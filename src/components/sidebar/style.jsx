@@ -9,7 +9,7 @@ export const Sidebar = styled.div`
     /* list-style-type: none; */
     /* margin: 0;  */
     height: auto;
-    border-right :  solid #4ad395;
+    border-right :  solid #eaeaea;
     height : 100vh;
     margin-bottom: 40px;
     position: fixed;

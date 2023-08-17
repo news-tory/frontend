@@ -35,13 +35,14 @@ export const LeftWrapper = styled.div`
     border-right: 2px solid #eaeaea;
     display: flex;
     flex-direction: column;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 `
 
 export const HomeText = styled.div`
     height: 50px;
     width: 100%;
-    padding: 10px 10px 10px 20px;
+    padding: 25px 10px 10px 20px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -54,7 +55,7 @@ border-bottom: ${props => props.active ? '3px solid #4ad395' : ''};
 `
 export const ArticleSection = styled.div`
     display: flex;
-    width: 100%;
+    width: 95%;
     height: 50px;
     border-bottom: 2px solid #eaeaea;
     justify-content: space-between;
