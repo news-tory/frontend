@@ -39,7 +39,7 @@ export const MainWrapper = styled.div`
 `
 
 export const CommunityText = styled.div`
-    width: 100%;
+    width: 78%;
     padding: 20px 10px 20px 20px;
     display: flex;
     align-items: center;
@@ -47,7 +47,7 @@ export const CommunityText = styled.div`
     font-size: 20px;
     background-color: white;
     border-bottom: 2px solid #eaeaea;
-    border-left: 2px solid #eaeaea;
+    /* border-left: 2px solid #eaeaea; */
     position: fixed;
 `
 export const Text = styled.div`
