@@ -46,7 +46,7 @@ function Body(props) {
 
     useEffect(() => {
         getUser();
-    }, [data])
+    }, [])
 
 
 

@@ -49,8 +49,8 @@ function CommunityNewsview(props) {
     const [reviseComment, setReviseComment] = useState("")
     const [reviseCommentInput, setReviseCommentInput] = useState(false);
 
-    const onClickNewsSite = (props) => {
-        const movetoLink = prompt(newsData.url);
+    const onClickNewsSite = (url) => {
+        window.open(url,'_blank');
     }
 
     const fetchPosting = async () => {
@@ -68,7 +68,7 @@ function CommunityNewsview(props) {
 
     const fetchnews = async () => {
         try {
-            const response = await noAuthApi.get(`/articles/${articleId}/`);
+            const response = await authApi.get(`/articles/${articleId}/`);
             console.log(response.data); // 서버의 응답 데이터 확인
             setNewsData(response.data); // 선택된 뉴스 설정
         } catch (error) {
@@ -102,24 +102,6 @@ function CommunityNewsview(props) {
         }
     }
 
-    // useEffect(async () => {
-    //     const fetchData = async() => {
-    //         const res = await axios.get()
-    //         if (res.data.type === 'liked') setLike(true)
-    //     }
-    // fetchData()
-    // },[])
-
-    // const toggleLike = async(e) => {
-    //     const res = await axios.post()
-    //     setLike(!like)
-    // }
-    // useEffect(async () => {
-    //     const fetchData = async() => {
-    //         const res = await axios.get()
-    //     }
-    // fetchData()
-    // },[])
     const getUser = async () => {
         try{
             const response = await authApi.get('/accounts/update/');
@@ -131,16 +113,19 @@ function CommunityNewsview(props) {
             }
         }
     
-    const reviseCmt = async (commentId) => {
-        try{
-            const response = await authApi.put(`/community/posts/${postId}/comment/${commentId}/`,{
-                content: reviseComment
-            });
-        }
-            catch(error){
-                console.log('reviseComment Error');
+        const reviseCmt = async (commentId) => {
+            try {
+                const cmt = comments.find((cmt) => cmt.id === commentId);
+                await authApi.patch(`/community/posts/${postId}/comment/${commentId}/`, {
+                    content: cmt.reviseComment,
+                });
+                alert("수정되었습니다.");
+                onClickRevise(commentId);
+            } catch (error) {
+                console.log("reviseSubmit Error");
             }
-    }
+        };
+        
 
     const deleteCmt = async (commentId) => {
         const confirmMessage = window.confirm('댓글을 삭제하시겠습니까?')
@@ -157,16 +142,34 @@ function CommunityNewsview(props) {
 
     const reviseSubmit = (commentId) => {
         reviseCmt(commentId);
-        alert("수정되었습니다.");
         setReviseCommentInput(!reviseCommentInput);
         fetchPosting();
     }
 
-    const onClickRevise = (reviseData) => {
-        setReviseCommentInput(!reviseCommentInput);
-        setReviseComment(reviseData)
+    const onClickRevise = (commentId) => {
+        const updatedComments = comments.map((cmt) => {
+            if (cmt.id === commentId) {
+                return { ...cmt, reviseCommentInput: !cmt.reviseCommentInput };
+            }
+            return cmt;
+        });
+        setComments(updatedComments);
+    };
+
+    const onClickLike = async (newsId) => {
+        if(props.isLoggedIn){
+            try{
+                const response = await authApi.post(`/articles/${newsId}/likes/`)
+                fetchnews();
+            }
+            catch(error){
+                console.log('like api error')
+                console.error(error);
+            }
+        }
     }
 
+    
     return (
         <Container>
             <NewsViewSection>
@@ -184,12 +187,12 @@ function CommunityNewsview(props) {
                         {newsData.paper}
                     </NewsPaper>
                     <NewsImage>
-                        <ArticleImage src={newsData.img_url} />
+                        <ArticleImage src={newsData.img_url} style={{cursor:'pointer'}} onClick={() => onClickNewsSite(newsData.url)}/>
                     </NewsImage>
                     <ButtonSection>
                         <ViewWrapper>
                             <HeartView>
-                                <FontAwesomeIcon icon={faHeart} style={{ color: like ? 'red' : 'grey' }} />
+                                <FontAwesomeIcon icon={faHeart} style={{ color: newsData.user_like ? 'red' : 'grey' , cursor: 'pointer'}} onClick={() => onClickLike(newsData.id)} />
                                 <div>{newsData.like_cnt}</div>
                             </HeartView>
                             <PostView>
@@ -217,22 +220,35 @@ function CommunityNewsview(props) {
                     <CommentWrapper>
                         <CommentInfWrapper>
                         <CommentUser>{cmt.user}</CommentUser>
-                        {reviseCommentInput == true ? (
-                            <ReviseCommentarea value={reviseComment} onChange={(e) => setReviseComment(e.target.value) }/>
-                        ):(
-                            <CommmentContent>{cmt.content}</CommmentContent>
-                        )}
-                        </CommentInfWrapper>
-                        {username === cmt.user && !reviseCommentInput ? (
-                            <CommentSettingWrapper>
-                                <FontAwesomeIcon icon={faWrench} onClick={() => onClickRevise(cmt.content)}/>
-                                <FontAwesomeIcon icon={faXmark} onClick={() => deleteCmt(cmt.id)}/>
-                            </CommentSettingWrapper>
+                        {cmt.reviseCommentInput ? (
+                        <ReviseCommentarea
+                            value={cmt.reviseComment || ""}
+                            onChange={(e) => {
+                                const updatedComments = comments.map((comment) => {
+                                    if (comment.id === cmt.id) {
+                                        return { ...comment, reviseComment: e.target.value };
+                                    }
+                                    return comment;
+                                });
+                                setComments(updatedComments);
+                            }}
+                        />
+                    ) : (
+                        <CommmentContent>{cmt.content}</CommmentContent>
+                    )}
+                    </CommentInfWrapper>
+                    {username === cmt.user ? (
+                    <CommentSettingWrapper>
+                        {cmt.reviseCommentInput ? (
+                            <p onClick={() => reviseSubmit(cmt.id)} style={{cursor: 'pointer'}}>수정</p>
                         ) : (
-                            <CommentSettingWrapper>
-                                <p onClick={() => reviseSubmit(cmt.id)}>수정</p>
-                            </CommentSettingWrapper>
+                            <>
+                            <FontAwesomeIcon icon={faWrench} onClick={() => onClickRevise(cmt.id)} style={{cursor:'pointer'}}/>
+                            <FontAwesomeIcon icon={faXmark} onClick={() => deleteCmt(cmt.id)} style={{cursor:'pointer'}}/>
+                            </>
                         )}
+                    </CommentSettingWrapper>
+                ) : null}
                     </CommentWrapper>
                 ))}
             </NewsPostSection>
