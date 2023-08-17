@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Sidebar = styled.div`
-    width: 250px;
+    width: 210px;
 
     /* background-color: #aac8a7; */
 
@@ -29,7 +29,7 @@ export const Profile = styled.div`
         cursor: pointer;
         font-size: 13px;
     }
-    h4 {
+    .nickname {
         padding-left: 10px;
         padding-top: 60px;
         text-align: right;    }
@@ -40,15 +40,15 @@ export const Goto = styled.div`
     display: flex;
     .gotoimage {
         position: absolute;
-        width: 32px;
-        height: 32px;
+        width: 25px;
+        height: 25px;
         padding-top: 20px;
-        padding-left: 38px;
+        padding-left: 20px;
     }
     p {
-        padding-left: 95px;
+        padding-left: 65px;
         padding-top: 10px;
-        font-size: 18px;
+        font-size: 15px;
     }
 `
 
@@ -66,17 +66,16 @@ export const Tologin = styled.div`
 export const All = styled.div`
     text-align: center;
     .logo {
-        width: 220px;
-        height:25px;
+        width: 150px;
+        height:20px;
         padding-top: 25px;
-        padding-left: 12px;
+        padding-left: 20px;
     }
     .basicimage {
         width:40px;
         height: 40px;
         margin-top: 70px;
-        /* border-radius: 20px; */
-        margin-left: 35px;
+        margin-left: 20px;
     }
     .noline {
         text-decoration: none;
@@ -86,8 +85,8 @@ export const All = styled.div`
       }
     .logout {
         margin-top: 26vh;
-        padding-left: 15px;
-        font-size: 12px;
+        padding-left: 23px;
+        font-size: 10px;
         cursor: pointer;
         color: gray;
     }
@@ -95,13 +94,13 @@ export const All = styled.div`
         /* padding-top:15vh; */
         color: #4ad395;
         font-weight: lighter;
-        padding-left: 15px;
+        padding-left: 23px;
     }
     .bottom2 {
         padding-top:27.5vh;
         color: #4ad395;
         font-weight: lighter;
-        padding-left: 15px;
+        padding-left: 23px;
     }
 `
 export const Modaltoo = styled.div`
