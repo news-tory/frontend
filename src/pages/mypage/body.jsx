@@ -140,7 +140,6 @@ const fetchLikedNews = async () => {
         if(props.isLoggedIn){
             try{
                 const response = await authApi.post(`/community/posts/${postId}/like/`)
-                setLiked(!liked);
                 fetchCommunity();
             }
             catch(error){
@@ -192,7 +191,7 @@ return (
                                 </CommunityNewsWrapper>
                                 <ButtonSection>
                                     <HeartButton>
-                                        <FontAwesomeIcon icon={faHeart} onClick={() => onClickLike(list.id)}/>
+                                        <FontAwesomeIcon icon={faHeart} style={{color: list.is_liked ? 'red': 'grey'}}onClick={() => onClickLike(list.id)}/>
                                         <p>{list.like_cnt}</p>
                                     </HeartButton>
                                     <PostButton onClick={() => onClickCommunityPost(list)}>

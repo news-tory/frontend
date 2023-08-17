@@ -30,16 +30,23 @@ import { authApi } from '../../modules/axiosInterceptor';
 
 function Newsview(props) {
     const [like, setLike] = useState(false);
-    const {news, changeModal} = props;
+    const {newsId} = props;
     const navigate = useNavigate()
     const [posting, setPosting] = useState("");
     const [userData,setUserData] = useState([]);
-    
-    const onClickNewsSite = () => {
-        const movetoLink = prompt(news.url);
+    const [news,setNews] = useState([]);
+
+    const onClickNewsSite = (url) => {
+        window.open(url,'_blank');
         }
-    const backtomain = () => {
-        changeModal();
+
+    const fetchnews = async () => {
+        try{
+            const response = await authApi.get(`/articles/${newsId}/`)
+            setNews(response.data);
+        } catch(error){
+            console.log("newsview_fetchnews Error");
+        }
     }
     const postfeed = async () => {
         try {
@@ -51,7 +58,6 @@ function Newsview(props) {
             console.log(response.data); // 서버의 응답 데이터 확인
             alert('게시되었습니다.');
             setPosting("");
-            backtomain();
         } catch (error) {
             alert('업로드에 실패했습니다. 인터넷 연결을 확인 후 다시 시도해보시겠어요?')
             console.error(error)
@@ -76,26 +82,20 @@ function Newsview(props) {
 
     useEffect(() => {
         getUser();
+        fetchnews();
+        console.log(newsId);
     },[])
 
-    // useEffect(async () => {
-    //     const fetchData = async() => {
-    //         const res = await axios.get()
-    //         if (res.data.type === 'liked') setLike(true)
-    //     }
-    // fetchData()
-    // },[])
 
-    // const toggleLike = async(e) => {
-    //     const res = await axios.post()
-    //     setLike(!like)
-    // }
-        // useEffect(async () => {
-    //     const fetchData = async() => {
-    //         const res = await axios.get()
-    //     }
-    // fetchData()
-    // },[])
+    const onClickLike = async() => {
+        try{
+            const res = await authApi.post(`/articles/${news.id}/likes/`)
+        fetchnews();
+    } catch(error){
+        console.log("newsview_onClickLike Error")
+    }
+    }
+    
 
     
     return(
@@ -104,11 +104,11 @@ function Newsview(props) {
                 <NewsPaper>
                     {news.paper}
                 </NewsPaper>
-                <NewsImage src={news.img_url}/>
+                <NewsImage src={news.img_url} onClick={() => onClickNewsSite(news.url)} style={{cursor: 'pointer'}}/>
                 <ButtonSection>
                     <ViewWrapper>
                     <HeartView>
-                        <FontAwesomeIcon icon={faHeart} style={{ color: like ? '#BABABA' : 'grey' }} />
+                        <FontAwesomeIcon icon={faHeart} onClick={onClickLike} style={{ color: news.user_like ? 'red' : 'grey' , cursor: 'pointer'}} />
                         <div>{news.like_cnt}</div>
                     </HeartView>
                     <PostView>
@@ -132,7 +132,7 @@ function Newsview(props) {
                         <PostText>
                             <div>{userData.nickname}</div>
                             <PostButton onClick={postfeed}>
-                                공유하기 <FontAwesomeIcon icon={faPenToSquare} style={{color: "#4ad395",}} />
+                                공유하기
                                 </PostButton>
                         </PostText>
                         <PostInput 

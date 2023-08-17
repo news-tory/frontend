@@ -54,14 +54,25 @@ function Body(props) {
     };
     
     const fetchnews = async () => {
+        if(props.isLoggedIn === true){
         try {
-            const response = await noAuthApi.get('/articles/');
+            const response = await authApi.get('/articles/');
             setNewsList(response.data);
             console.log(newslist)
         } catch (error) {
-            console.log('뉴스데이터 로딩에 실패했습니다.')
+            console.log('fetchnews_noauthApi Error');
+            console.error(error);
             navigate('/')
+        }}
+        else {
+            try{
+            const response = await noAuthApi.get('/articles/');
+            setNewsList(response.data);
+        } catch(error) {
+            console.log('fetchnews_noauthApi Error')
         }
+        }
+
     };
     
     const fetchHotnews = async () => {
@@ -74,9 +85,14 @@ function Body(props) {
         }
     };
     
-    const onClickNews = (news) => {
-        setSelectedNews(news);
+    const onClickNews = (newsId) => {
+        if(props.isLoggedIn === true){
+        setSelectedNews(newsId);
         changeModal();
+        } else{
+            alert('로그인 후 이용가능합니다.')
+            navigate('/login')
+        }
     }
     
     useEffect(() => {
@@ -121,6 +137,10 @@ function Body(props) {
                 console.error(error);
             }
         }
+        else{
+            alert('로그인 후 이용가능합니다.')
+            navigate('/login')
+        }
     }
     
 
@@ -148,10 +168,10 @@ function Body(props) {
                             <NewsAbstract>{news.abstract}</NewsAbstract>
                             <ButtonSection>
                                 <HeartButton>
-                                    <FontAwesomeIcon icon={faHeart} style={{color: news.liked ? 'red' : 'grey'}} onClick={() => onClickLike(news.id)}/>
+                                    <FontAwesomeIcon icon={faHeart} style={{color: news.user_like ? 'red' : 'grey'}} onClick={() => onClickLike(news.id)}/>
                                     <div>{news.like_cnt}</div>
                                 </HeartButton>
-                                <PostButton onClick={() => onClickNews(news)} modal = {modal} changeModal={changeModal}>
+                                <PostButton onClick={() => onClickNews(news.id)} modal = {modal} changeModal={changeModal}>
                                     <FontAwesomeIcon icon={faPenToSquare} />
                                     <p> Post</p>
                                 </PostButton>
@@ -198,7 +218,7 @@ function Body(props) {
                         <div>실시간 인기 뉴스</div>
                     </HotNewsText>
                     {hotnewsList.map((news,index) => (
-                        <HotNewsWrapper onClick={() => onClickNews(news)}>
+                        <HotNewsWrapper onClick={() => onClickNews(news.id)}>
                             <HotNewsPaper>
                                 <div>{news.paper}</div>
                             </HotNewsPaper>
@@ -215,7 +235,7 @@ function Body(props) {
             { modal &&
             <ModalBackground onClick={changeModal}>
                 <ModalContainer onClick={stopPropagation}>
-                    <Newsview news = {selectedNews}/>
+                    <Newsview newsId = {selectedNews}/>
                 </ModalContainer>
             </ModalBackground>
             }

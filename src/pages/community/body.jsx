@@ -36,15 +36,14 @@ function Body(props) {
     const [activeMyFav, setActiveMyFav] = useState(false);
     const navigate = useNavigate();
     let [modal, setModal] = useState(false);
+    const [selectedPost, setSelectedPost] = useState([]);
+    const [newsModal, setNewsModal] = useState(false);
 
-    const changeModal = () => {
-        setModal(!modal);
-    };
-
+    
     const stopPropagation = (e) => {
         e.stopPropagation();
     };
-
+    
     console.log('ComToken', props.accessToken);
     const fetchCommunity = async () => {
         try {
@@ -59,21 +58,55 @@ function Body(props) {
             console.error(error);
         }
     };
-
-    const onClickNews = (news) => {
-        setSelectedNews(news);
+    
+    const onClickPosts = (post) => {
+        setSelectedPost(post);
+        console.log(post)
         changeModal();
     }
+    const changeModal = () => {
+        setModal(!modal);
+    };
+    
 
     useEffect(() => {
         fetchCommunity();
     }, []);
+
+
+    const newsclick = (post) => {
+        setSelectedNews(post);
+        console.log(post)
+        changeNewsModal();
+    }
+
+    const changeNewsModal = () => {
+        setNewsModal(!newsModal);
+    };
+    
 
     const onClickMyFav = () => {
         setActiveMyFav(!activeMyFav)
         console.log(activeMyFav)
     }
 
+    const onClickLike = async (postId) => {
+        if(props.isLoggedIn){
+            try{
+                const response = await authApi.post(`/community/posts/${postId}/like/`)
+                fetchCommunity();
+            }
+            catch(error){
+                console.log('like api error')
+                console.error(error);
+            }
+        }
+        else{
+            alert('로그인 후 이용가능합니다.')
+            navigate('/login')
+        }
+    }
+    
     return (
         <>
             <MainContainer>
@@ -94,10 +127,10 @@ function Body(props) {
                                 </CommunityNewsWrapper>
                                 <ButtonSection>
                                     <HeartButton>
-                                        <FontAwesomeIcon icon={faHeart} />
+                                        <FontAwesomeIcon icon={faHeart} style={{color: list.is_liked ? 'red': 'grey'}} onClick={() => onClickLike(list.id)}/>
                                         <p>{list.like_cnt}</p>
                                     </HeartButton>
-                                    <PostButton onClick={() => onClickNews(list)}>
+                                    <PostButton onClick={() => onClickPosts(list)}>
                                         <FontAwesomeIcon icon={faComment} />
                                         <p>Comment</p>
                                     </PostButton>
@@ -110,7 +143,7 @@ function Body(props) {
             {modal &&
                 <ModalBackground onClick={changeModal}>
                     <ModalContainer onClick={stopPropagation}>
-                        <CommunityNewsview postId={selectedNews.id} articleId={selectedNews.article} />
+                        <CommunityNewsview postId={selectedPost.id} articleId={selectedPost.article} />
                     </ModalContainer>
                 </ModalBackground>
             }

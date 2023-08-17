@@ -72,7 +72,7 @@ function CommunityNews(props) {
       {modal &&
         <ModalBackground onClick={changeModal}>
           <ModalContainer onClick={stopPropagation}>
-            <Newsview news={selectedNews} />
+            <Newsview newsId={selectedNews.id} />
           </ModalContainer>
         </ModalBackground>
       }
