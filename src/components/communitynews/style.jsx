@@ -89,7 +89,7 @@ export const ModalContainer = styled.div`
     border-radius: 10px;
     margin: 100px 0px 100px 0px;
     width: 1000px;
-    height: 800px;
+    height: 750px;
     display: flex;
     justify-content: center;
     z-index: 11;
