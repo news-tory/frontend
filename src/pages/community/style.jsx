@@ -137,7 +137,10 @@ export const PostUser = styled.div`
 export const CommunityContent =  styled.div`
     width: 100%;
     font-size: 20px;
-    padding-left: 50px;
+    padding: 20px 50px 20px 50px;
+    display:flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
 `
 export const NewsAbstract = styled.div`
     font-size: 17px;
