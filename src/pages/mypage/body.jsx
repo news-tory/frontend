@@ -132,10 +132,15 @@ const fetchLikedNews = async () => {
             navigate("/");
         } else {
             getUser();
+        }
+    }, [props.isLoggedIn]);
+
+    useEffect(() => {
+        if(nickname){
             fetchCommunity();
             fetchLikedNews();
         }
-    }, [props.isLoggedIn]);
+    },[])
     
 
     const onClickLike = async (postId) => {
