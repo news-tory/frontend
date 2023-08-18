@@ -34,7 +34,7 @@ export const LeftWrapper = styled.div`
     border-right: 2px solid #eaeaea;
     display: flex;
     flex-direction: column;
-    overflow: auto;
+    overflow-x: hidden;
 `
 
 export const HomeText = styled.div`
