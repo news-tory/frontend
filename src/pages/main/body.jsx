@@ -199,7 +199,7 @@ function Body(props) {
                             <NewsAbstract>{news.abstract}</NewsAbstract>
                             <ButtonSection>
                                 <HeartButton>
-                                    <FontAwesomeIcon icon={faHeart} />
+                                    <FontAwesomeIcon icon={faHeart} style={{color: news.user_like ? 'red' : 'grey'}} onClick={() => onClickLike(news.id)}/>
                                     <p>{news.like_cnt}</p>
                                 </HeartButton>
                                 <PostButton onClick={() => onClickNews(news)} modal={modal} changeModal={changeModal}>
