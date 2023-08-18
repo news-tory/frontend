@@ -140,7 +140,7 @@ const fetchLikedNews = async () => {
             fetchCommunity();
             fetchLikedNews();
         }
-    },[])
+    },[nickname])
     
 
     const onClickLike = async (postId) => {
